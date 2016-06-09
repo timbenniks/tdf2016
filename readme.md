@@ -6,7 +6,7 @@ The project evolves every year and tries to use bleeding edge technology. I don'
 ## Features
 This year the project has the following features:
 * Isomorpic architecture with node, shared templating and JavaScript.
-* An open connection with Websockets for live data streaming of tweets and progres updates of the current stage, groups or riders, leaderboards and virtual ranking. No ajax calls are made from the front-end.
+* The dashboard has an open connection with Websockets for live data streaming of tweets and progress updates of the current stage, groups or attackers, leaderboards and virtual ranking. No ajax calls are made from the front-end.
 * ES6 code in the front-end and back-end.
 * Promises are user for all the things.
 * Complex fullscreen dashboard like layout for all devices with flexbox. 
