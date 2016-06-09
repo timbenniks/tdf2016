@@ -1,5 +1,7 @@
 data/config_local.js
 
+.DS_Store
+
 # Logs
 logs
 *.log
