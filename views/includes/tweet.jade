@@ -1,0 +1,8 @@
+blockquote
+  p.entry!=tweet.text
+  if typeof( tweet.entities.media ) !== "undefined"
+    for media in tweet.entities.media
+      figure.media
+        img( src=media.media_url )
+
+  p.meta!=tweet.created_at

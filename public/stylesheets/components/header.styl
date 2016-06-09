@@ -1,0 +1,50 @@
+header
+  height: 7.5em
+  background: rgba( #fff, .5 )
+  padding: 0 1.5em
+  border-bottom: 1px solid #f9bc0d
+  position: relative
+  
+  .logo
+    display: block
+    height: 3.5em
+    width: auto
+    position: absolute
+    top: 50%
+    transform: translateY( -50% )
+    
+  h1
+    font-size: 1.5em
+    text-transform: uppercase
+    line-height: 1
+    position: absolute
+    top: 50%
+    transform: translateY( -50% )
+    left: 4.7em
+    
+    span
+      display: block
+      
+      &.chapeau
+        font-size: 0.6em
+        margin: 0 0 0.5em
+        opacity: 0.6
+  
+  @media screen and ( min-width: 768px )
+    height: 6em
+      
+    h1
+      font-size: 1.9em
+      left: 4em
+
+  .options
+    position: absolute
+    right: 1em
+    top: 50%
+    transform: translateY( -50% )
+    display: none
+    
+    @media screen and ( min-width: 1000px )
+      display: block
+
+    

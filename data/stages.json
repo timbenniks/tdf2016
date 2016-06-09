@@ -1,0 +1,155 @@
+{
+  "stages_types": [ 
+    "Flat stage", 
+    "Hilly stage", 
+    "Medium-mountain stage", 
+    "Mountain stage", 
+    "Individual time trial", 
+    "Rest day"
+  ],
+
+  "stages": [{
+    "date":"02/07/2016",
+    "from": "Mont Saint-Michel",
+    "to": "Utah Beach, Sainte-Marie-du-Mont",
+    "distance": 118,
+    "stages_type": 0,
+    "image": "stage-1-July-2.jpg"
+  },{
+    "date":"03/07/2016",
+    "from": "Saint-Lô",
+    "to": "Cherbourg-Octeville",
+    "distance": 182,
+    "stages_type": 1,
+    "image": "stage-2-July-3.jpg"
+  },{
+    "date":"04/07/2016",
+    "from": "Granville",
+    "to": "Angers",
+    "distance": 222,
+    "stages_type": 0,
+    "image": "stage-3-July-4.jpg"
+  },{
+    "date":"05/07/2016",
+    "from": "Saumur",
+    "to": "Limoges",
+    "distance": 232,
+    "stages_type": 0,
+    "image": "stage-4-July-5.jpg"
+  },{
+    "date":"06/07/2016",
+    "from": "Limoges",
+    "to": "Le Lioran",
+    "distance": 216,
+    "stages_type": 2,
+    "image": "stage-5-July-6.jpg"
+  },{
+    "date":"07/07/2016",
+    "from": "Arpajon-sur-Cère",
+    "to": "Montauban",
+    "distance": 187,
+    "stages_type": 0
+  },{
+    "date":"08/07/2016",
+    "from": "L'Isle-Jourdai",
+    "to": "Lac de Payolle",
+    "distance": 162,
+    "stages_type": 2
+  },{
+    "date":"09/07/2016",
+    "from": "Pau",
+    "to": "Bagnères-de-Luchon",
+    "distance": 183,
+    "stages_type": 3
+  },{
+    "date":"10/07/2016",
+    "from": "Vielha Val d'Aran (Spain)",
+    "to": "Andorra-Arcalis (Andorra)",
+    "distance": 184,
+    "stages_type": 3
+  },{
+    "date":"11/07/2016",
+    "from": "Andorra",
+    "to": "",
+    "distance": 0,
+    "stages_type": 5
+  },{
+    "date":"12/07/2016",
+    "from": "Escaldes-Engordany (Andorra)",
+    "to": "Revel",
+    "distance": 198,
+    "stages_type": 2
+  },{
+    "date":"13/07/2016",
+    "from": "Carcassonne",
+    "to": "Montpellier",
+    "distance": 164,
+    "stages_type": 0
+  },{
+    "date":"14/07/2016",
+    "from": "Montpellier",
+    "to": "Mont Ventoux",
+    "distance": 185,
+    "stages_type": 3
+  },{
+    "date":"15/07/2016",
+    "from": "Bourg-Saint-Andéol",
+    "to": "La Caverne du Pont-d'Arc",
+    "distance": 37,
+    "stages_type": 4
+  },{
+    "date":"16/07/2016",
+    "from": "Montélimar",
+    "to": "Villars-les-Dombes",
+    "distance": 208,
+    "stages_type": 0
+  },{
+    "date":"17/07/2016",
+    "from": "Bourg-en-Bresse",
+    "to": "Culoz",
+    "distance": 159,
+    "stages_type": 2
+  },{
+    "date":"18/07/2016",
+    "from": "Moirans-en-Montagne",
+    "to": "Bern (Switzerland)",
+    "distance": 206,
+    "stages_type": 2
+  },{
+    "date":"19/07/2016",
+    "from": "Bern (Switzerland)",
+    "to": "",
+    "distance": 0,
+    "stages_type": 5
+  },{
+    "date":"20/07/2016",
+    "from": "Bern (Switzerland)",
+    "to": "Finhaut Émosson (Switzerland)",
+    "distance": 184,
+    "stages_type": 3
+  },{
+    "date":"21/07/2016",
+    "from": "Sallanches",
+    "to": "Megève",
+    "distance": 17,
+    "stages_type": 4
+  },{
+    "date":"22/07/2016",
+    "from": "Albertville",
+    "to": "Saint-Gervais-les-Bains",
+    "distance": 146,
+    "stages_type": 3
+  },{
+    "date":"23/07/2016",
+    "from": "Megève",
+    "to": "Morzine",
+    "distance": 146,
+    "stages_type": 3
+  },{
+    "date":"24/07/2016",
+    "from": "Chantilly",
+    "to": "Paris",
+    "distance": 113,
+    "stages_type": 0
+  }]
+}

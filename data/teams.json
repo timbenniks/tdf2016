@@ -1,0 +1,10 @@
+[{
+  "name": "Team Sky",
+  "nationality": "GBR",
+  "riders": [{
+    "name": "Chris Froome",
+    "nationality": "GBR",
+    "number": 1,
+    "gave_up": false
+  }],
+}]

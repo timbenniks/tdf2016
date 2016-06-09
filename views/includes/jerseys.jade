@@ -1,0 +1,9 @@
+section.jerseys
+  //-p=JSON.stringify(jerseys)
+
+  for jersey in jerseys
+    .jersey-wrapper( class=jersey.kind )
+      img( src="/images/jerseys/#{jersey.kind}.png", width="30" )
+      p=jersey.name
+      p=jersey.team
+      p=jersey.meta

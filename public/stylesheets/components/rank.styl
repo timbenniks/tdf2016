@@ -1,0 +1,64 @@
+.rank
+  overflow: auto
+  height: 25.7em
+  -webkit-overflow-scrolling: touch
+  
+  @media screen and ( min-width: 600px )
+    height: calc( 100% - 1em )
+
+  .switch-tables-wrapper
+    margin: 0 0 1em 0 
+  
+  table
+    font-size: .8em
+    border-collapse: collapse
+    width: 100%
+    
+    &.climbers
+    &.sprinters
+    &.white
+      display: none
+    
+    tr
+      background: rgba( #fff, .3 )
+      border-bottom: 1px solid #f9bc0d
+
+    th
+      opacity: 0.6
+
+    td
+    th
+      padding: 0.7em 1em
+      text-align: left
+      
+      .flag
+        position: relative
+        top: 0.2em
+        opacity: 0.8
+        margin: 0 0.7em 0 0
+        
+      &.team
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        max-width: 140px
+      
+      &.classification
+        width: 30px
+
+      &.no
+      &.team
+      &.time
+        display: none
+      
+      @media screen and ( min-width: 1000px )
+        &.no
+        &.team
+        &.time
+          display: table-cell
+      
+      @media screen and ( min-width: 1400px )
+        &.no
+        &.team
+        &.time
+          display: none

@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  .section-holder
+    
+    include includes/header.jade
+    
+    .page-content
+      include includes/stream.jade
+
+      section.other-data
+        .progress
+          include includes/progress.jade
+        
+        section.bottom-data
+          include includes/jerseys.jade
+          include includes/rank.jade

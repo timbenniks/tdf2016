@@ -1,0 +1,71 @@
+section.rank
+
+  .switch-tables-wrapper
+    button.switch.active( data-switch="individual") yellow
+    button.switch( data-switch="white") white
+    button.switch( data-switch="climbers") polka dot
+    button.switch( data-switch="sprinters") green
+
+  table.individual
+    tr
+      th.classification RANK
+      th.rider RIDER
+      th.no NO
+      th.team TEAM
+      th.time TIME
+      th.behind BEHIND
+    each rider, index in rank.individual
+      tr
+        td.classification=index+1
+        td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+        td.no=rider.no
+        td.team=rider.team
+        td.time=rider['individual-time']
+        td.behind=rider['individual-behind']
+
+  table.climbers
+    tr
+      th.classification RANK
+      th.rider RIDER
+      th.no NO
+      th.team TEAM
+      th.points POINTS
+    each rider, index in rank.climbers
+      tr
+        td.classification=index+1
+        td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+        td.no=rider.no
+        td.team=rider.team
+        td.points=rider.climb
+
+  table.sprinters
+    tr
+      th.classification RANK
+      th.rider RIDER
+      th.no NO
+      th.team TEAM
+      th.points POINTS
+    each rider, index in rank.sprinters
+      tr
+        td.classification=index+1
+        td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+        td.no=rider.no
+        td.team=rider.team
+        td.points=rider.sprint
+
+  table.white
+    tr
+      th.classification RANK
+      th.rider RIDER
+      th.no NO
+      th.team TEAM
+      th.time TIME
+      th.behind BEHIND
+    each rider, index in rank.white
+      tr
+        td.classification=index+1
+        td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+        td.no=rider.no
+        td.team=rider.team
+        td.time=rider['white-time']
+        td.behind=rider['white-behind']

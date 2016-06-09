@@ -1,0 +1,72 @@
+*
+  box-sizing: border-box;
+  
+.section-holder
+  width: 100%
+
+  .page-content
+    display: flex
+    flex-direction: column
+
+    section
+      display: block
+      flex: 1 1 0
+
+      &.stream
+        order: 2
+
+      &.other-data
+        order: 1
+
+      &.bottom-data
+        padding: 1em 1em 0 1em
+        font-size: 1.2em
+
+      &.jerseys
+        display: none
+            
+@media screen and ( min-width: 600px )
+  html, body
+    height: 100%
+    
+  .section-holder
+    height: 100%
+
+    .page-content
+      height: calc( 100% - 6em )
+      flex-direction: row
+      
+      section
+        &.stream
+          flex: 1 1 0
+          width: 50%
+          order: 1
+          
+        &.other-data
+          flex-direction: column
+          display: flex
+          width: 50%
+          flex: 1 1 0
+          order: 2
+        
+        &.bottom-data
+          flex-direction: row
+          flex: 1 1 0
+          display: flex
+
+@media screen and ( min-width: 1000px )
+  .section-holder .page-content section
+    &.stream
+      flex: 1 1 0
+      
+    &.other-data
+      flex: 2 2 0
+
+@media screen and ( min-width: 1400px )
+  .section-holder .page-content section
+    &.bottom-data
+      flex: 2 2 0
+
+    &.jerseys
+      display: block
+        

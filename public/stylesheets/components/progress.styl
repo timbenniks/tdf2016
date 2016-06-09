@@ -1,0 +1,169 @@
+.progress
+  padding: 1em 1em 0 1em
+  font-size: 1.2em
+  
+  @media screen and ( min-width: 1300px )
+    display: flex
+  
+  figure
+    margin: 0 0 1em 0
+    padding: 1em
+    background: rgba( #fff, .3 )
+    border-bottom: 1px solid #f9bc0d
+    
+    @media screen and ( min-width: 1300px )
+      flex: 3 3 0
+  
+  .stats
+    display: flex
+    justify-content: center
+    margin: 0 0 1em 0
+    
+    .stat
+      flex: 1 1 0
+    
+      @media screen and ( min-width: 1000px )
+        padding: 0 4em
+        flex: none
+      
+      h3
+        font-size: 0.8em
+        margin: 0 0 0.5em
+        opacity: 0.6
+      
+      p
+        font-size: 1.5em
+
+  .progress-profile
+    position: relative
+    
+    .profile
+      display: block
+      width: 100%
+      height: auto
+    
+    .progress-percentage
+      position: absolute
+      top: 0
+      left: 0
+      height: 100%
+      background: rgba( 255, 255, 255, 0.2 )
+      border-right: 1px solid #f9bc0d
+      transition: 300ms width
+  
+  .groups-wrapper
+    display: flex
+    flex-direction: column
+    
+    @media screen and ( min-width: 1000px )
+      flex-direction: row
+
+      &.no-riders
+        .riders
+          display: none
+
+    @media screen and ( min-width: 1300px )
+      flex: 2 2 0
+      flex-direction: column-reverse
+      overflow: auto
+      -webkit-overflow-scrolling: touch
+      
+    .group
+      display: flex
+      margin: 0 0 1em
+      padding: 1em
+      background: rgba( #fff, .3 )
+      border-bottom: 1px solid #f9bc0d
+    
+      &:last-child
+        margin: 0
+      
+      @media screen and ( min-width: 1000px )
+        margin: 0 1em 1em 0
+        flex: 1 1 0
+    
+        &:last-child
+          margin: 0 0 1em
+
+      @media screen and ( min-width: 1300px )
+        margin: 0 0 1em 1em
+        flex: none
+
+        &:last-child
+          margin: 0 0 1em 1em
+
+      
+      .info
+        flex: 3 3 0
+
+        .delay
+        .kmcompleted
+          font-size: 1.5em
+          margin: 0 0 0.2em 0
+
+        h2
+          font-size: 0.8em
+          margin: 0 0 0.6em
+          opacity: 0.6
+          text-transform: uppercase
+          white-space: nowrap
+          overflow: hidden
+          text-overflow: ellipsis
+          max-width: 100px
+        
+        .jerseys
+          overflow: hidden
+          
+          .riders-no
+            font-size: 0.8em
+            opacity: 0.6
+            margin: 0 0 0 0.6em
+            line-height: 1
+            position: relative
+            top: 1px
+
+          .jersey
+            width: 13px
+            height: 16px
+            background: url( '/images/icons.png' ) 0 0
+            margin: 0 1px 0 0
+            background-size: 20px auto
+            float: left
+
+            &.y
+              background-position: center -529px
+
+            &.w
+              background-position: center -576px
+
+            &.g
+              background-position: center -545px
+
+            &.r
+              background-position: center -560px
+      
+      .riders
+        flex: 4 4 0
+        max-height: 4.2em
+        overflow: auto
+        
+        .rider
+          margin: 0 0 0.1em
+          background: rgba( #fff, .2 )
+          padding: 0.1em 0 0.2em 0.3em
+          
+          h3
+          h4
+            vertical-align: top
+            display: inline-block
+            font-size: 0.8em
+            line-height: 1
+          
+          .flag
+            opacity: 0.6
+            position: relative
+            top: 2px
+          
+          .name
+            text-transform: uppercase
+            margin: 0 0.2em 0 0

@@ -1,0 +1,42 @@
+var request = require( 'superagent' ),
+    call = require( './call' );
+
+module.exports = function(){
+  return new Promise( ( resolve, reject )=>{
+    
+    call( 'http://www.letour.fr/useradgents/2015/json/appState.json', 'state' )
+      .then( ( state )=>{
+        var jerseys = [{
+          kind: 'yellow',
+          name: state.j.y[ 0 ],
+          team: state.j.y[ 1 ],
+          meta: state.j.y[ 2 ]
+        },{
+          kind: 'polka_dots',
+          name: state.j.d[ 0 ],
+          team: state.j.d[ 1 ],
+          meta: state.j.d[ 2 ]
+        },{
+          kind: 'green',
+          name: state.j.g[ 0 ],
+          team: state.j.g[ 1 ],
+          meta: state.j.g[ 2 ]
+        },{
+          kind: 'white',
+          name: state.j.w[ 0 ],
+          team: state.j.w[ 1 ],
+          meta: state.j.w[ 2 ]
+        }];
+
+        resolve( {
+          stage: state.stage,
+          route: state.jsonVersions.route,
+          starters: state.jsonVersions.starters,
+          jerseys: jerseys
+        } );
+      } )
+      .catch( ( error )=>{
+        reject( error );
+      } );
+  } );
+}
