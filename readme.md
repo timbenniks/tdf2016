@@ -8,7 +8,7 @@ This year the project has the following features:
 * Isomorpic architecture with node, shared templating and JavaScript.
 * The dashboard has an open connection with Websockets for live data streaming of tweets and progress updates of the current stage, groups or attackers, leaderboards and virtual ranking. No ajax calls are made from the front-end.
 * ES6 code in the front-end and back-end.
-* Promises are user for all the things.
+* Promises are used for all the things.
 * Complex fullscreen dashboard like layout for all devices with flexbox. 
 * Native browser notifications for tweets and changes in groups of attacking riders
 * Fullscreen mode for big screens like televisions and projectors.
