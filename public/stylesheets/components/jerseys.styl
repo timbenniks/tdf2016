@@ -1,9 +1,78 @@
 .jerseys
   display: flex
+  flex-wrap: wrap
   
+  @media screen and ( min-width: 1000px )
+    flex-wrap: nowrap
+  
+  @media screen and ( min-width: 1300px )
+    flex-wrap: wrap
+    align-items: flex-start
+    align-content: flex-start
+    flex: 1 1 0;
+
   .jersey-wrapper
     padding: 1em
     background: rgba( #fff, .3 )
     border-bottom: 1px solid #f9bc0d
-    max-width: 10em
+    margin: 0 0 1em 0
+    overflow: hidden
+    width: calc( 50% - 0.5em )
     
+    &:nth-child( even )
+      margin: 0 0 1em 0.5em
+
+    &:nth-child( odd )
+      margin: 0 0.5em 1em 0
+      
+    @media screen and ( min-width: 1000px )
+      margin: 0 1em 1em 0
+      
+      &:nth-child( even )
+      &:nth-child( odd )
+        margin: 0 1em 1em 0
+
+      &:last-child
+        margin: 0 0 1em 0
+    
+    @media screen and ( min-width: 1300px )
+      margin: 0 0 1em 0
+      max-height: 6em
+      width: calc( 100% - 1em )
+    
+      &:nth-child( even )
+      &:last-child
+      &:nth-child( odd )
+        margin: 0 0 1em 0
+
+    img
+      display: block
+      width: 100%
+      height: auto
+      float: left
+      width: 3em
+    
+    figcaption
+      float: left
+      padding: 0 0 0 1em
+      width: calc( 100% - 3em )
+      
+      h4
+        font-size: 1em
+        text-transform: uppercase
+        opacity: 0.6
+        margin: 0 0 0.4em
+        
+        white-space: nowrap
+        overflow: hidden
+        text-overflow: ellipsis
+        max-width: 100px
+      
+      
+      p
+        font-size: 0.8em
+        margin: 0 0 0.4em
+        
+        &:last-child
+          margin: 0
+        

@@ -61,245 +61,83 @@ button:hover {
   border-radius: 5px;
   box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
 }
-body {
-  background: -webkit-radial-gradient(#ffdb78, #fac018);
-  background: -moz-radial-gradient(#ffdb78, #fac018);
-  background: -o-radial-gradient(#ffdb78, #fac018);
-  background: -ms-radial-gradient(#ffdb78, #fac018);
-  background: radial-gradient(#ffdb78, #fac018);
-  color: #222;
-  font-family: 'Open Sans', sans-serif;
-  margin: 0;
-  line-height: 1;
-  font-size: 10px;
-}
-h1,
-h2,
-h3,
-h4 {
-  font-weight: normal;
-  font-size: 1.5em;
-  line-height: 1.3;
-  color: #000;
-  margin: 0;
-  padding: 0;
-}
-p {
-  margin: 0;
-  padding: 0;
-}
-a {
-  text-decoration: underline;
-  color: #453301;
-}
-a:hover,
-a:focus {
-  outline: none;
-  color: #000;
-}
-button {
-  margin: 0 1em 0 0;
-  color: rgba(69,51,1,0.6);
-  cursor: pointer;
-  font-size: 8px;
-  text-transform: uppercase;
-  padding: 0.5em 1em;
-  background: rgba(255,255,255,0.3);
-  border: solid #f9bc0d;
-  border-width: 0 0 1px 0;
-}
-button.active {
-  color: #000;
-  background: rgba(255,255,255,0.5);
-}
-button:focus {
-  outline: none;
-}
-button:hover {
-  background: rgba(255,255,255,0.5);
-}
-::-webkit-scrollbar {
-  width: 5px;
-}
-::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
-}
-::-webkit-scrollbar-thumb {
-  -webkit-border-radius: 5px;
-  border-radius: 5px;
-  -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-  box-shadow: inset 0 0 6px rgba(0,0,0,0.2);
-}
 * {
-  -webkit-box-sizing: border-box;
-  -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 .section-holder {
   width: 100%;
 }
 .section-holder .page-content {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -o-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
 }
 .section-holder .page-content section {
   display: block;
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
-  flex: 1 1 0;
 }
 .section-holder .page-content section.stream {
-  -webkit-box-ordinal-group: 2;
-  -moz-box-ordinal-group: 2;
-  -o-box-ordinal-group: 2;
-  -ms-flex-order: 2;
-  -webkit-order: 2;
   order: 2;
 }
 .section-holder .page-content section.other-data {
-  -webkit-box-ordinal-group: 1;
-  -moz-box-ordinal-group: 1;
-  -o-box-ordinal-group: 1;
-  -ms-flex-order: 1;
-  -webkit-order: 1;
   order: 1;
 }
 .section-holder .page-content section.bottom-data {
   padding: 1em 1em 0 1em;
   font-size: 1.2em;
-}
-.section-holder .page-content section.jerseys {
   display: none;
 }
 @media screen and ( min-width: 600px ) {
   html,
   body {
     height: 100%;
+    overflow: hidden;
   }
   .section-holder {
     height: 100%;
   }
   .section-holder .page-content {
     height: calc(100% - 6em);
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -o-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
     flex-direction: row;
   }
   .section-holder .page-content section.stream {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -o-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex: 1 1 0;
-    -ms-flex: 1 1 0;
     flex: 1 1 0;
     width: 50%;
-    -webkit-box-ordinal-group: 1;
-    -moz-box-ordinal-group: 1;
-    -o-box-ordinal-group: 1;
-    -ms-flex-order: 1;
-    -webkit-order: 1;
     order: 1;
   }
   .section-holder .page-content section.other-data {
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    -o-box-orient: vertical;
-    -webkit-flex-direction: column;
-    -ms-flex-direction: column;
-    flex-direction: column;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: box;
-    display: flex;
+    display: block;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
     width: 50%;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -o-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex: 1 1 0;
-    -ms-flex: 1 1 0;
-    flex: 1 1 0;
-    -webkit-box-ordinal-group: 2;
-    -moz-box-ordinal-group: 2;
-    -o-box-ordinal-group: 2;
-    -ms-flex-order: 2;
-    -webkit-order: 2;
+    flex: none;
     order: 2;
   }
   .section-holder .page-content section.bottom-data {
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -o-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -o-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex: 1 1 0;
-    -ms-flex: 1 1 0;
-    flex: 1 1 0;
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: box;
+    flex: none;
+    display: block;
+  }
+  .section-holder .page-content section.rank {
+    display: block;
+  }
+  .section-holder .page-content section.jerseys {
     display: flex;
   }
 }
 @media screen and ( min-width: 1000px ) {
   .section-holder .page-content section.stream {
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -o-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex: 1 1 0;
-    -ms-flex: 1 1 0;
     flex: 1 1 0;
   }
   .section-holder .page-content section.other-data {
-    -webkit-box-flex: 2;
-    -moz-box-flex: 2;
-    -o-box-flex: 2;
-    box-flex: 2;
-    -webkit-flex: 2 2 0;
-    -ms-flex: 2 2 0;
     flex: 2 2 0;
   }
 }
-@media screen and ( min-width: 1400px ) {
-  .section-holder .page-content section.bottom-data {
-    -webkit-box-flex: 2;
-    -moz-box-flex: 2;
-    -o-box-flex: 2;
-    box-flex: 2;
-    -webkit-flex: 2 2 0;
-    -ms-flex: 2 2 0;
-    flex: 2 2 0;
+@media screen and ( min-width: 1300px ) {
+  .section-holder .page-content section.other-data {
+    overflow: initial;
   }
-  .section-holder .page-content section.jerseys {
-    display: block;
+  .section-holder .page-content section.bottom-data {
+    display: flex;
+    flex: 1 1 0;
+    height: 100%;
   }
 }
 .flag {
@@ -964,10 +802,6 @@ header .logo {
   width: auto;
   position: absolute;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
 }
 header h1 {
@@ -976,10 +810,6 @@ header h1 {
   line-height: 1;
   position: absolute;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   left: 4.7em;
 }
@@ -990,8 +820,6 @@ header h1 span.chapeau {
   font-size: 0.6em;
   margin: 0 0 0.5em;
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
 }
 @media screen and ( min-width: 768px ) {
   header {
@@ -1006,10 +834,6 @@ header .options {
   position: absolute;
   right: 1em;
   top: 50%;
-  -webkit-transform: translateY(-50%);
-  -moz-transform: translateY(-50%);
-  -o-transform: translateY(-50%);
-  -ms-transform: translateY(-50%);
   transform: translateY(-50%);
   display: none;
 }
@@ -1045,8 +869,6 @@ header .options {
 .stream blockquote .meta {
   font-size: 0.8em;
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
 }
 @media screen and ( min-width: 600px ) {
   .stream {
@@ -1060,11 +882,6 @@ header .options {
 }
 @media screen and ( min-width: 1300px ) {
   .progress {
-    display: -webkit-box;
-    display: -moz-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
-    display: box;
     display: flex;
   }
 }
@@ -1076,48 +893,21 @@ header .options {
 }
 @media screen and ( min-width: 1300px ) {
   .progress figure {
-    -webkit-box-flex: 3;
-    -moz-box-flex: 3;
-    -o-box-flex: 3;
-    box-flex: 3;
-    -webkit-flex: 3 3 0;
-    -ms-flex: 3 3 0;
     flex: 3 3 0;
+    margin: 0;
   }
 }
 .progress .stats {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
-  -webkit-box-pack: center;
-  -moz-box-pack: center;
-  -o-box-pack: center;
-  -ms-flex-pack: center;
-  -webkit-justify-content: center;
   justify-content: center;
   margin: 0 0 1em 0;
 }
 .progress .stats .stat {
-  -webkit-box-flex: 1;
-  -moz-box-flex: 1;
-  -o-box-flex: 1;
-  box-flex: 1;
-  -webkit-flex: 1 1 0;
-  -ms-flex: 1 1 0;
   flex: 1 1 0;
 }
 @media screen and ( min-width: 1000px ) {
   .progress .stats .stat {
     padding: 0 4em;
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    -o-box-flex: 0;
-    box-flex: 0;
-    -webkit-flex: none;
-    -ms-flex: none;
     flex: none;
   }
 }
@@ -1125,8 +915,6 @@ header .options {
   font-size: 0.8em;
   margin: 0 0 0.5em;
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
 }
 .progress .stats .stat p {
   font-size: 1.5em;
@@ -1146,33 +934,14 @@ header .options {
   height: 100%;
   background: rgba(255,255,255,0.2);
   border-right: 1px solid #f9bc0d;
-  -webkit-transition: 300ms width;
-  -moz-transition: 300ms width;
-  -o-transition: 300ms width;
-  -ms-transition: 300ms width;
   transition: 300ms width;
 }
 .progress .groups-wrapper {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
-  -webkit-box-orient: vertical;
-  -moz-box-orient: vertical;
-  -o-box-orient: vertical;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
   flex-direction: column;
 }
 @media screen and ( min-width: 1000px ) {
   .progress .groups-wrapper {
-    -webkit-box-orient: horizontal;
-    -moz-box-orient: horizontal;
-    -o-box-orient: horizontal;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
     flex-direction: row;
   }
   .progress .groups-wrapper.no-riders .riders {
@@ -1181,32 +950,13 @@ header .options {
 }
 @media screen and ( min-width: 1300px ) {
   .progress .groups-wrapper {
-    -webkit-box-flex: 2;
-    -moz-box-flex: 2;
-    -o-box-flex: 2;
-    box-flex: 2;
-    -webkit-flex: 2 2 0;
-    -ms-flex: 2 2 0;
     flex: 2 2 0;
-    -webkit-box-direction: reverse;
-    -moz-box-direction: reverse;
-    -o-box-direction: reverse;
-    -webkit-box-orient: vertical;
-    -moz-box-orient: vertical;
-    -o-box-orient: vertical;
-    -webkit-flex-direction: column-reverse;
-    -ms-flex-direction: column-reverse;
     flex-direction: column-reverse;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
   }
 }
 .progress .groups-wrapper .group {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
   margin: 0 0 1em;
   padding: 1em;
@@ -1218,28 +968,16 @@ header .options {
 }
 @media screen and ( min-width: 1000px ) {
   .progress .groups-wrapper .group {
-    margin: 0 1em 1em 0;
-    -webkit-box-flex: 1;
-    -moz-box-flex: 1;
-    -o-box-flex: 1;
-    box-flex: 1;
-    -webkit-flex: 1 1 0;
-    -ms-flex: 1 1 0;
+    margin: 0 1em 0 0;
     flex: 1 1 0;
   }
   .progress .groups-wrapper .group:last-child {
-    margin: 0 0 1em;
+    margin: 0 0 0;
   }
 }
 @media screen and ( min-width: 1300px ) {
   .progress .groups-wrapper .group {
     margin: 0 0 1em 1em;
-    -webkit-box-flex: 0;
-    -moz-box-flex: 0;
-    -o-box-flex: 0;
-    box-flex: 0;
-    -webkit-flex: none;
-    -ms-flex: none;
     flex: none;
   }
   .progress .groups-wrapper .group:last-child {
@@ -1247,12 +985,6 @@ header .options {
   }
 }
 .progress .groups-wrapper .group .info {
-  -webkit-box-flex: 3;
-  -moz-box-flex: 3;
-  -o-box-flex: 3;
-  box-flex: 3;
-  -webkit-flex: 3 3 0;
-  -ms-flex: 3 3 0;
   flex: 3 3 0;
 }
 .progress .groups-wrapper .group .info .delay,
@@ -1264,12 +996,9 @@ header .options {
   font-size: 0.8em;
   margin: 0 0 0.6em;
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
-  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   max-width: 100px;
 }
@@ -1279,8 +1008,6 @@ header .options {
 .progress .groups-wrapper .group .info .jerseys .riders-no {
   font-size: 0.8em;
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
   margin: 0 0 0 0.6em;
   line-height: 1;
   position: relative;
@@ -1291,8 +1018,6 @@ header .options {
   height: 16px;
   background: url("/images/icons.png") 0 0;
   margin: 0 1px 0 0;
-  -webkit-background-size: 20px auto;
-  -moz-background-size: 20px auto;
   background-size: 20px auto;
   float: left;
 }
@@ -1309,12 +1034,6 @@ header .options {
   background-position: center -560px;
 }
 .progress .groups-wrapper .group .riders {
-  -webkit-box-flex: 4;
-  -moz-box-flex: 4;
-  -o-box-flex: 4;
-  box-flex: 4;
-  -webkit-flex: 4 4 0;
-  -ms-flex: 4 4 0;
   flex: 4 4 0;
   max-height: 4.2em;
   overflow: auto;
@@ -1333,8 +1052,6 @@ header .options {
 }
 .progress .groups-wrapper .group .riders .rider .flag {
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
   position: relative;
   top: 2px;
 }
@@ -1349,7 +1066,15 @@ header .options {
 }
 @media screen and ( min-width: 600px ) {
   .rank {
+    height: auto;
+    margin: 0 0 1em 0;
+  }
+}
+@media screen and ( min-width: 1300px ) {
+  .rank {
     height: calc(100% - 1em);
+    margin: 0;
+    flex: 2 2 0;
   }
 }
 .rank .switch-tables-wrapper {
@@ -1371,8 +1096,6 @@ header .options {
 }
 .rank table th {
   opacity: 0.6;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
-  filter: alpha(opacity=60);
 }
 .rank table td,
 .rank table th {
@@ -1384,15 +1107,12 @@ header .options {
   position: relative;
   top: 0.2em;
   opacity: 0.8;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-  filter: alpha(opacity=80);
   margin: 0 0.7em 0 0;
 }
 .rank table td.team,
 .rank table th.team {
   white-space: nowrap;
   overflow: hidden;
-  -o-text-overflow: ellipsis;
   text-overflow: ellipsis;
   max-width: 140px;
 }
@@ -1429,16 +1149,86 @@ header .options {
   }
 }
 .jerseys {
-  display: -webkit-box;
-  display: -moz-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: box;
   display: flex;
+  flex-wrap: wrap;
+}
+@media screen and ( min-width: 1000px ) {
+  .jerseys {
+    flex-wrap: nowrap;
+  }
+}
+@media screen and ( min-width: 1300px ) {
+  .jerseys {
+    flex-wrap: wrap;
+    align-items: flex-start;
+    align-content: flex-start;
+    flex: 1 1 0;
+  }
 }
 .jerseys .jersey-wrapper {
   padding: 1em;
   background: rgba(255,255,255,0.3);
   border-bottom: 1px solid #f9bc0d;
-  max-width: 10em;
+  margin: 0 0 1em 0;
+  overflow: hidden;
+  width: calc(50% - 0.5em);
+}
+.jerseys .jersey-wrapper:nth-child(even ) {
+  margin: 0 0 1em 0.5em;
+}
+.jerseys .jersey-wrapper:nth-child(odd ) {
+  margin: 0 0.5em 1em 0;
+}
+@media screen and ( min-width: 1000px ) {
+  .jerseys .jersey-wrapper {
+    margin: 0 1em 1em 0;
+  }
+  .jerseys .jersey-wrapper:nth-child(even ),
+  .jerseys .jersey-wrapper:nth-child(odd ) {
+    margin: 0 1em 1em 0;
+  }
+  .jerseys .jersey-wrapper:last-child {
+    margin: 0 0 1em 0;
+  }
+}
+@media screen and ( min-width: 1300px ) {
+  .jerseys .jersey-wrapper {
+    margin: 0 0 1em 0;
+    max-height: 6em;
+    width: calc(100% - 1em);
+  }
+  .jerseys .jersey-wrapper:nth-child(even ),
+  .jerseys .jersey-wrapper:last-child,
+  .jerseys .jersey-wrapper:nth-child(odd ) {
+    margin: 0 0 1em 0;
+  }
+}
+.jerseys .jersey-wrapper img {
+  display: block;
+  width: 100%;
+  height: auto;
+  float: left;
+  width: 3em;
+}
+.jerseys .jersey-wrapper figcaption {
+  float: left;
+  padding: 0 0 0 1em;
+  width: calc(100% - 3em);
+}
+.jerseys .jersey-wrapper figcaption h4 {
+  font-size: 1em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0 0 0.4em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100px;
+}
+.jerseys .jersey-wrapper figcaption p {
+  font-size: 0.8em;
+  margin: 0 0 0.4em;
+}
+.jerseys .jersey-wrapper figcaption p:last-child {
+  margin: 0;
 }

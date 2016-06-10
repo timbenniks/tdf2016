@@ -65,8 +65,8 @@ router.get( '/', ( req, res, next )=>{
       res.render( 'index', { title: 'Tim\'s TDF2016', tweets: tweets, info: info, progress: progress, rank: rank, jerseys: state.jerseys } );
     } )
     .catch( ( error )=>{
-      res.render( 'error', { message: error, error: {} } );
-    } );
+      res.render( 'error', { message: JSON.stringify( error ), error: {} } );
+    } )
   } );
 
 } );

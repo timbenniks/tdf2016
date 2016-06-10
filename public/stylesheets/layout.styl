@@ -10,7 +10,6 @@
 
     section
       display: block
-      flex: 1 1 0
 
       &.stream
         order: 2
@@ -21,13 +20,12 @@
       &.bottom-data
         padding: 1em 1em 0 1em
         font-size: 1.2em
-
-      &.jerseys
         display: none
             
 @media screen and ( min-width: 600px )
   html, body
     height: 100%
+    overflow: hidden
     
   .section-holder
     height: 100%
@@ -43,16 +41,23 @@
           order: 1
           
         &.other-data
-          flex-direction: column
-          display: flex
+          display: block
+          overflow: auto
+          -webkit-overflow-scrolling: touch
           width: 50%
-          flex: 1 1 0
+          flex: none
           order: 2
         
         &.bottom-data
-          flex-direction: row
-          flex: 1 1 0
+          flex: none
+          display: block
+        
+        &.rank
+          display: block
+
+        &.jerseys
           display: flex
+
 
 @media screen and ( min-width: 1000px )
   .section-holder .page-content section
@@ -62,11 +67,12 @@
     &.other-data
       flex: 2 2 0
 
-@media screen and ( min-width: 1400px )
+@media screen and ( min-width: 1300px )
   .section-holder .page-content section
-    &.bottom-data
-      flex: 2 2 0
+    &.other-data
+      overflow: initial
 
-    &.jerseys
-      display: block
-        
+    &.bottom-data
+      display: flex
+      flex: 1 1 0
+      height: 100%
