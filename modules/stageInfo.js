@@ -1,5 +1,4 @@
-var request = require( 'superagent' ),
-    moment = require( 'moment' ),
+var moment = require( 'moment' ),
     getStageType = require( './getStageType' ),
     call = require( './call' );
 

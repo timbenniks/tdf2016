@@ -1,5 +1,4 @@
-var request = require( 'superagent' ),
-    moment = require( 'moment' ),
+var moment = require( 'moment' ),
     riders = require( './riders' ),
     call = require( './call' );
 

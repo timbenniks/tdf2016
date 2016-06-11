@@ -7,6 +7,7 @@ var config = require( '../data/config' ),
     getStageInfo = require( '../modules/stageInfo' ),
     getProgress = require( '../modules/progress' ),
     getRank = require( '../modules/rank' ),
+    getJerseys = require( '../modules/jerseys' ),
     TwitterHandler = new twitter(),
     router = express.Router(),
 
@@ -47,12 +48,14 @@ router.get( '/', ( req, res, next )=>{
     promises.push( getStageInfo( state ) );
     promises.push( getProgress( state ) );
     promises.push( getRank( state ) );
+    promises.push( getJerseys( state ) );
     
     Promise.all( promises ).then( ( data )=>{
       let tweets = data[ 0 ],
           info = data[ 1 ],
           progress = data[ 2 ],
-          rank = data[ 3 ];
+          rank = data[ 3 ],
+          jerseys = data[ 4 ];
 
       //setUpTweetStream( res.io );
       
@@ -62,7 +65,7 @@ router.get( '/', ( req, res, next )=>{
 
       //{ polka_dots: [ 'Froome', 'SKY', 119 ],green: [ 'Sagan', 'TCS', 432 ],white: [ 'Quintana Rojas', 'MOV', 305246 ],yellow: [ 'Froome', 'SKY', 305174 ] }
 
-      res.render( 'index', { title: 'Tim\'s TDF2016', tweets: tweets, info: info, progress: progress, rank: rank, jerseys: state.jerseys } );
+      res.render( 'index', { title: 'Tim\'s TDF2016', tweets: tweets, info: info, progress: progress, rank: rank, jerseys: jerseys } );
     } )
     .catch( ( error )=>{
       res.render( 'error', { message: JSON.stringify( error ), error: {} } );

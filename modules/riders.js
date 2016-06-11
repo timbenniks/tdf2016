@@ -1,5 +1,4 @@
-var request = require( 'superagent' ),
-    moment = require( 'moment' ),
+var moment = require( 'moment' ),
     call = require( './call' );
 
 module.exports = function( state ){

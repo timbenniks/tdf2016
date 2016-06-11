@@ -1,8 +1,33 @@
 section.jerseys
-  for jersey in jerseys
-    figure.jersey-wrapper( class=jersey.kind )
-      img( src="/images/jerseys/#{jersey.kind}.png", width="30" )
-      figcaption
-        h4=jersey.name
-        p=jersey.team
-        p=jersey.meta
+
+  figure.jersey-wrapper.yellow
+    img( src="/images/jerseys/yellow.png" )
+    img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.yellow.no }.jpg" )
+    figcaption
+      h4=jerseys.yellow.name
+      p=jerseys.yellow.team
+      p #{jerseys.yellow[ 'individual-time' ]}
+
+  figure.jersey-wrapper.white
+    img( src="/images/jerseys/white.png" )
+    img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.white.no }.jpg" )
+    figcaption
+      h4=jerseys.white.name
+      p=jerseys.white.team
+      p #{jerseys.white[ 'white-time' ]}
+
+  figure.jersey-wrapper.polka_dot
+    img( src="/images/jerseys/polka_dots.png" )
+    img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.polka_dot.no }.jpg" )
+    figcaption
+      h4=jerseys.polka_dot.name
+      p=jerseys.polka_dot.team
+      p #{jerseys.polka_dot.climb} points
+
+  figure.jersey-wrapper.green
+    img( src="/images/jerseys/green.png" )
+    img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.green.no }.jpg" )
+    figcaption
+      h4=jerseys.green.name
+      p=jerseys.green.team
+      p #{jerseys.green.sprint} points

@@ -1138,16 +1138,6 @@ header .options {
     display: table-cell;
   }
 }
-@media screen and ( min-width: 1400px ) {
-  .rank table td.no,
-  .rank table th.no,
-  .rank table td.team,
-  .rank table th.team,
-  .rank table td.time,
-  .rank table th.time {
-    display: none;
-  }
-}
 .jerseys {
   display: flex;
   flex-wrap: wrap;
@@ -1210,10 +1200,26 @@ header .options {
   float: left;
   width: 3em;
 }
+.jerseys .jersey-wrapper img.profile {
+  width: 3.5em;
+  margin: 0 0 0 1em;
+  border: 1px solid #f9bc0d;
+  display: none;
+}
+@media screen and ( min-width: 1300px ) {
+  .jerseys .jersey-wrapper img.profile {
+    display: block;
+  }
+}
 .jerseys .jersey-wrapper figcaption {
   float: left;
   padding: 0 0 0 1em;
   width: calc(100% - 3em);
+}
+@media screen and ( min-width: 1300px ) {
+  .jerseys .jersey-wrapper figcaption {
+    width: calc(100% - 8em);
+  }
 }
 .jerseys .jersey-wrapper figcaption h4 {
   font-size: 1em;
@@ -1223,7 +1229,7 @@ header .options {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 200px;
 }
 .jerseys .jersey-wrapper figcaption p {
   font-size: 0.8em;

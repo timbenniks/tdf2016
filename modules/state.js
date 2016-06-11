@@ -1,5 +1,4 @@
-var request = require( 'superagent' ),
-    call = require( './call' ),
+var call = require( './call' ),
     moment = require( 'moment' );
 
 require( 'moment-duration-format' );
