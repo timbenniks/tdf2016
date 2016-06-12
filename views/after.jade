@@ -1,0 +1,18 @@
+extends layout
+
+block content
+
+  .section-holder.after
+    include includes/header.jade
+    
+    .page-content
+      include includes/stream.jade
+
+      section.news-data
+        include includes/afternews.jade
+        include includes/interviews.jade
+        
+      section.rank-data
+        include includes/afterrank.jade
+        include includes/jerseys.jade
+        include includes/rank.jade

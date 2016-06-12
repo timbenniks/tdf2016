@@ -1,7 +1,7 @@
 *
   box-sizing: border-box;
   
-.section-holder
+.section-holder.during
   width: 100%
 
   .page-content
@@ -27,7 +27,7 @@
     height: 100%
     overflow: hidden
     
-  .section-holder
+  .section-holder.during
     height: 100%
 
     .page-content
@@ -60,7 +60,7 @@
 
 
 @media screen and ( min-width: 1000px )
-  .section-holder .page-content section
+  .section-holder.during .page-content section
     &.stream
       flex: 1 1 0
       
@@ -68,7 +68,7 @@
       flex: 2 2 0
 
 @media screen and ( min-width: 1300px )
-  .section-holder .page-content section
+  .section-holder.during .page-content section
     &.other-data
       overflow: initial
 

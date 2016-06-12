@@ -14,6 +14,8 @@ This year the project has the following features:
 * Fullscreen mode for big screens like televisions and projectors.
 
 Todo:
+* Afternews / interview after stage
+* stage photos (media_frfree.json: http://www.letour.fr/useradgents/2015/photos/2100/1.jpg)
 * Time trial progress tracking
 * Video embed (if I find a good / free one)
 * A special screen for rest days

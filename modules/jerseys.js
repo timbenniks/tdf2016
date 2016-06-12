@@ -28,14 +28,14 @@ module.exports = function( state, currentStage ){
         firstRiderTime = moment.duration( list[ i ].s, 'seconds' );
       }
       
-      var riderData = getRiderForID( riders, list[ i ].r );
-      riderData[ `${which}-time`] = moment.duration( list[ i ].s, 'seconds' ).format( 'hh:mm:ss' );
+      var riderTimeData = getRiderForID( riders, list[ i ].r );
+      riderTimeData[ `${which}-time`] = moment.duration( list[ i ].s, 'seconds' ).format( 'hh:mm:ss' );
       
       if( i !== 0 ){
-        riderData[ `${which}-behind`] = '+ ' + moment.duration( list[ i ].s, 'seconds' ).subtract( firstRiderTime ).format( 'hh:mm:ss' );
+        riderTimeData[ `${which}-behind`] = '+ ' + moment.duration( list[ i ].s, 'seconds' ).subtract( firstRiderTime ).format( 'hh:mm:ss' );
       }
 
-      rankTime.push( riderData );
+      rankTime.push( riderTimeData );
     }
 
     return rankTime;
@@ -45,10 +45,9 @@ module.exports = function( state, currentStage ){
     var pointsRank = [];
 
     for( var i = 0; i < list.length; i++ ){
-     
-      var riderData = getRiderForID( riders, list[ i ].r );
-      riderData[ which ] = list[ i ].p;
-      pointsRank.push( riderData );
+      var riderPointData = getRiderForID( riders, list[ i ].r );
+      riderPointData[ which ] = list[ i ].p;
+      pointsRank.push( riderPointData );
     }
 
     return pointsRank;
@@ -62,19 +61,18 @@ module.exports = function( state, currentStage ){
 
         call( `http://www.letour.fr/useradgents/2015/json/gprank${stageToQueryFor}.json`, 'rank' )
           .then( ( data )=>{
-            var sprinters = buildPointsRank( riders, data.ipg.r, 'sprint' ),
-                individual = buildTimeRank( riders, data.itg.r, 'individual' ),
-                climbers = buildPointsRank( riders, data.img.r, 'climb' ),
+            var green = buildPointsRank( riders, data.ipg.r, 'sprint' ),
+                yellow = buildTimeRank( riders, data.itg.r, 'individual' ),
+                polka_dot = buildPointsRank( riders, data.img.r, 'climb' ),
                 white = buildTimeRank( riders, data.ijg.r, 'white' )
-                ranks = {
-                  sprinters: sprinters,
-                  individual: individual,
-                  climbers: climbers,
-                  white: white
+                jerseys = {
+                  green: green[ 0 ],
+                  yellow: yellow[ 0 ],
+                  polka_dot: polka_dot[ 0 ],
+                  white: white[ 0 ]
                 };
 
-            resolve( ranks );
-
+            resolve( jerseys );
           } )
           .catch( ( error )=>{
             reject( error );

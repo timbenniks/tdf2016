@@ -1,0 +1,10 @@
+section.interviews
+  for interview in afternews.interviews
+    article
+      h1=interview.title
+      
+      if typeof interview.extra !== ""
+        p
+          em #{interview.extra}
+      
+      p #{interview.body}

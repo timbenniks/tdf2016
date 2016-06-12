@@ -14,15 +14,15 @@ module.exports = function( url, identifier ){
           reject( `Something went wrong while getting the ${identifier}.` );
         }
 
-        if( !res ){
-          reject( `Something went wrong while getting the ${identifier}.` );
-        }
-
         if( typeof res === 'undefined' ){
           reject( `Something went wrong while getting the ${identifier}.` );
         }
 
         if( typeof res === null ){
+          reject( `Something went wrong while getting the ${identifier}.` );
+        }
+
+        if( !res ){
           reject( `Something went wrong while getting the ${identifier}.` );
         }
 
@@ -34,7 +34,8 @@ module.exports = function( url, identifier ){
           reject( `Something went wrong while getting the ${identifier}.` );
         }
         
-        resolve( res.body );
+        var data = res.body;
+        resolve( data || { 'error': 'No result from API' } );
       } );
   } );
 

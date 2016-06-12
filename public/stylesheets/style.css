@@ -64,23 +64,23 @@ button:hover {
 * {
   box-sizing: border-box;
 }
-.section-holder {
+.section-holder.during {
   width: 100%;
 }
-.section-holder .page-content {
+.section-holder.during .page-content {
   display: flex;
   flex-direction: column;
 }
-.section-holder .page-content section {
+.section-holder.during .page-content section {
   display: block;
 }
-.section-holder .page-content section.stream {
+.section-holder.during .page-content section.stream {
   order: 2;
 }
-.section-holder .page-content section.other-data {
+.section-holder.during .page-content section.other-data {
   order: 1;
 }
-.section-holder .page-content section.bottom-data {
+.section-holder.during .page-content section.bottom-data {
   padding: 1em 1em 0 1em;
   font-size: 1.2em;
   display: none;
@@ -91,19 +91,19 @@ button:hover {
     height: 100%;
     overflow: hidden;
   }
-  .section-holder {
+  .section-holder.during {
     height: 100%;
   }
-  .section-holder .page-content {
+  .section-holder.during .page-content {
     height: calc(100% - 6em);
     flex-direction: row;
   }
-  .section-holder .page-content section.stream {
+  .section-holder.during .page-content section.stream {
     flex: 1 1 0;
     width: 50%;
     order: 1;
   }
-  .section-holder .page-content section.other-data {
+  .section-holder.during .page-content section.other-data {
     display: block;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
@@ -111,33 +111,98 @@ button:hover {
     flex: none;
     order: 2;
   }
-  .section-holder .page-content section.bottom-data {
+  .section-holder.during .page-content section.bottom-data {
     flex: none;
     display: block;
   }
-  .section-holder .page-content section.rank {
+  .section-holder.during .page-content section.rank {
     display: block;
   }
-  .section-holder .page-content section.jerseys {
+  .section-holder.during .page-content section.jerseys {
     display: flex;
   }
 }
 @media screen and ( min-width: 1000px ) {
-  .section-holder .page-content section.stream {
+  .section-holder.during .page-content section.stream {
     flex: 1 1 0;
   }
-  .section-holder .page-content section.other-data {
+  .section-holder.during .page-content section.other-data {
     flex: 2 2 0;
   }
 }
 @media screen and ( min-width: 1300px ) {
-  .section-holder .page-content section.other-data {
+  .section-holder.during .page-content section.other-data {
     overflow: initial;
   }
-  .section-holder .page-content section.bottom-data {
+  .section-holder.during .page-content section.bottom-data {
     display: flex;
     flex: 1 1 0;
     height: 100%;
+  }
+}
+* {
+  box-sizing: border-box;
+}
+.section-holder.after {
+  width: 100%;
+}
+.section-holder.after .page-content {
+  display: flex;
+  flex-direction: column;
+}
+.section-holder.after .page-content section {
+  display: block;
+}
+.section-holder.after .page-content section.stream {
+  order: 2;
+}
+.section-holder.after .page-content section.news-data {
+  order: 1;
+}
+.section-holder.after .page-content section.rank-data {
+  display: none;
+}
+@media screen and ( min-width: 600px ) {
+  html,
+  body {
+    height: 100%;
+    overflow: hidden;
+  }
+  .section-holder.after {
+    height: 100%;
+  }
+  .section-holder.after .page-content {
+    height: calc(100% - 6em);
+    flex-direction: row;
+  }
+  .section-holder.after .page-content section.stream {
+    display: block;
+    overflow: auto;
+    flex: none;
+    width: 33.3%;
+    -webkit-overflow-scrolling: touch;
+    order: 1;
+  }
+  .section-holder.after .page-content section.news-data {
+    display: block;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 33.3%;
+    flex: none;
+    order: 2;
+  }
+  .section-holder.after .page-content section.rank-data {
+    display: block;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+    width: 33.3%;
+    flex: none;
+    order: 3;
+    padding: 1em 1em 0 1em;
+    font-size: 1.2em;
+  }
+  .section-holder.after .page-content section.jerseys {
+    display: flex;
   }
 }
 .flag {
@@ -1236,5 +1301,38 @@ header .options {
   margin: 0 0 0.4em;
 }
 .jerseys .jersey-wrapper figcaption p:last-child {
+  margin: 0;
+}
+section.afternews,
+section.interviews {
+  padding: 1em;
+}
+section.afternews article,
+section.interviews article {
+  display: block;
+  margin: 0 0 1em 0;
+  padding: 1em;
+  background: rgba(255,255,255,0.3);
+  border-bottom: 1px solid #f9bc0d;
+}
+section.afternews article:last-child,
+section.interviews article:last-child {
+  margin: 0;
+}
+section.afternews article h1,
+section.interviews article h1 {
+  text-transform: uppercase;
+  font-size: 1.4em;
+  opacity: 0.6;
+  margin: 0 0 1em;
+}
+section.afternews article p,
+section.interviews article p {
+  line-height: 1.5;
+  margin: 0 0 1em;
+  font-size: 1.2em;
+}
+section.afternews article p:last-child,
+section.interviews article p:last-child {
   margin: 0;
 }

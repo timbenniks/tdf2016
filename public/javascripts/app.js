@@ -7,12 +7,16 @@ import Notify from './components/notify';
 class App{
   constructor(){
     this.io = require( 'socket.io-client' )( '//localhost:3000' );
+    this.wrapper = document.querySelector( '.section-holder' );
   
     new Stream( this );
-    new Progress( this );
     new Rank( this );
     new Fullscreen( this );
     new Notify( this );
+
+    if( this.wrapper.classList.contains( 'during' ) ){
+      new Progress( this );
+    }
   }
 }
 

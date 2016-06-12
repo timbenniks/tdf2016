@@ -8,6 +8,8 @@ var config = require( '../data/config' ),
     getProgress = require( '../modules/progress' ),
     getRank = require( '../modules/rank' ),
     getJerseys = require( '../modules/jerseys' ),
+    getAfterNews = require( '../modules/afterNews' ),
+    getAfterRank = require( '../modules/afterRank' ),
     TwitterHandler = new twitter(),
     router = express.Router(),
 
@@ -34,44 +36,73 @@ var config = require( '../data/config' ),
         .catch( ( error )=>{
           socket.emit( 'progress.error', error );
         } );
+    },
+
+    renderDuringStage = ( res )=>{
+      let promises = [];
+
+      getAppState().then( ( state )=>{
+        promises.push( TwitterHandler.get( 'statuses/user_timeline', { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true } ) )
+        promises.push( getStageInfo( state ) );
+        promises.push( getProgress( state ) );
+        promises.push( getRank( state ) );
+        promises.push( getJerseys( state, false ) );
+        
+        Promise.all( promises ).then( ( data )=>{
+          let tweets = data[ 0 ],
+              info = data[ 1 ],
+              progress = data[ 2 ],
+              rank = data[ 3 ],
+              jerseys = data[ 4 ];
+        
+          setUpTweetStream( res.io );
+          
+          setInterval( ()=>{
+            streamProgress( res.io, info );
+          }, 20000 );
+
+          res.render( 'during', { title: 'Tim\'s TDF2016', tweets: tweets, info: info, progress: progress, rank: rank, jerseys: jerseys } );
+        } )
+        .catch( ( error )=>{
+          res.render( 'error', { message: JSON.stringify( error ), error: error } );
+        } );
+      } );
+    },
+    
+    renderAfterStage = ( res )=>{
+      let promises = [];
+
+      getAppState().then( ( state )=>{
+        promises.push( TwitterHandler.get( 'statuses/user_timeline', { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true } ) )
+        promises.push( getStageInfo( state ) );
+        promises.push( getRank( state ) );
+        promises.push( getJerseys( state, true ) );
+        promises.push( getAfterNews( state ) );
+        promises.push( getAfterRank( state ) );
+        
+        Promise.all( promises ).then( ( data )=>{
+          let tweets = data[ 0 ],
+              info = data[ 1 ],
+              rank = data[ 2 ],
+              jerseys = data[ 3 ],
+              afterNews = data[ 4 ],
+              afterRank = data[ 5 ];
+
+          setUpTweetStream( res.io );
+
+          res.render( 'after', {
+            title: 'Tim\'s TDF2016', tweets: tweets, info: info, rank: rank, jerseys: jerseys, afternews: afterNews, afterrank: afterRank } );
+        } )
+        .catch( ( error )=>{
+          res.render( 'error', { message: JSON.stringify( error ), error: error } );
+        } );
+      } );
     };
 
 
 router.get( '/', ( req, res, next )=>{
-  
-  let twQuery = 'statuses/user_timeline',
-      twOpts = { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true },
-      promises = [];
-
-  getAppState().then( ( state )=>{
-    promises.push( TwitterHandler.get( twQuery, twOpts ) )
-    promises.push( getStageInfo( state ) );
-    promises.push( getProgress( state ) );
-    promises.push( getRank( state ) );
-    promises.push( getJerseys( state ) );
-    
-    Promise.all( promises ).then( ( data )=>{
-      let tweets = data[ 0 ],
-          info = data[ 1 ],
-          progress = data[ 2 ],
-          rank = data[ 3 ],
-          jerseys = data[ 4 ];
-
-      //setUpTweetStream( res.io );
-      
-      // setInterval( ()=>{
-      //   streamProgress( res.io, info );
-      // }, 20000 );
-
-      //{ polka_dots: [ 'Froome', 'SKY', 119 ],green: [ 'Sagan', 'TCS', 432 ],white: [ 'Quintana Rojas', 'MOV', 305246 ],yellow: [ 'Froome', 'SKY', 305174 ] }
-
-      res.render( 'index', { title: 'Tim\'s TDF2016', tweets: tweets, info: info, progress: progress, rank: rank, jerseys: jerseys } );
-    } )
-    .catch( ( error )=>{
-      res.render( 'error', { message: JSON.stringify( error ), error: {} } );
-    } )
-  } );
-
+  //renderAfterStage( res );
+  renderDuringStage( res );
 } );
 
 module.exports = router;
