@@ -22,12 +22,11 @@ module.exports = function( state, currentStage ){
 
   const buildTimeRank = ( riders, list )=>{
     var rankTime = [];
-
     for( var i = 0; i < list.length; i++ ){
       if( i === 0 ){
         firstRiderTime = moment.duration( list[ i ].s, 'seconds' );
       }
-      
+
       var riderData = getRiderForID( riders, list[ i ].r );
       riderData[ 'time' ] = moment.duration( list[ i ].s, 'seconds' ).format( 'hh:mm:ss' );
       
@@ -50,10 +49,13 @@ module.exports = function( state, currentStage ){
   return new Promise( ( resolve, reject )=>{
     riders( state )
       .then( ( riders )=>{
-  
         call( `http://www.letour.fr/useradgents/2015/json/afterrank${stage}.json`, 'rank' )
           .then( ( data )=>{
-            var rank = ( data.ite ) ? buildTimeRank( riders, data.ite.r ) : false;
+            var rank = false;
+            if( data.ite ){
+              rank = buildTimeRank( riders, data.ite.r );
+            }
+
             resolve( rank );
           } )
           .catch( ( error )=>{

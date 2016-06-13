@@ -108,7 +108,7 @@ var config = require( '../data/config' ),
 
       getAppState().then( ( state )=>{
         promises.push( getStageInfo( state ) );
-        promises.push( TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'popular' } ) );
+        promises.push( TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'recent' } ) );
         promises.push( getRank( state ) );
         promises.push( getJerseys( state, true ) );
 
@@ -132,22 +132,22 @@ var config = require( '../data/config' ),
     };
 
 router.get( '/', ( req, res, next )=>{
-  var time = new Date().getTime(),
-      afterStageDate = new Date(),
-      afterStageTime;
+  // var time = new Date().getTime(),
+  //     afterStageDate = new Date(),
+  //     afterStageTime;
   
-  afterStageDate.setHours( 18, 0, 0, 0 );
+  // afterStageDate.setHours( 18, 0, 0, 0 );
 
-  afterStageTime = afterStageDate.getTime();
+  // afterStageTime = afterStageDate.getTime();
   
-  if( time > afterStageTime ){
-    renderAfterStage( res );
-  }
-  else {
-    renderDuringStage( res );
-  }
+  // if( time > afterStageTime ){
+  //   renderAfterStage( res );
+  // }
+  // else {
+  //   renderDuringStage( res );
+  // }
 
-  //renderRestDay( res );
+  renderRestDay( res );
 } );
 
 module.exports = router;

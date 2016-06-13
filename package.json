@@ -33,6 +33,7 @@
   },
   "devDependencies": {
     "babel-polyfill": "^6.9.1",
+    "masonry-layout": "^4.1.0",
     "notifyjs": "^2.0.2",
     "screenfull": "^3.0.0",
     "sly-scrolling": "^1.6.1"
