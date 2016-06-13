@@ -43,7 +43,7 @@ export default class Notifications {
       let notification = new Notify( 'Tim\'s TDF 2016', {
         body: text,
         tag: Math.random(),
-        icon: '/icons/apple-icon-57x57.png',
+        icon: '/icons/apple-icon-180x180.png',
         timeout: 5
       });
 

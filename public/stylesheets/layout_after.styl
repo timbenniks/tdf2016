@@ -11,12 +11,6 @@
     section
       display: block
 
-      &.stream
-        order: 2
-
-      &.news-data
-        order: 1
-
       &.rank-data
         display: none
             
@@ -33,49 +27,20 @@
       flex-direction: row
       
       section
-        &.stream
-          display: block
-          overflow: auto
-          flex: none
-          width: 33.3%
-          -webkit-overflow-scrolling: touch
-          order: 1
-          
+  
         &.news-data
           display: block
           overflow: auto
           -webkit-overflow-scrolling: touch
-          width: 33.3%
-          flex: none
-          order: 2
+          flex: 1 1 0
         
         &.rank-data
           display: block
           overflow: auto
           -webkit-overflow-scrolling: touch
-          width: 33.3%
-          flex: none
-          order: 3
+          flex: 1 1 0
           padding: 1em 1em 0 1em
           font-size: 1.2em
         
         &.jerseys
           display: flex
-
-// @media screen and ( min-width: 1000px )
-//   .section-holder.after .page-content section
-//     &.stream
-//       flex: 1 1 0
-      
-//     &.other-data
-//       flex: 2 2 0
-
-// @media screen and ( min-width: 1300px )
-//   .section-holder.after .page-content section
-//     &.other-data
-//       overflow: initial
-
-//     &.bottom-data
-//       display: flex
-//       flex: 1 1 0
-//       height: 100%

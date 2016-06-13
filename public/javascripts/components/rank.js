@@ -5,7 +5,7 @@ export default class Rank {
 
   bind(){
     this.switches = document.querySelectorAll( '.rank .switch' );
-    this.tables = document.querySelectorAll( '.rank table' );
+    this.tables = document.querySelectorAll( '.rank .switchable' );
 
     for( var i = 0; i < this.switches.length; i++ ){
       this.switches[ i ].addEventListener( 'click', this.onClickSwitch.bind( this ) );

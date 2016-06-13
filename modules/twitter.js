@@ -3,8 +3,7 @@
 var twitterClient = require( 'twitter' ),
     config = require( '../data/config' ),
     tweetCleaner = require( './tweetCleaner' ),
-    client = new twitterClient( config.twitter ),
-    mock = [];
+    client = new twitterClient( config.twitter );
 
 function Twitter( options ){
   if( !( this instanceof Twitter ) ) { 
@@ -34,16 +33,16 @@ Twitter.prototype = {
 
   get: function( query, options ){
     return new Promise( ( resolve, reject )=>{
-      // tweetCleaner( mock )
-      //   .then( resolve )
-      //   .catch( reject );
 
       client.get( query, options, function( error, tweets, response ){
+
         if( error ){
           reject( error );
         }
 
-        tweetCleaner( tweets )
+        let twitters = ( tweets.statuses ) ? tweets.statuses : tweets;
+
+        tweetCleaner( twitters )
           .then( resolve )
           .catch( reject );
       } );

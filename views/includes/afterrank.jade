@@ -1,6 +1,6 @@
 section.rank
 
-  table.individual
+  table.afterrank
     tr
       th.classification RANK
       th.rider RIDER
@@ -8,7 +8,7 @@ section.rank
       th.team TEAM
       th.time TIME
       th.behind BEHIND
-    each rider, index in afterrank
+    each rider, index in afterrank.slice( 0, 10 )
       tr
         td.classification=index+1
         td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}

@@ -9,13 +9,17 @@ class App{
     this.io = require( 'socket.io-client' )( '//localhost:3000' );
     this.wrapper = document.querySelector( '.section-holder' );
   
-    new Stream( this );
     new Rank( this );
     new Fullscreen( this );
-    new Notify( this );
-
+    
     if( this.wrapper.classList.contains( 'during' ) ){
+      new Notify( this );
+      new Stream( this );
       new Progress( this );
+    }
+
+    if( this.wrapper.classList.contains( 'rest' ) ){
+      new Stream( this );
     }
   }
 }

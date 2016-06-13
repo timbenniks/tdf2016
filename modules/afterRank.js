@@ -53,8 +53,8 @@ module.exports = function( state, currentStage ){
   
         call( `http://www.letour.fr/useradgents/2015/json/afterrank${stage}.json`, 'rank' )
           .then( ( data )=>{
-            var rank = buildTimeRank( riders, data.ite.r );
-            resolve( rank.slice( 0, 10 ) );
+            var rank = ( data.ite ) ? buildTimeRank( riders, data.ite.r ) : false;
+            resolve( rank );
           } )
           .catch( ( error )=>{
             reject( error );

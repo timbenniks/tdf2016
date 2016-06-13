@@ -1,14 +1,14 @@
 var moment = require( 'moment' ),
-    riders = require( './riders' ),
+    getRiders = require( './riders' ),
+    findApplicableStage = require( './findApplicableStage' ),
     call = require( './call' );
 
 require( 'moment-duration-format' );
 
-module.exports = function( state, currentStage ){
+module.exports = function( state ){
   var stage = state.stage,
-      prevStage = ( stage > 0100 ) ? stage - 100 : stage;
 
-  const getRiderForID = ( riders, id )=>{
+  getRiderForID = ( riders, id )=>{
     var result;
 
     riders.forEach( ( rider )=>{
@@ -18,9 +18,9 @@ module.exports = function( state, currentStage ){
     } );
 
     return result;
-  };
+  },
 
-  const buildTimeRank = ( riders, list, which )=>{
+  buildTimeRank = ( riders, list, which )=>{
     var rankTime = [];
 
     for( var i = 0; i < list.length; i++ ){
@@ -39,9 +39,9 @@ module.exports = function( state, currentStage ){
     }
 
     return rankTime;
-  }
+  },
 
-  const buildPointsRank = ( riders, list, which )=>{
+  buildPointsRank = ( riders, list, which )=>{
     var pointsRank = [];
 
     for( var i = 0; i < list.length; i++ ){
@@ -52,36 +52,31 @@ module.exports = function( state, currentStage ){
     }
 
     return pointsRank;
-  }
+  };
 
   return new Promise( ( resolve, reject )=>{
-    riders( state )
-      .then( ( riders )=>{
-        
-        var stageToQueryFor = ( currentStage ) ? stage : prevStage;
+    getRiders( state ).then( ( riders )=>{
+      findApplicableStage( state.stage, state.route ).then( ( stage )=>{
+        call( `http://www.letour.fr/useradgents/2015/json/gprank${stage}.json`, 'rank' ).then( ( data )=>{
+          var sprinters = ( data.ipg ) ? buildPointsRank( riders, data.ipg.r, 'sprint' ) : false,
+              individual = ( data.itg ) ? buildTimeRank( riders, data.itg.r, 'individual' ) : false,
+              climbers = ( data.img ) ? buildPointsRank( riders, data.img.r, 'climb' ) : false,
+              white = ( data.ijg ) ? buildTimeRank( riders, data.ijg.r, 'white' ) : false;
+          
+          var ranks = {
+              sprinters: sprinters,
+              individual: individual,
+              climbers: climbers,
+              white: white
+            };
 
-        call( `http://www.letour.fr/useradgents/2015/json/gprank${stageToQueryFor}.json`, 'rank' )
-          .then( ( data )=>{
-            var sprinters = buildPointsRank( riders, data.ipg.r, 'sprint' ),
-                individual = buildTimeRank( riders, data.itg.r, 'individual' ),
-                climbers = buildPointsRank( riders, data.img.r, 'climb' ),
-                white = buildTimeRank( riders, data.ijg.r, 'white' )
-                ranks = {
-                  sprinters: sprinters,
-                  individual: individual,
-                  climbers: climbers,
-                  white: white
-                };
-
-            resolve( ranks );
-
-          } )
-          .catch( ( error )=>{
-            reject( error );
-          } );
-      } )
-      .catch( ( error )=>{
-        reject( error );
+          resolve( ranks );
+        } )
+        .catch( ( error )=>{
+          reject( error );
+        } );
+    
       } );
+    } );
   } );
 };

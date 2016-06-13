@@ -6,7 +6,7 @@ section.rank
     button.switch( data-switch="climbers") polka dot
     button.switch( data-switch="sprinters") green
 
-  table.individual
+  table.switchable.individual
     tr
       th.classification RANK
       th.rider RIDER
@@ -23,7 +23,7 @@ section.rank
         td.time=rider['individual-time']
         td.behind=rider['individual-behind']
 
-  table.climbers
+  table.switchable.climbers
     tr
       th.classification RANK
       th.rider RIDER
@@ -38,7 +38,7 @@ section.rank
         td.team=rider.team
         td.points=rider.climb
 
-  table.sprinters
+  table.switchable.sprinters
     tr
       th.classification RANK
       th.rider RIDER
@@ -53,7 +53,7 @@ section.rank
         td.team=rider.team
         td.points=rider.sprint
 
-  table.white
+  table.switchable.white
     tr
       th.classification RANK
       th.rider RIDER
