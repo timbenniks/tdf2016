@@ -1,10 +1,11 @@
-var call = require( './call' );
+var call = require( './call' ),
+    config = require( '../data/config.js' );
 
 module.exports = function( state ){
   var stage = state.stage;
 
   return new Promise( ( resolve, reject )=>{
-    call( `http://www.letour.fr/useradgents/2015/json/afternews${stage}_en.json`, 'after news' )
+    call( `${config.baseUrl}/afternews${stage}_en.json`, 'after news' )
       .then( ( afterNews )=>{
         var news = afterNews.f,
             interviews = afterNews.i,

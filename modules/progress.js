@@ -23,6 +23,7 @@ module.exports = function( state ){
       .then( ( riders )=>{
         call( `http://www.letour.fr/useradgents/2015/json/livestage${stage}.json`, 'progress' )
           .then( ( data )=>{
+
             var progress = {
               speed: ( data.s ) ? ( data.s / 1000 ).toFixed( 1 ) : 0,
               kmCompleted: ( data.kp ) ? data.kp : 0,

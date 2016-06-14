@@ -1,13 +1,13 @@
 var moment = require( 'moment' ),
     riders = require( './riders' ),
-    call = require( './call' );
+    call = require( './call' ),
+    config = require( '../data/config.js' );
 
 require( 'moment-duration-format' );
 
-module.exports = function( state, currentStage ){
-  var stage = state.stage,
-      prevStage = ( stage > 0100 ) ? stage - 100 : stage;
-
+module.exports = function( state ){
+  var stage = state.stage;
+  
   const getRiderForID = ( riders, id )=>{
     var result;
 
@@ -49,7 +49,7 @@ module.exports = function( state, currentStage ){
   return new Promise( ( resolve, reject )=>{
     riders( state )
       .then( ( riders )=>{
-        call( `http://www.letour.fr/useradgents/2015/json/afterrank${stage}.json`, 'rank' )
+        call( `${config.baseUrl}/afterrank${stage}.json`, 'rank' )
           .then( ( data )=>{
             var rank = false;
             if( data.ite ){

@@ -1,12 +1,13 @@
 var call = require( './call' ),
-    moment = require( 'moment' );
+    moment = require( 'moment' ),
+    config = require( '../data/config.js' );
 
 require( 'moment-duration-format' );
 
 module.exports = function(){
   return new Promise( ( resolve, reject )=>{
     
-    call( 'http://www.letour.fr/useradgents/2015/json/appState.json', 'state' )
+    call( `${config.baseUrl}/appState.json`, 'state' )
       .then( ( state )=>{
         var jerseys = [{
           kind: 'yellow',
@@ -29,9 +30,9 @@ module.exports = function(){
           team: state.j.g[ 1 ],
           meta: `${state.j.g[ 2 ]} points`
         }];
-
+        
         resolve( {
-          stage: state.stage,
+          stage: ( config.debugStage ) ? config.debugStage : state.stage,
           route: state.jsonVersions.route,
           starters: state.jsonVersions.starters,
           jerseys: jerseys

@@ -42,8 +42,8 @@ app.use( stylus.middleware( {
     return stylus( str )
       .set( 'filename', path )
       .set( 'compress', false )
-      .use( nib() )
-      .import( 'nib' );
+      //.use( nib() )
+      //.import( 'nib' );
   }
 } ) );
 

@@ -3,6 +3,10 @@ import progressTmpl from '../../../views/includes/progress.jade';
 
 export default class Stream {
   constructor( app ){
+    if( !document.querySelector( '.progress' ) ){
+      return false;
+    }
+
     this.io = app.io;
     this.currentProgress = '';
     this.setHeight = 0;

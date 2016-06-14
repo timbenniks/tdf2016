@@ -65,11 +65,15 @@ var config = require( '../data/config' ),
             jerseys: data[ 4 ]
           }
 
+          tmplData.noprogress = ( tmplData.info.type === 'prologue' || tmplData.info.type === 'time trial' );
+
           setUpTweetStream( res.io, { follow: 153403071,  with: 'user' } );
           
-          setInterval( ()=>{
-            streamProgress( res.io, tmplData.info );
-          }, 20000 );
+          if( !tmplData.noprogress ){
+            setInterval( ()=>{
+              streamProgress( res.io, tmplData.info );
+            }, 20000 );
+          }
 
           res.render( 'during', tmplData );
         } )

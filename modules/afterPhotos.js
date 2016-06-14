@@ -1,12 +1,13 @@
-var call = require( './call' );
+var call = require( './call' ),
+    config = require( '../data/config.js' );
 
 module.exports = function( state ){
   var stage = state.stage,
-      photosBaseUrl = 'http://www.letour.fr/useradgents/2015/photos',
+      photosBaseUrl = config.photosUrl,
       ext = 'jpg';
 
   return new Promise( ( resolve, reject )=>{
-    call( `http://www.letour.fr/useradgents/2015/json/photos${stage}.json`, 'photos' )
+    call( `${config.baseUrl}/photos${stage}.json`, 'photos' )
       .then( ( photosData )=>{
 
         var photos = photosData.p.map( ( photoId )=>{

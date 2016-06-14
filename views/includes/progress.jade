@@ -1,44 +1,46 @@
-figure.profile-stats-wrapper
-  figcaption.stats
-    .stat.avg-speed
-      h3 SPEED
-      p #{progress.speed}km
-    
-    .stat.completed
-      h3 COMPLETED
-      p #{progress.kmCompleted}km
-    
-    .stat.remaining
-      h3 REMAINING
-      p #{progress.kmRemaining}km
-  
-  .progress-profile
-    img.profile( src="http://www.letour.fr/le-tour/2015/img/profils/#{progress.stage}.png", alt="Profile for stage." )
-    .progress-percentage( style="width: #{ ( ( progress.kmCompleted / ( progress.kmCompleted + progress.kmRemaining ) ) * 100 ).toFixed( 0 ) }%" )
+if !noprogress
+  .progress
+    figure.profile-stats-wrapper
+      figcaption.stats
+        .stat.avg-speed
+          h3 SPEED
+          p #{progress.speed}km
+        
+        .stat.completed
+          h3 COMPLETED
+          p #{progress.kmCompleted}km
+        
+        .stat.remaining
+          h3 REMAINING
+          p #{progress.kmRemaining}km
+      
+      .progress-profile
+        img.profile( src="http://www.letour.fr/le-tour/2015/img/profils/#{progress.stage}.png", alt="Profile for stage." )
+        .progress-percentage( style="width: #{ ( ( progress.kmCompleted / ( progress.kmCompleted + progress.kmRemaining ) ) * 100 ).toFixed( 0 ) }%" )
 
-.groups-wrapper
-  each group, index in progress.groups
-    .group
-      .info
-        if group.runnersNo > 0
-          if index === 0
-            h2 #{group.title} (#{group.runnersNo}) 
-          else
-            h2 +#{group.delay} #{group.title} (#{group.runnersNo}) 
-        else
-          if index === 0
-            h2 #{group.title}
-          else
-            h2 +#{group.delay} #{group.title}
+    .groups-wrapper
+      each group, index in progress.groups
+        .group
+          .info
+            if group.runnersNo > 0
+              if index === 0
+                h2 #{group.title} (#{group.runnersNo}) 
+              else
+                h2 +#{group.delay} #{group.title} (#{group.runnersNo}) 
+            else
+              if index === 0
+                h2 #{group.title}
+              else
+                h2 +#{group.delay} #{group.title}
 
-        if group.jerseys.length > 0
-          .jerseys
-            for jersey in group.jerseys
-              span.jersey( class=jersey )
+            if group.jerseys.length > 0
+              .jerseys
+                for jersey in group.jerseys
+                  span.jersey( class=jersey )
 
-      if group.riders.length > 0
-        .riders
-          .group-riders
-            for rider in group.riders
-              .rider( data-lang=rider.lang )
-                h3 #[span.flag( class="flag-#{rider.lang}" )] #[span.name #{rider.lastName}] #[span.behind #{rider.behind}]
+          if group.riders.length > 0
+            .riders
+              .group-riders
+                for rider in group.riders
+                  .rider( data-lang=rider.lang )
+                    h3 #[span.flag( class="flag-#{rider.lang}" )] #[span.name #{rider.lastName}] #[span.behind #{rider.behind}]
