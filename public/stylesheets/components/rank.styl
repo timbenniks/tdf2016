@@ -29,6 +29,12 @@
     tr
       background: rgba( #fff, .3 )
       border-bottom: 1px solid #f9bc0d
+      
+      &[data-lang="ned"]
+        background: rgba( #fff, .4 )
+        
+        .rider
+          font-weight: 700
 
     th
       opacity: 0.6
@@ -64,3 +70,16 @@
         &.team
         &.time
           display: table-cell
+          
+        .rest &
+          &.no
+          &.team
+          &.time
+            display: none
+          
+      @media screen and ( min-width: 1400px )
+        .rest &
+          &.no
+          &.team
+          &.time
+            display: table-cell

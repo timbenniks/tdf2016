@@ -53,6 +53,7 @@ button:hover {
 }
 ::-webkit-scrollbar {
   width: 5px;
+  height: 5px;
 }
 ::-webkit-scrollbar-track {
   -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.1);
@@ -899,6 +900,9 @@ header {
   border-bottom: 1px solid #f9bc0d;
   position: relative;
 }
+.after header .notifications {
+  display: none;
+}
 header .logo {
   display: block;
   height: 3.5em;
@@ -949,16 +953,12 @@ header .options {
   font-size: 1.2em;
   line-height: 1.5;
   padding: 1em 0 0 0;
-}
-.stream .grid-sizer {
-  display: none;
+  column-count: 1;
+  column-gap: 1em;
 }
 .rest .stream {
   overflow: auto;
-  padding: 1em 0 0 1em;
-}
-.rest .stream .grid-sizer {
-  width: 32%;
+  padding: 1em;
 }
 .stream blockquote {
   margin: 0 1em 1em;
@@ -967,8 +967,9 @@ header .options {
   border-bottom: 1px solid #f9bc0d;
 }
 .rest .stream blockquote {
-  width: 32%;
-  margin: 0 0 10px 0;
+  display: inline-block;
+  margin: 0 0 1em;
+  width: 100%;
 }
 .stream blockquote .entry {
   margin: 0 0 1em 0;
@@ -987,10 +988,30 @@ header .options {
   font-size: 0.8em;
   opacity: 0.6;
 }
+@media screen and ( min-width: 450px ) {
+  .stream {
+    column-count: 2;
+    padding: 1em;
+  }
+  .stream blockquote {
+    margin: 0 0 1em 0;
+  }
+}
 @media screen and ( min-width: 600px ) {
   .stream {
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    column-count: 1;
+  }
+}
+@media screen and ( min-width: 1000px ) {
+  .rest .stream {
+    column-count: 3;
+  }
+}
+@media screen and ( min-width: 1300px ) {
+  .rest .stream {
+    column-count: 4;
   }
 }
 .progress {
@@ -1059,65 +1080,60 @@ header .options {
 }
 @media screen and ( min-width: 1000px ) {
   .progress .groups-wrapper {
-    flex-direction: row;
-  }
-  .progress .groups-wrapper.no-riders .riders {
-    display: none;
+    flex-direction: row-reverse;
+    overflow: auto;
+    padding: 0 0 1em 0;
   }
 }
 @media screen and ( min-width: 1300px ) {
   .progress .groups-wrapper {
     flex: 2 2 0;
-    flex-direction: column-reverse;
+    flex-direction: column;
     overflow: auto;
     -webkit-overflow-scrolling: touch;
+    height: 0;
+    padding: 0;
   }
 }
 .progress .groups-wrapper .group {
-  display: flex;
   margin: 0 0 1em;
   padding: 1em;
   background: rgba(255,255,255,0.3);
   border-bottom: 1px solid #f9bc0d;
-}
-.progress .groups-wrapper .group:last-child {
-  margin: 0;
 }
 @media screen and ( min-width: 1000px ) {
   .progress .groups-wrapper .group {
     margin: 0 1em 0 0;
     flex: 1 1 0;
   }
-  .progress .groups-wrapper .group:last-child {
-    margin: 0 0 0;
+  .progress .groups-wrapper .group:first-child {
+    margin-right: 0;
   }
 }
 @media screen and ( min-width: 1300px ) {
   .progress .groups-wrapper .group {
     margin: 0 0 1em 1em;
     flex: none;
+    align-self: initial;
   }
   .progress .groups-wrapper .group:last-child {
-    margin: 0 0 1em 1em;
+    margin: 0 0 0 1em;
   }
 }
 .progress .groups-wrapper .group .info {
-  flex: 3 3 0;
-}
-.progress .groups-wrapper .group .info .delay,
-.progress .groups-wrapper .group .info .kmcompleted {
-  font-size: 1.5em;
-  margin: 0 0 0.2em 0;
+  margin: 0;
+  display: flex;
+  justify-content: space-between;
 }
 .progress .groups-wrapper .group .info h2 {
-  font-size: 0.8em;
-  margin: 0 0 0.6em;
+  font-size: 1em;
+  margin: 0 1em 0 0;
   opacity: 0.6;
   text-transform: uppercase;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  max-width: 100px;
+  max-width: 250px;
 }
 .progress .groups-wrapper .group .info .jerseys {
   overflow: hidden;
@@ -1151,9 +1167,18 @@ header .options {
   background-position: center -560px;
 }
 .progress .groups-wrapper .group .riders {
-  flex: 4 4 0;
-  max-height: 4.2em;
   overflow: auto;
+  margin: 0.5em 0 0 0;
+}
+@media screen and ( min-width: 1000px ) {
+  .progress .groups-wrapper .group .riders {
+    max-height: 4.2em;
+  }
+}
+@media screen and ( min-width: 1300px ) {
+  .progress .groups-wrapper .group .riders {
+    max-height: none;
+  }
 }
 .progress .groups-wrapper .group .riders .rider {
   margin: 0 0 0.1em;
@@ -1163,7 +1188,7 @@ header .options {
 .progress .groups-wrapper .group .riders .rider h3,
 .progress .groups-wrapper .group .riders .rider h4 {
   vertical-align: top;
-  display: inline-block;
+  display: block;
   font-size: 0.8em;
   line-height: 1;
 }
@@ -1175,6 +1200,23 @@ header .options {
 .progress .groups-wrapper .group .riders .rider .name {
   text-transform: uppercase;
   margin: 0 0.2em 0 0;
+}
+.progress .groups-wrapper .group .riders .rider .behind {
+  float: right;
+  margin: 2px 6px 0 0;
+}
+@media screen and ( min-width: 1000px ) {
+  .progress .groups-wrapper .group .riders .rider .behind {
+    display: none;
+  }
+}
+@media screen and ( min-width: 1300px ) {
+  .progress .groups-wrapper .group .riders .rider .behind {
+    display: block;
+  }
+}
+.progress .groups-wrapper .group .riders .rider[data-lang="ned"] h3 .name {
+  font-weight: 700;
 }
 .rank {
   overflow: auto;
@@ -1210,6 +1252,12 @@ header .options {
 .rank table tr {
   background: rgba(255,255,255,0.3);
   border-bottom: 1px solid #f9bc0d;
+}
+.rank table tr[data-lang="ned"] {
+  background: rgba(255,255,255,0.4);
+}
+.rank table tr[data-lang="ned"] .rider {
+  font-weight: 700;
 }
 .rank table th {
   opacity: 0.6;
@@ -1254,6 +1302,24 @@ header .options {
   .rank table th.team,
   .rank table td.time,
   .rank table th.time {
+    display: table-cell;
+  }
+  .rest .rank table td.no,
+  .rest .rank table th.no,
+  .rest .rank table td.team,
+  .rest .rank table th.team,
+  .rest .rank table td.time,
+  .rest .rank table th.time {
+    display: none;
+  }
+}
+@media screen and ( min-width: 1400px ) {
+  .rest .rank table td.no,
+  .rest .rank table th.no,
+  .rest .rank table td.team,
+  .rest .rank table th.team,
+  .rest .rank table td.time,
+  .rest .rank table th.time {
     display: table-cell;
   }
 }
@@ -1393,6 +1459,32 @@ section.interviews article p {
 section.afternews article p:last-child,
 section.interviews article p:last-child {
   margin: 0;
+}
+section.afternews article p em,
+section.interviews article p em {
+  border-left: 2px solid #f9bc0d;
+  padding: 0 0 0 1em;
+  margin: 0 0 3em 0;
+  display: block;
+  font-style: normal;
+  font-size: 0.9em;
+  line-height: 1.8;
+}
+section.interviews {
+  margin: 1em;
+  padding: 1em;
+  background: rgba(255,255,255,0.3);
+  border-bottom: 1px solid #f9bc0d;
+}
+@media screen and ( min-width: 1000px ) {
+  section.interviews {
+    column-gap: 1em;
+    column-count: 2;
+  }
+}
+section.interviews article {
+  background: none;
+  border: none;
 }
 .after-photos {
   font-size: 0;

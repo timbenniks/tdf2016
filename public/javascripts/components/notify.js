@@ -16,7 +16,7 @@ export default class Notifications {
   bind(){
     this.io.on( 'tweet', ( data )=>{
       if( !Notify.needsPermission ){
-        this.notify( data.text );
+        this.notify( data.raw, 'update' );
       }
     } );
 
@@ -24,23 +24,25 @@ export default class Notifications {
       if( this.currentProgress !== JSON.stringify( data ) ){
         this.currentProgress = JSON.stringify( data );
         
-        if( data.groups.length > 1 ){
-          let group = data.groups[ data.groups.length - 1 ].title,
-              time = data.groups[ data.groups.length - 2 ].delay;
-          this.notify( `${group} at ${time} from persuers` );
-        }
+        var text = '';
+
+        data.groups.forEach( ( group )=>{
+          text += `${group.title} (${group.runnersNo}) at ${ group.delay }\n`;
+        } );
+
+        this.notify( text, 'groups' );
       }
     } );
 
     this.button.addEventListener( 'click', ()=>{
-      this.notify( 'Notifications are turned on' );
+      this.notify( 'Notifications are turned on', '' );
       this.button.style.display = 'none';
     } );
   }
 
-  notify( text ){
+  notify( text, title ){
     if( !Notify.needsPermission ){
-      let notification = new Notify( 'Tim\'s TDF 2016', {
+      let notification = new Notify( `Tim\'s TDF 2016 ${title}`, {
         body: text,
         tag: Math.random(),
         icon: '/icons/apple-icon-180x180.png',

@@ -1,28 +1,25 @@
 .stream
   font-size: 1.2em
   line-height: 1.5
-  padding: 1em 0 0 0
-  
-  .grid-sizer
-    display: none
-  
+  padding: 1em 0 0 0  
+  column-count: 1
+  column-gap: 1em
+
   .rest &
     overflow: auto
-    padding: 1em 0 0 1em
+    padding: 1em
     
-    .grid-sizer
-      width: 32%
-
   blockquote
     margin: 0 1em 1em
     padding: 1em
     background: rgba( #fff, .3 )
     border-bottom: 1px solid #f9bc0d
     
-    .rest &
-      width: 32%
-      margin: 0 0 10px 0
-  
+    .rest & 
+      display: inline-block
+      margin: 0 0 1em
+      width: 100%
+    
     .entry
       margin: 0 0 1em 0
 
@@ -35,12 +32,28 @@
         height: auto
         display: block
         border: 1px solid #f9bc0d
-
     
     .meta
       font-size: 0.8em
       opacity: 0.6
   
+
+  @media screen and ( min-width: 450px )
+    column-count: 2
+    padding: 1em
+    
+    blockquote
+      margin: 0 0 1em 0
+
   @media screen and ( min-width: 600px )
     overflow: auto
     -webkit-overflow-scrolling: touch
+    column-count: 1
+
+  @media screen and ( min-width: 1000px )
+    .rest &
+      column-count: 3
+  
+  @media screen and ( min-width: 1300px )
+    .rest &
+      column-count: 4

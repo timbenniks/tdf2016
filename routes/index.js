@@ -43,6 +43,12 @@ var config = require( '../data/config' ),
       let promises = [];
 
       getAppState().then( ( state )=>{
+        
+        if( state.stage === '00R1' || state.stage === '00R2' ){
+          renderRestDay( res );
+          return false;
+        }
+
         promises.push( TwitterHandler.get( 'statuses/user_timeline', { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true } ) )
         promises.push( getStageInfo( state ) );
         promises.push( getProgress( state ) );
@@ -77,6 +83,12 @@ var config = require( '../data/config' ),
       let promises = [];
 
       getAppState().then( ( state )=>{
+
+        if( state.stage === '00R1' || state.stage === '00R2' ){
+          renderRestDay( res );
+          return false;
+        }
+
         promises.push( getStageInfo( state ) );
         promises.push( getRank( state ) );
         promises.push( getJerseys( state, true ) );
@@ -108,7 +120,7 @@ var config = require( '../data/config' ),
 
       getAppState().then( ( state )=>{
         promises.push( getStageInfo( state ) );
-        promises.push( TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'recent' } ) );
+        promises.push( TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'popular' } ) );
         promises.push( getRank( state ) );
         promises.push( getJerseys( state, true ) );
 
@@ -132,22 +144,20 @@ var config = require( '../data/config' ),
     };
 
 router.get( '/', ( req, res, next )=>{
-  // var time = new Date().getTime(),
-  //     afterStageDate = new Date(),
-  //     afterStageTime;
+  var time = new Date().getTime(),
+      afterStageDate = new Date(),
+      afterStageTime;
   
-  // afterStageDate.setHours( 18, 0, 0, 0 );
+  afterStageDate.setHours( config.dayEndsAt, 0, 0, 0 );
 
-  // afterStageTime = afterStageDate.getTime();
+  afterStageTime = afterStageDate.getTime();
   
-  // if( time > afterStageTime ){
-  //   renderAfterStage( res );
-  // }
-  // else {
-  //   renderDuringStage( res );
-  // }
-
-  renderRestDay( res );
+  if( time > afterStageTime ){
+    renderAfterStage( res );
+  }
+  else {
+    renderDuringStage( res );
+  }
 } );
 
 module.exports = router;

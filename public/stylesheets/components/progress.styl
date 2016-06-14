@@ -57,60 +57,54 @@
     flex-direction: column
     
     @media screen and ( min-width: 1000px )
-      flex-direction: row
-
-      &.no-riders
-        .riders
-          display: none
+      flex-direction: row-reverse
+      overflow: auto
+      padding: 0 0 1em 0
 
     @media screen and ( min-width: 1300px )
       flex: 2 2 0
-      flex-direction: column-reverse
+      flex-direction: column
       overflow: auto
       -webkit-overflow-scrolling: touch
+      height: 0
+      padding: 0
       
     .group
-      display: flex
       margin: 0 0 1em
       padding: 1em
       background: rgba( #fff, .3 )
       border-bottom: 1px solid #f9bc0d
     
-      &:last-child
-        margin: 0
-      
       @media screen and ( min-width: 1000px )
         margin: 0 1em 0 0
         flex: 1 1 0
+        //align-self: center
     
-        &:last-child
-          margin: 0 0 0
+        &:first-child
+          margin-right: 0
 
       @media screen and ( min-width: 1300px )
         margin: 0 0 1em 1em
         flex: none
+        align-self: initial
 
         &:last-child
-          margin: 0 0 1em 1em
-
+          margin: 0 0 0 1em
       
       .info
-        flex: 3 3 0
-
-        .delay
-        .kmcompleted
-          font-size: 1.5em
-          margin: 0 0 0.2em 0
-
+        margin: 0
+        display: flex
+        justify-content: space-between
+        
         h2
-          font-size: 0.8em
-          margin: 0 0 0.6em
+          font-size: 1em
+          margin: 0 1em 0 0
           opacity: 0.6
           text-transform: uppercase
           white-space: nowrap
           overflow: hidden
           text-overflow: ellipsis
-          max-width: 100px
+          max-width: 250px
         
         .jerseys
           overflow: hidden
@@ -144,9 +138,14 @@
               background-position: center -560px
       
       .riders
-        flex: 4 4 0
-        max-height: 4.2em
         overflow: auto
+        margin: 0.5em 0 0 0
+        
+        @media screen and ( min-width: 1000px )
+          max-height: 4.2em
+        
+        @media screen and ( min-width: 1300px )
+          max-height: none
         
         .rider
           margin: 0 0 0.1em
@@ -156,7 +155,7 @@
           h3
           h4
             vertical-align: top
-            display: inline-block
+            display: block
             font-size: 0.8em
             line-height: 1
           
@@ -168,3 +167,16 @@
           .name
             text-transform: uppercase
             margin: 0 0.2em 0 0
+          
+          .behind
+            float: right;
+            margin: 2px 6px 0 0
+            
+            @media screen and ( min-width: 1000px )
+              display: none
+            
+            @media screen and ( min-width: 1300px )
+              display: block
+          
+          &[data-lang="ned"] h3 .name
+            font-weight: 700

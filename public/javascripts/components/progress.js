@@ -5,14 +5,15 @@ export default class Stream {
   constructor( app ){
     this.io = app.io;
     this.currentProgress = '';
-    this.bind();
+    this.setHeight = 0;
     
+    this.bind();
+
     this.groups = document.querySelector( '.groups-wrapper' );
     this.stats = document.querySelector( '.profile-stats-wrapper' );
     
     if( window.matchMedia( "(min-width: 1300px)" ).matches ){
-      this.groups.style.height = '0px';
-      setTimeout( this.alignHeights.bind( this ), 2000 );
+      setTimeout( this.alignHeights.bind( this ), 100 );
     }
   }
 
@@ -29,11 +30,15 @@ export default class Stream {
 
   alignHeights(){
     if( window.matchMedia( "(min-width: 1300px)" ).matches ){
-      this.groups.style.height = this.stats.offsetHeight + 'px';
-      this.groups.scrollTop = 0;
+      if( this.setHeight === 0 ){
+        this.setHeight = this.stats.offsetHeight;
+      }
+
+      document.querySelector( '.groups-wrapper' ).style.height = this.setHeight + 'px';
+      document.querySelector( '.groups-wrapper' ).scrollTop = 0;
     }
     else {
-      this.groups.style.height = 'auto'; 
+      document.querySelector( '.groups-wrapper' ).style.height = 'auto'; 
     }
   }
 
@@ -49,5 +54,6 @@ export default class Stream {
 
   placeProgress( progressHtml ){
     document.querySelector( '.progress' ).innerHTML = progressHtml;
+    this.alignHeights();
   }
 }

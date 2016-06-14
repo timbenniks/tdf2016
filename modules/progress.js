@@ -52,47 +52,11 @@ module.exports = function( state ){
                 } );
               } );
 
-              progress.groups = progress.groups.reverse();
+              //progress.groups = progress.groups.reverse();
+              progress.groups = progress.groups;
             }
 
             progress.stage = stage;
-
-            progress.groups.push({
-              title: 'Groupe Nibali',
-              runnersNo: 2,
-              delay: '02:33',
-              jerseys: [ 'y', 'g' ],
-              riders: [{
-                no: 1,
-                name: "V. Nibali",
-                lastName: "NIBALI",
-                lang: "ita",
-                behind: "+00:23",
-                team: "bla"
-              }, {
-                no: 2,
-                name: "L. Boom",
-                lastName: "BOOM",
-                lang: "ned",
-                behind: "+01:28",
-                team: "bla"
-              }]
-            } );
-
-            progress.groups.push({
-              title: 'Tête de la course',
-              runnersNo: 1,
-              delay: '',
-              jerseys: [ 'w' ],
-              riders: [{
-                no: 1,
-                name: "V. Nibali",
-                lastName: "NIBALI",
-                lang: "ita",
-                behind: "+00:23",
-                team: "bla"
-              }]
-            } );
 
             resolve( progress );
           } )

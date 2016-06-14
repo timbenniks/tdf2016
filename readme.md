@@ -16,7 +16,6 @@ This year the project has the following features:
 Todo:
 * use https://github.com/node-schedule for automatic view switching
 * Time trial progress tracking
-* A special screen for rest days
 * Show a virtual leaderboard for mountain stages
 
 ## Run it yourself

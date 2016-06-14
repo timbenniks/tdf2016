@@ -16,20 +16,20 @@ figure.profile-stats-wrapper
     img.profile( src="http://www.letour.fr/le-tour/2015/img/profils/#{progress.stage}.png", alt="Profile for stage." )
     .progress-percentage( style="width: #{ ( ( progress.kmCompleted / ( progress.kmCompleted + progress.kmRemaining ) ) * 100 ).toFixed( 0 ) }%" )
 
-.groups-wrapper( class=( progress.groups.length > 3 ) ? "no-riders" : undefined )
+.groups-wrapper
   each group, index in progress.groups
     .group
       .info
-        if group.delay !== ""
-          p.delay +#{group.delay}
-
-        if index === progress.groups.length - 1
-          p.kmcompleted #{progress.kmCompleted}km
-
         if group.runnersNo > 0
-          h2 #{group.title} (#{group.runnersNo}) 
+          if index === 0
+            h2 #{group.title} (#{group.runnersNo}) 
+          else
+            h2 +#{group.delay} #{group.title} (#{group.runnersNo}) 
         else
-          h2= group.title
+          if index === 0
+            h2 #{group.title}
+          else
+            h2 +#{group.delay} #{group.title}
 
         if group.jerseys.length > 0
           .jerseys
@@ -40,5 +40,5 @@ figure.profile-stats-wrapper
         .riders
           .group-riders
             for rider in group.riders
-              .rider
+              .rider( data-lang=rider.lang )
                 h3 #[span.flag( class="flag-#{rider.lang}" )] #[span.name #{rider.lastName}] #[span.behind #{rider.behind}]

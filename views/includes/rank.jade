@@ -23,7 +23,7 @@ section.rank
         th.time TIME
         th.behind BEHIND
       each rider, index in rank.individual
-        tr
+        tr( data-lang=rider.lang )
           td.classification=index+1
           td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
           td.no=rider.no
