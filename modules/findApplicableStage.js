@@ -1,5 +1,6 @@
 var moment = require( 'moment' ),
-    call = require( './call' );
+    call = require( './call' ),
+    config = require( '../data/config.js' );
 
 module.exports = function( availStage, route ){
 
@@ -31,7 +32,7 @@ module.exports = function( availStage, route ){
   };
 
   return new Promise( ( resolve, reject )=>{
-    call( `http://www.letour.fr/useradgents/2015/json/route.${route}.json`, 'applicable stage' )
+    call( `${config.baseUrl}/route.${route}.json`, 'applicable stage' )
       .then( ( stages )=>{
         var stage = findWorkableStage( stages, availStage );
         resolve( stage );

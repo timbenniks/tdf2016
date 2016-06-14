@@ -1,6 +1,7 @@
 var moment = require( 'moment' ),
     call = require( './call' ),
-    riders = require( './riders' );
+    riders = require( './riders' ),
+    config = require( '../data/config.js' );
 
 require( 'moment-duration-format' );
 
@@ -21,7 +22,7 @@ module.exports = function( state ){
   return new Promise( ( resolve, reject )=>{
     riders( state )
       .then( ( riders )=>{
-        call( `http://www.letour.fr/useradgents/2015/json/livestage${stage}.json`, 'progress' )
+        call( `${config.baseUrl}/livestage${stage}.json`, 'progress' )
           .then( ( data )=>{
 
             var progress = {
@@ -53,7 +54,6 @@ module.exports = function( state ){
                 } );
               } );
 
-              //progress.groups = progress.groups.reverse();
               progress.groups = progress.groups;
             }
 

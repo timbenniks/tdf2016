@@ -1,5 +1,6 @@
 var moment = require( 'moment' ),
-    call = require( './call' );
+    call = require( './call' ),
+    config = require( '../data/config.js' );
 
 module.exports = function( state ){
   var starters = state.starters;
@@ -20,7 +21,7 @@ module.exports = function( state ){
   }
 
   return new Promise( ( resolve, reject )=>{
-    call( `http://www.letour.fr/useradgents/2015/json/starters.${starters}.json`, 'riders' )
+    call( `${config.baseUrl}/starters.${starters}.json`, 'riders' )
       .then( ( data )=>{
 
         var riders = data.r.map( ( rider )=>{

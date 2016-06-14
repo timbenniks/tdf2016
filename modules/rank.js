@@ -1,7 +1,8 @@
 var moment = require( 'moment' ),
     getRiders = require( './riders' ),
     findApplicableStage = require( './findApplicableStage' ),
-    call = require( './call' );
+    call = require( './call' ),
+    config = require( '../data/config.js' );
 
 require( 'moment-duration-format' );
 
@@ -57,7 +58,7 @@ module.exports = function( state ){
   return new Promise( ( resolve, reject )=>{
     getRiders( state ).then( ( riders )=>{
       findApplicableStage( state.stage, state.route ).then( ( stage )=>{
-        call( `http://www.letour.fr/useradgents/2015/json/gprank${stage}.json`, 'rank' ).then( ( data )=>{
+        call( `${config.baseUrl}/gprank${stage}.json`, 'rank' ).then( ( data )=>{
           var sprinters = ( data.ipg ) ? buildPointsRank( riders, data.ipg.r, 'sprint' ) : false,
               individual = ( data.itg ) ? buildTimeRank( riders, data.itg.r, 'individual' ) : false,
               climbers = ( data.img ) ? buildPointsRank( riders, data.img.r, 'climb' ) : false,
