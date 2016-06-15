@@ -14,7 +14,6 @@ This year the project has the following features:
 * Fullscreen mode for big screens like televisions and projectors.
 
 Todo:
-* Show stage start time
 * Tomorrow screen
 * Use node-schedule for automatic view switching
 * Time trial progress tracking
