@@ -1,6 +1,35 @@
 extends layout
 
 block content
-  h1= message
-  h2= error.status
-  pre #{error.stack}
+  style.
+    article {
+      padding: 1em;
+      background: rgba( 255, 255, 255, .3 );
+      border-bottom: 1px solid #f9bc0d;
+      width: 70%;
+      overflow: auto;
+      top: 50%;
+      position: absolute;
+      left: 50%;
+      transform: translate( -50%, -50% );
+      font-size: 11px;
+    }
+
+    article h1 {
+      font-size: 11px;
+    }
+
+  .section-holder
+    header
+      img.logo( src="/images/logo.svg" )
+    
+      h1
+        span.chapeau Tim's TDF 2016
+        span.title SOME SORT OF ERROR
+
+    article
+      h1=message
+      if error.status
+        h2=error.status
+      if error.stack
+        pre=error.stack

@@ -26,8 +26,17 @@ export default class Notifications {
         
         var text = '';
 
-        data.groups.forEach( ( group )=>{
-          text += `${group.title} (${group.runnersNo}) at ${ group.delay }\n`;
+        if( data.groups.length === 1 ){
+          return;
+        }
+
+        data.groups.forEach( ( group, index )=>{
+          if( index === 0 ){
+            text += `${group.title} (${group.runnersNo})\n`;
+          }
+          else {
+            text += `${group.title} (${group.runnersNo}) at ${ group.delay }\n`;
+          }
         } );
 
         this.notify( text, 'groups' );

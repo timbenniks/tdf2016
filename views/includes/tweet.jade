@@ -1,6 +1,11 @@
+- var mediaRendered = false
+
 blockquote
   p.entry!=tweet.text
-  if typeof( tweet.extended_entities ) !== "undefined"
+
+  if tweet.extended_entities
+    - var mediaRendered = true
+
     for entity in tweet.extended_entities
 
       if entity[ 0 ].type === 'video'
@@ -13,10 +18,16 @@ blockquote
           img( src=entity[ 0 ].media_url )
   
   if typeof( tweet.entities.urls ) !== "undefined"
+
     for url in tweet.entities.urls
       if url.expanded_url.indexOf( 'vine' ) !== -1
         figure.media
           .media-wrapper.iframe
             iframe( src=url.expanded_url + '/embed/simple?audio=0', frameborder="0" )
+
+  if !mediaRendered && typeof( tweet.entities.media ) !== "undefined"
+    for media in tweet.entities.media
+      figure.media
+        img( src=media.media_url )
   
   p.meta!=tweet.created_at

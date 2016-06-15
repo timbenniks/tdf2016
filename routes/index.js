@@ -54,7 +54,7 @@ var config = require( '../data/config' ),
         promises.push( getProgress( state ) );
         promises.push( getRank( state ) );
         promises.push( getJerseys( state, false ) );
-        
+
         Promise.all( promises ).then( ( data )=>{
           let tmplData = {
             title: config.title,

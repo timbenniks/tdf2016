@@ -35,7 +35,8 @@ module.exports = function(){
           stage: ( config.debugStage ) ? config.debugStage : state.stage,
           route: state.jsonVersions.route,
           starters: state.jsonVersions.starters,
-          jerseys: jerseys
+          jerseys: jerseys,
+          checkpoints: state.jsonVersions.checkpoints
         } );
       } )
       .catch( ( error )=>{
