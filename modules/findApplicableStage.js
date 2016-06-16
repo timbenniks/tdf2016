@@ -2,10 +2,10 @@ var moment = require( 'moment' ),
     call = require( './call' ),
     config = require( '../data/config.js' );
 
-module.exports = function( availStage, route ){
-
-  var findWorkableStage = ( stages, availStage )=>{
-    if( stages[ availStage ].type !== 'REP' ){
+module.exports = function( availStage, route, useTomorrow ){
+  
+  var findWorkableStage = ( stages, availStage, tomorrow )=>{
+    if( stages[ availStage ].type !== 'REP' && !tomorrow ){
       return availStage;
     }
 
@@ -24,7 +24,12 @@ module.exports = function( availStage, route ){
     var result = ''; 
     for( var i = 0; i < workableStages.length; i++ ){
       if( workableStages[ i ].id.toString() === availStage ){
-        result = workableStages[ i - 1 ].id;
+        if( tomorrow ){
+          result = ( availStage !== '2100' ) ? workableStages[ i + 1 ].id : false;
+        }
+        else {
+          result = ( availStage !== '0100' ) ? workableStages[ i - 1 ].id : false;
+        }
       }
     }
 
@@ -34,7 +39,9 @@ module.exports = function( availStage, route ){
   return new Promise( ( resolve, reject )=>{
     call( `${config.baseUrl}/route.${route}.json`, 'applicable stage' )
       .then( ( stages )=>{
-        var stage = findWorkableStage( stages, availStage );
+        var tomorrow = !!useTomorrow,
+            stage = findWorkableStage( stages, availStage, tomorrow );
+        
         resolve( stage );
       } )
       .catch( ( error )=>{

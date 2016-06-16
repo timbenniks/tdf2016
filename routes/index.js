@@ -11,6 +11,7 @@ var config = require( '../data/config' ),
     getAfterNews = require( '../modules/afterNews' ),
     getAfterRank = require( '../modules/afterRank' ),
     getAfterPhotos = require( '../modules/afterPhotos' ),
+    getTomorrow = require( '../modules/tomorrow' ),
     TwitterHandler = new twitter(),
     router = express.Router(),
 
@@ -99,6 +100,7 @@ var config = require( '../data/config' ),
         promises.push( getAfterNews( state ) );
         promises.push( getAfterRank( state ) );
         promises.push( getAfterPhotos( state ) );
+        promises.push( getTomorrow( state ) );
         
         Promise.all( promises ).then( ( data )=>{
           let tmplData = {
@@ -108,9 +110,10 @@ var config = require( '../data/config' ),
             jerseys: data[ 2 ],
             afternews: data[ 3 ],
             afterrank: data[ 4 ],
-            afterphotos: data[ 5 ]
+            afterphotos: data[ 5 ],
+            tomorrow: data[ 6 ]
           }
-
+          console.log( tmplData.tomorrow );
           res.render( 'after', tmplData );
         } )
         .catch( ( error )=>{
@@ -126,7 +129,8 @@ var config = require( '../data/config' ),
         promises.push( getStageInfo( state ) );
         promises.push( TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'popular' } ) );
         promises.push( getRank( state ) );
-        promises.push( getJerseys( state, true ) );
+        promises.push( getJerseys( state ) );
+        promises.push( getTomorrow( state ) );
 
         Promise.all( promises ).then( ( data )=>{
           let tmplData = {
@@ -134,7 +138,8 @@ var config = require( '../data/config' ),
             info: data[ 0 ],
             tweets: data[ 1 ],
             rank: data[ 2 ],
-            jerseys: data[ 3 ]
+            jerseys: data[ 3 ],
+            tomorrow: data[ 4 ]
           }
 
           setUpTweetStream( res.io, { track: 'tdf2016', filter_level: 'none', language: 'en,fr' } );

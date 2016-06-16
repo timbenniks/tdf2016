@@ -4,6 +4,7 @@ var config = {
   end: '24/07/2016',
   baseUrl: 'http://www.letour.fr/useradgents/2015/json',
   photosUrl: 'http://www.letour.fr/useradgents/2015/photos',
+  alternativePhotosUrl: 'http://www.letour.fr/PHOTOS/TDF/2015',
   dayEndsAt: 18, // shows afterstage screen
   debugStage: false,
   twitter: {

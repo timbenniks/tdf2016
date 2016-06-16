@@ -8,34 +8,19 @@ module.exports = function( url, identifier ){
       .accept( 'application/json' )
       .end( ( err, res )=>{
         if( err && err.status === 404 ){
-          reject( `${identifier} not reachable.` );
+          reject( `${identifier} not reachable. URL: ${url}` );
         }
         else if( err ) {
-          reject( `Something went wrong while getting the ${identifier}.` );
+          reject( `Something went wrong while getting the ${identifier}. Error: ${err}` );
         }
 
-        if( typeof res === 'undefined' ){
-          reject( `Something went wrong while getting the ${identifier}.` );
+        try {
+          resolve( res.body );
         }
-
-        if( typeof res === null ){
-          reject( `Something went wrong while getting the ${identifier}.` );
+        catch( e ){
+          console.log( 'error:', e );
+          reject( `Something went wrong while getting the ${identifier}. Error: ${err}` );
         }
-
-        if( !res ){
-          reject( `Something went wrong while getting the ${identifier}.` );
-        }
-
-        if( !res.ok ){
-          reject( `Something went wrong while getting the ${identifier}.` );
-        }
-
-        if( !res.body ){
-          reject( `Something went wrong while getting the ${identifier}.` );
-        }
-        
-        var data = res.body;
-        resolve( data || { 'error': 'No result from API' } );
       } );
   } );
 

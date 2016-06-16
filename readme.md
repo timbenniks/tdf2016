@@ -5,7 +5,7 @@ The project evolves every year and tries to use bleeding edge technology. I don'
 
 ## Features
 This year the project has the following features:
-* Isomorpic architecture with node, shared templating and JavaScript.
+* Isomorpic architecture with nodejs, shared templating and JavaScript.
 * The dashboard has an open connection with Websockets for live data streaming of tweets and progress updates of the current stage, groups or attackers, leaderboards and virtual ranking. No ajax calls are made from the front-end.
 * ES6 code in the front-end and back-end.
 * Promises are used for all the things.
@@ -14,6 +14,7 @@ This year the project has the following features:
 * Fullscreen mode for big screens like televisions and projectors.
 
 Todo:
+* rest day screen doesn't load at the moment, debug needed.
 * Tomorrow screen
 * Use node-schedule for automatic view switching
 * Time trial progress tracking
