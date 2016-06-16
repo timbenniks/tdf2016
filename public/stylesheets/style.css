@@ -1510,3 +1510,29 @@ section.interviews article {
   width: 50%;
   border: 2px solid #f9bc0d;
 }
+.tomorrow {
+  margin: 0 0 1em 0;
+  padding: 1em;
+  background: rgba(255,255,255,0.3);
+  border-bottom: 1px solid #f9bc0d;
+}
+.tomorrow h1 {
+  font-size: 1.5em;
+  text-transform: uppercase;
+  line-height: 1;
+  margin: 0 0 1em 0;
+}
+.tomorrow h1 span {
+  display: block;
+}
+.tomorrow h1 span.chapeau {
+  font-size: 0.6em;
+  margin: 0 0 0.5em;
+  opacity: 0.6;
+}
+.tomorrow img {
+  display: block;
+  border: 1px solid #f9bc0d;
+  width: 100%;
+  height: auto;
+}

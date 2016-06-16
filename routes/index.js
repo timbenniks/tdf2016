@@ -113,7 +113,7 @@ var config = require( '../data/config' ),
             afterphotos: data[ 5 ],
             tomorrow: data[ 6 ]
           }
-          console.log( tmplData.tomorrow );
+
           res.render( 'after', tmplData );
         } )
         .catch( ( error )=>{
@@ -130,7 +130,7 @@ var config = require( '../data/config' ),
         promises.push( TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'popular' } ) );
         promises.push( getRank( state ) );
         promises.push( getJerseys( state ) );
-        promises.push( getTomorrow( state ) );
+        //promises.push( getTomorrow( state ) );
 
         Promise.all( promises ).then( ( data )=>{
           let tmplData = {
@@ -138,8 +138,8 @@ var config = require( '../data/config' ),
             info: data[ 0 ],
             tweets: data[ 1 ],
             rank: data[ 2 ],
-            jerseys: data[ 3 ],
-            tomorrow: data[ 4 ]
+            jerseys: data[ 3 ]//,
+            //tomorrow: data[ 4 ]
           }
 
           setUpTweetStream( res.io, { track: 'tdf2016', filter_level: 'none', language: 'en,fr' } );

@@ -14,11 +14,11 @@ This year the project has the following features:
 * Fullscreen mode for big screens like televisions and projectors.
 
 Todo:
-* rest day screen doesn't load at the moment, debug needed.
-* Tomorrow screen
-* Use node-schedule for automatic view switching
+* Refactor API calls so another datasource could be plugged
+* Query the news items from letour.fr as back up for tweet sream
 * Time trial progress tracking
 * Show a virtual leaderboard for mountain stages
+* Use node-schedule for automatic view switching
 
 ## Run it yourself
 Add your twitter credentials in /data/config.json

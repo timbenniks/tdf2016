@@ -10,12 +10,13 @@ module.exports = function( state ){
     call( `${config.baseUrl}/checkpoints.${checkpoints}.json`, 'checkpoints' )
       .then( ( checkpoints )=>{
 
-        var time = false,
-            cp = checkpoints[ stage ].cp;
+        var time = false;
 
         if( stage === '00R1' || stage === '00R2' ){
           resolve( time );
         }
+
+        var cp = checkpoints[ stage ].cp;
 
         for( var i = 0; i < cp.length; i++ ){
           if( cp[ i ].h ){

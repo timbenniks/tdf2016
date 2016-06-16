@@ -1,5 +1,7 @@
-section.tomorrow
-  //-p=JSON.stringify( tomorrow )
-  h2 Tomorrow: #{ tomorrow.start } &ndash; #{tomorrow.finish}
-  p #{tomorrow.startsAt} &ndash; #{tomorrow.distance}km
-  img( src=tomorrow.route )
+if !tomorrow.error
+  section.tomorrow
+    h1
+      span.chapeau TOMORROW &ndash; #{tomorrow.startsAt} &ndash; #{tomorrow.distance}km
+      span.title #{ tomorrow.start } &ndash; #{tomorrow.finish}
+    
+    img( src=tomorrow.route )

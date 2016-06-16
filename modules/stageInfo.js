@@ -30,6 +30,9 @@ module.exports = function( state ){
           reject( error );
         } );
 
+    } )
+    .catch( ( error )=>{
+      reject( error );
     } );
   } );
 };

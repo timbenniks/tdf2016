@@ -6,12 +6,12 @@ module.exports = function( id ){
     case 'EQU': type = 'time trial'; break;
     case 'REP': type = 'rest day'; break;
 
-    case 'LGN':
-    case 'HMG':
-    case 'MMG': type = 'regular race'; break;
+    case 'LGN': type = 'flat stage'; break;
+    case 'HMG': type = 'mountaing race'; break;
+    case 'MMG': type = 'hilly stage'; break;
 
     default:
-      type = 'regular';
+      type = 'regular stage';
   }
 
   return type;
