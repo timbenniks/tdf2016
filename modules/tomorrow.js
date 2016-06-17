@@ -18,12 +18,14 @@ module.exports = function( state ){
       }
       else {
         
-        var stageImg = `${config.alternativePhotosUrl}/${applicableStage}/CARTE.jpg`;
+        var stageImg = `${config.alternativePhotosUrl}/${applicableStage}/CARTE.jpg`,
+            stafgeProfile = `${config.alternativePhotosUrl}/${applicableStage}/PROFIL.jpg`;
 
         state.stage = applicableStage;
 
         getStageInfo( state ).then( ( stageInfoForTomorrow )=>{  
           stageInfoForTomorrow.route = stageImg;
+          stageInfoForTomorrow.profile = stafgeProfile;
           resolve( stageInfoForTomorrow );
         } )
         .catch( ( error )=>{

@@ -142,7 +142,7 @@ var config = require( '../data/config' ),
             //tomorrow: data[ 4 ]
           }
 
-          setUpTweetStream( res.io, { track: 'tdf2016', filter_level: 'none', language: 'en,fr' } );
+          setUpTweetStream( res.io, { track: 'tdf2016', filter_level: 'none', language: 'en,fr,nl' } );
 
           res.render( 'rest', tmplData );
         } )

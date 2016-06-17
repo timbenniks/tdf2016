@@ -5,8 +5,8 @@ var config = {
   baseUrl: 'http://www.letour.fr/useradgents/2015/json',
   photosUrl: 'http://www.letour.fr/useradgents/2015/photos',
   alternativePhotosUrl: 'http://www.letour.fr/PHOTOS/TDF/2015',
-  dayEndsAt: 18, // shows afterstage screen
-  debugStage: false,
+  dayEndsAt: 18, // shows afterstage screen.
+  debugStage: false, // needs to be a string if used.
   twitter: {
     consumer_key: 'xxx',
     consumer_secret: 'xxx',

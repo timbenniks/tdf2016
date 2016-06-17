@@ -13,7 +13,8 @@ var http = require( 'http' ),
     browserify = require( 'browserify-middleware' ),
     babelify = require( 'babelify' ),
     jadeify = require( 'jadeify' ),
-    routes = require( './routes/index' );
+    home = require( './routes/index' ),
+    api = require( './routes/api' );
 
 const app = express();
 const server = http.Server( app );
@@ -42,8 +43,8 @@ app.use( stylus.middleware( {
     return stylus( str )
       .set( 'filename', path )
       .set( 'compress', false )
-      //.use( nib() )
-      //.import( 'nib' );
+      .use( nib() )
+      .import( 'nib' );
   }
 } ) );
 
@@ -61,7 +62,8 @@ app.use('/app.js', browserify( path.join( __dirname, '/public/javascripts/app.js
 app.use( express.static( path.join( __dirname, 'public' ) ) );
 
 // routes
-app.use( '/', routes );
+app.use( '/', home );
+app.use( '/api/', api );
 
 // catch 404 and forward to error handler
 app.use( ( req, res, next )=>{
