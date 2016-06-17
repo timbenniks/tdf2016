@@ -1,6 +1,5 @@
-data/config_local.js
-
 .DS_Store
+.env
 
 # Logs
 logs
