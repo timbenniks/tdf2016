@@ -1,7 +1,8 @@
 {
   "name": "tdf2016",
   "version": "0.0.1",
-  "private": true,
+  "author": "Tim Benniks <tbenniks@gmail.com> (http://timbenniks.com)",
+  "main": "./bin/www",
   "scripts": {
     "start": "NODE_ENV=development nodemon ./bin/www"
   },
