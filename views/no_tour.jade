@@ -1,0 +1,41 @@
+extends layout
+
+block content
+  style.
+    article {
+      padding: 1em;
+      background: rgba( 255, 255, 255, .3 );
+      border-bottom: 1px solid #f9bc0d;
+      width: 80%;
+      overflow: auto;
+      font-size: 11px;
+      margin: 20px auto;
+      text-align: center;
+      max-width: 400px;
+    }
+
+    .tdf {
+      width: 150px;
+      height: auto;
+      margin: -75px 0 0 -75px;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+    }
+
+    article h1 {
+      font-size: 12px;
+    }
+
+  .section-holder
+    header
+      img.logo( src="/images/logo.svg" )
+    
+      h1
+        span.chapeau There is no tour at the moment
+        span.title Tim's TDF 2016
+
+    article
+      h1 The Tour starts at #{conf.start} and ends at #{conf.end}
+    img.tdf( src="/images/logo.svg" )

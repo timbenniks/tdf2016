@@ -153,14 +153,19 @@ var config = require( '../data/config' ),
     };
 
 router.get( '/', ( req, res, next )=>{
+  
   var time = new Date().getTime(),
       afterStageDate = new Date(),
       afterStageTime;
-  
+
   afterStageDate.setHours( config.dayEndsAt, 0, 0, 0 );
 
   afterStageTime = afterStageDate.getTime();
   
+  if( new Date( config.start ).getTime() < new Date().getTime() ){
+    res.render( 'no_tour', { conf: config } );
+  }
+
   if( time > afterStageTime ){
     renderAfterStage( res );
   }
