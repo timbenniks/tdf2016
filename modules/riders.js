@@ -21,6 +21,10 @@ module.exports = function( state ){
   }
 
   return new Promise( ( resolve, reject )=>{
+    if( !starters ){
+      resolve( [] );
+    }
+    
     call( `${config.baseUrl}/starters.${starters}.json`, 'riders' )
       .then( ( data )=>{
 

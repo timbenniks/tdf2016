@@ -11,7 +11,6 @@ module.exports = function( state ){
   return new Promise( ( resolve, reject )=>{
     
     getStartTime( state ).then( ( time )=>{
-
       call( `${config.baseUrl}/route.${route}.json`, 'route info' )
         .then( ( routeInfo )=>{
           var data = routeInfo[ stage ],

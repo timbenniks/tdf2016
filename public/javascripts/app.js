@@ -9,17 +9,22 @@ class App {
     this.io = require( 'socket.io-client' )( '//tims-tdf-2016.herokuapp.com' );
     this.wrapper = document.querySelector( '.section-holder' );
   
-    new Rank( this );
     new Fullscreen( this );
     
     if( this.wrapper.classList.contains( 'during' ) ){
+      new Rank( this );
       new Notify( this );
       new Stream( this );
       new Progress( this );
     }
 
     if( this.wrapper.classList.contains( 'rest' ) ){
+      new Rank( this );
       new Notify( this );
+      new Stream( this );
+    }
+
+    if( this.wrapper.classList.contains( 'no-tour' ) ){
       new Stream( this );
     }
   }

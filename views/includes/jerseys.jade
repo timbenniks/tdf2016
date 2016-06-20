@@ -1,5 +1,9 @@
 section.jerseys
 
+  if !jerseys.yellow && !jerseys.white && !jerseys.polka_dot && !jerseys.green
+    figure.jersey-wrapper.yellow
+      p There are no jerseys yet...
+
   if jerseys.yellow
     figure.jersey-wrapper.yellow
       img( src="/images/jerseys/yellow.png" )

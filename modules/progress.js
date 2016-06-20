@@ -22,6 +22,12 @@ module.exports = function( state ){
   return new Promise( ( resolve, reject )=>{
     riders( state )
       .then( ( riders )=>{
+
+        // no riders, no progress...
+        if( riders.length === 0 ){
+          resolve( {} );
+        }
+
         call( `${config.baseUrl}/livestage${stage}.json`, 'progress' )
           .then( ( data )=>{
 

@@ -6,6 +6,7 @@
   column-gap: 1em
 
   .rest &
+  .no-tour &
     overflow: auto
     padding: 1em
     
@@ -16,6 +17,7 @@
     border-bottom: 1px solid #f9bc0d
     
     .rest & 
+    .no-tour &
       display: inline-block
       margin: 0 0 1em
       width: 100%
@@ -63,11 +65,20 @@
     overflow: auto
     -webkit-overflow-scrolling: touch
     column-count: 1
+    
+    .no-tour &
+      column-count: 2
+
+  @media screen and ( min-width: 1000px )
+    .no-tour &
+      column-count: 3
 
   @media screen and ( min-width: 1000px )
     .rest &
+    .no-tour &
       column-count: 3
   
   @media screen and ( min-width: 1300px )
     .rest &
+    .no-tour &
       column-count: 4

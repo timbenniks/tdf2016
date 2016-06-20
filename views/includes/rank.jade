@@ -1,5 +1,8 @@
 section.rank
 
+  if !rank.individual && !rank.white && !rank.sprinters && !rank.climbers
+    p no rank known yet
+
   .switch-tables-wrapper
     if rank.individual
       button.switch.active( data-switch="individual") yellow

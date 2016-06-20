@@ -14,6 +14,7 @@ var config = require( '../data/config' ),
     getTomorrow = require( '../modules/tomorrow' ),
     TwitterHandler = new twitter(),
     router = express.Router(),
+    moment = require( 'moment' ),
 
     setUpTweetStream = ( socket, query )=>{
       TwitterHandler.createStream( 'statuses/filter', query ).then( ( stream )=>{
@@ -38,6 +39,18 @@ var config = require( '../data/config' ),
         .catch( ( error )=>{
           socket.emit( 'progress.error', error );
         } );
+    },
+
+    renderNoTourYet = ( res )=>{
+      var tmplData = [];
+      TwitterHandler.get( 'search/tweets', { q: '#tdf2016', result_type: 'popular' } ).then( ( tweets )=>{
+        tmplData.title = config.title;
+        tmplData.tweets = tweets;
+        tmplData.starts = moment( new Date( config.start ) ).fromNow();
+        setUpTweetStream( res.io, { track: 'tdf2016', filter_level: 'none', language: 'en,fr,nl' } );
+        res.render( 'no_tour', tmplData );
+      } );
+
     },
 
     renderDuringStage = ( res )=>{
@@ -66,17 +79,22 @@ var config = require( '../data/config' ),
             jerseys: data[ 4 ]
           }
 
-          tmplData.noprogress = ( tmplData.info.type === 'prologue' || tmplData.info.type === 'time trial' );
+          tmplData.noprogress = ( tmplData.info.type === 'prologue' || tmplData.info.type === 'time trial' ) || !tmplData.progress.stage;
 
-          setUpTweetStream( res.io, { follow: 153403071,  with: 'user' } );
-          
-          if( !tmplData.noprogress ){
-            setInterval( ()=>{
-              streamProgress( res.io, tmplData.info );
-            }, 20000 );
+          if( !tmplData.progress.stage && !tmplData.rank.individual && !tmplData.jerseys.yellow ){
+            renderNoTourYet( res );
           }
+          else {
+            setUpTweetStream( res.io, { follow: 153403071,  with: 'user' } );
+            
+            if( !tmplData.noprogress ){
+              setInterval( ()=>{
+                streamProgress( res.io, tmplData.info );
+              }, 20000 );
+            }
 
-          res.render( 'during', tmplData );
+            res.render( 'during', tmplData );
+          }
         } )
         .catch( ( error )=>{
           res.render( 'error', { message: JSON.stringify( error ), error: error } );
@@ -162,8 +180,9 @@ router.get( '/', ( req, res, next )=>{
 
   afterStageTime = afterStageDate.getTime();
   
-  if( new Date( config.start ).getTime() < new Date().getTime() ){
-    res.render( 'no_tour', { conf: config } );
+  if( new Date( config.start ).getTime() > new Date().getTime() ){
+    renderNoTourYet( res );
+    return false;
   }
 
   if( time > afterStageTime ){
