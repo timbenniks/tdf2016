@@ -7,8 +7,6 @@
 
     section
       display: block
-
-      &.rank-data
         display: none
             
 @media screen and ( min-width: 600px )
@@ -28,18 +26,6 @@
           flex: 1 1 0
           order: 1
           
-        &.rank-data
-          display: block
-          overflow: auto
-          -webkit-overflow-scrolling: touch
-          flex: 1 1 0
-          padding: 1em 1em 0 1em
-          font-size: 1.2em
-          order: 2
-        
-        &.jerseys
-          display: flex
-          
 @media screen and ( min-width: 1000px )
   .section-holder.no-tour
   
@@ -49,7 +35,3 @@
         &.stream
           flex: 2 2 0
           order: 1
-          
-        &.rank-data
-          flex: 1 1 0
-          order: 2
