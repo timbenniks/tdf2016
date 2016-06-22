@@ -21,7 +21,7 @@ module.exports = function( availStage, route, useTomorrow ){
       } );
     }
 
-    var result = ''; 
+    var result = false; 
     for( var i = 0; i < workableStages.length; i++ ){
       if( workableStages[ i ].id.toString() === availStage ){
         if( tomorrow ){

@@ -7,6 +7,7 @@ var config = {
   alternativePhotosUrl: 'http://www.letour.fr/PHOTOS/TDF/2016',
   dayEndsAt: 18, // shows afterstage screen.
   debugStage: false, // needs to be a string if used.
+  useLiveNewsInsteadOfTwitter: false,
   twitter: {
     consumer_key: process.env.consumer_key,
     consumer_secret: process.env.consumer_secret,

@@ -16,7 +16,20 @@ header
     position: absolute
     top: 50%
     transform: translateY( -50% )
-    
+  
+  .about
+    display: inline-block;
+    color: darken( rgba( #fac018, 0.6 ), 40 )
+    cursor: pointer
+    font-size: 8px
+    text-transform: uppercase
+    padding: 0.5em 1em
+    background: rgba( #fff, .3 )
+    border: solid #f9bc0d
+    border-width: 0 0 1px 0
+    text-decoration: none
+    line-height: 10px
+
   h1
     font-size: 1.5em
     text-transform: uppercase
@@ -46,9 +59,14 @@ header
     right: 1em
     top: 50%
     transform: translateY( -50% )
-    display: none
+    
+    .fullscreen
+    .notifications
+      display: none
     
     @media screen and ( min-width: 1000px )
-      display: block
+      .fullscreen
+      .notifications
+        display: inline-block
 
     

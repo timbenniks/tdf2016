@@ -6,18 +6,18 @@ var moment = require( 'moment' ),
 require( 'moment-duration-format' );
 
 module.exports = function( state ){
-  const stage = state.stage;
-  const getRiderForID = ( riders, id )=>{
-    var result;
+  var stage = state.stage,
+      getRiderForID = ( riders, id )=>{
+        var result;
 
-    riders.forEach( ( rider )=>{
-      if( rider.no === id ){
-        result = rider;
-      }
-    } );
+        riders.forEach( ( rider )=>{
+          if( rider.no === id ){
+            result = rider;
+          }
+        } );
 
-    return result;
-  };
+        return result;
+      };
 
   return new Promise( ( resolve, reject )=>{
     riders( state )

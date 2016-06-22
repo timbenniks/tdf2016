@@ -6,9 +6,7 @@ module.exports = function( state ){
   var starters = state.starters;
 
   const getTeamForRider = ( teams, rider )=>{
-   
     var result;
-
     teams.forEach( ( team )=>{
       team.r.forEach( ( riderInTeam )=>{
         if( riderInTeam === rider ){

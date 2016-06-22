@@ -2,12 +2,15 @@ extends layout
 
 block content
 
-  .section-holder.during
+  .section-holder.during( class=( livenews ) ? "livenews" : "tweet-stream" )
     
     include includes/header.jade
     
     .page-content
-      include includes/stream.jade
+      if livenews
+        include includes/livenews.jade
+      else
+        include includes/stream.jade
 
       section.other-data
         if !noprogress

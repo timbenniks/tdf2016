@@ -5,6 +5,7 @@ export default class Notifications {
     this.button = document.querySelector( 'button.notifications' );
     this.io = app.io;
     this.currentProgress = '';
+    this.currentLiveNews = '';
 
     this.bind(); 
 
@@ -15,9 +16,7 @@ export default class Notifications {
 
   bind(){
     this.io.on( 'tweet', ( data )=>{
-      if( !Notify.needsPermission ){
-        this.notify( data.raw, 'update' );
-      }
+      this.notify( data.raw, 'update' );
     } );
 
     this.io.on( 'progress', ( data )=>{
@@ -40,6 +39,13 @@ export default class Notifications {
         } );
 
         this.notify( text, 'groups' );
+      }
+    } );
+
+    this.io.on( 'livenews', ( data )=>{
+      if( this.currentLiveNews !== JSON.stringify( data ) ){
+        this.currentLiveNews = JSON.stringify( data );
+        this.notify( `${data[ 0 ].time}: ${data[ 0 ].title}\n${data[ 0 ].desc.replace( /\n\n/g, '\n' )}`, 'news' );
       }
     } );
 
