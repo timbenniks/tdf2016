@@ -18,6 +18,7 @@ module.exports = ( tweets )=>{
 
     tweets.forEach( ( tweet )=>{
       cleanedTweets.push({
+        id: tweet.id,
         text: tweetParser.autoLink( tweet.text, { urlEntities: tweet.entities } ),
         raw: tweet.text,
         created_at: moment( new Date( tweet.created_at ) ).format( 'MMMM Do YYYY, h:mm:ss a' ),

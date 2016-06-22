@@ -9,6 +9,7 @@ export default class Stream {
 
   bind(){
     this.io.on( 'tweet', ( data )=>{
+      console.log( data );
       this.renderTweet( data )
         .then( this.placeTweet.bind( this ) )
         .catch( ( error )=>{
