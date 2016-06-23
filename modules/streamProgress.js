@@ -1,13 +1,13 @@
 var getAppState = require( './state' ),
     getProgress = require( './progress' );
 
-module.exports = function( socket, info ){
+module.exports = function( io, info ){
   getAppState()
     .then( getProgress )
     .then( ( data )=>{
-      socket.emit( 'progress', data );
+      io.sockets.emit( 'progress', data );
     } )
     .catch( ( error )=>{
-      socket.emit( 'progress.error', error );
+      io.sockets.emit( 'progress.error', error );
     } );
 }

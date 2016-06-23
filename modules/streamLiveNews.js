@@ -1,13 +1,13 @@
 var getAppState = require( './state' ),
     getLiveNews = require( './liveNews' );
 
-module.exports = function( socket ){
+module.exports = function( io ){
   getAppState()
     .then( getLiveNews )
     .then( ( data )=>{
-      socket.emit( 'livenews', data );
+      io.sockets.emit( 'livenews', data );
     } )
     .catch( ( error )=>{
-      socket.emit( 'livenews.error', error );
+      io.sockets.emit( 'livenews.error', error );
     } );
 }
