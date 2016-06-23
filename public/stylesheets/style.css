@@ -1367,6 +1367,9 @@ header .options .notifications {
   font-size: 0.8em;
   color: rgba(0,0,0,0.6);
 }
+.stream blockquote .meta a {
+  color: rgba(0,0,0,0.6);
+}
 @media screen and ( min-width: 450px ) {
   .stream {
     -webkit-column-count: 2;

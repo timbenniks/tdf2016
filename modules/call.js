@@ -13,7 +13,6 @@ module.exports = function( url, identifier ){
         else if( err ) {
           reject( `Something went wrong while getting the ${identifier}. Error: ${err}` );
         }
-
         try {
           resolve( res.body );
         }

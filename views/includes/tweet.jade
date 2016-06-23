@@ -30,4 +30,9 @@ blockquote( id!=tweet.id )
       figure.media
         img( src=media.media_url )
   
-  p.meta!=tweet.created_at
+  p.meta
+    if tweet.user && tweet.user.screen_name
+      a( href="//twitter.com/#{tweet.user.screen_name}", target="_blank" ) @#{tweet.user.screen_name}
+      |  &ndash; #{tweet.created_at}
+    else
+      | #{tweet.created_at}

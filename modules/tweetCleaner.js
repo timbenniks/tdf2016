@@ -1,7 +1,8 @@
 'use strict';
 
-var tweetParser = require( 'twitter-text' );
-var moment = require( 'moment' );
+var tweetParser = require( 'twitter-text' ),
+    moment = require( 'moment' );
+
 
 module.exports = ( tweets )=>{
 
@@ -23,7 +24,8 @@ module.exports = ( tweets )=>{
         raw: tweet.text,
         created_at: moment( new Date( tweet.created_at ) ).format( 'MMMM Do YYYY, h:mm:ss a' ),
         entities: tweet.entities || false,
-        extended_entities: tweet.extended_entities || false
+        extended_entities: tweet.extended_entities || false,
+        user: tweet.user || false
       } );
     } );
   
