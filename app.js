@@ -26,6 +26,25 @@ app.set( 'view engine', 'jade' );
 
 app.use( ( req, res, next )=>{
   res.io = io;
+  res.io.tdfOpenSockets = 0;
+
+  res.io.sockets.on( 'connection', ( socket )=>{
+    if( res.io.tdfOpenSockets <= 0 ){
+      res.io.tdfOpenSockets = 0;
+    }
+   // console.log( socket.id, 'connected' );
+
+    res.io.tdfOpenSockets++;
+
+    socket.on( 'disconnect', ()=>{
+      res.io.tdfOpenSockets--;
+
+      if( res.io.tdfOpenSockets <= 0 ){
+        res.io.tdfOpenSockets = 0;
+      }
+    } );
+  } );
+
   next();
 });
 

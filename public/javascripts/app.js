@@ -8,6 +8,7 @@ import Notify from './components/notify';
 class App {
   constructor(){
     
+
     this.io = require( 'socket.io-client' )( '//tims-tdf-2016.herokuapp.com' );
     this.wrapper = document.querySelector( '.section-holder' );
   
