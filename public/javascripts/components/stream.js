@@ -3,6 +3,8 @@ import tweetTmpl from '../../../views/includes/tweet.jade';
 
 export default class Stream {
   constructor( app ){
+    this.stream = document.querySelector( '.stream' );
+    this.items = this.stream.getElementsByTagName( 'blockquote' );
     this.emitter = app.emitter;
     this.bind();
   }
@@ -34,6 +36,21 @@ export default class Stream {
   }
 
   placeTweet( tweetHtml ){
-    document.querySelector( '.stream' ).insertAdjacentHTML( 'afterbegin', tweetHtml );
+    this.stream.insertAdjacentHTML( 'afterbegin', tweetHtml );
+    this.cleanUp();
+  }
+
+  cleanUp(){
+    this.items = this.stream.getElementsByTagName( 'blockquote' );
+
+    if( this.items.length < 30 ){
+      return;
+    }
+
+    for( var i = 0; i < this.items.length; i++ ){
+      if( i > 30 ){
+        this.stream.removeChild( this.items[ i ] );
+      }
+    }
   }
 }

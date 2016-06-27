@@ -16,7 +16,6 @@ export default class SocketHandler {
     } );
 
     this.io.on( 'connected', ( data )=>{
-
       ga('send', 'event', 'socket user', 'connected', data.id );
       console.info( `User ${data.id} has connected, starting stream.` );
       this.emitToSocket( 'start-stream' );
