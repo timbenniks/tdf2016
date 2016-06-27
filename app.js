@@ -70,7 +70,7 @@ app.use( '/api/', api );
 
 io.sockets.on( 'connection', ( socket )=>{
   
-  if( connectedUsers.indexOf( socket.id ) === -1){
+  if( connectedUsers.indexOf( socket.id ) === -1 ){
     connectedUsers.push( socket.id );
   }
 
@@ -94,7 +94,7 @@ io.sockets.on( 'connection', ( socket )=>{
     pubSub.on( 'socket:tweet', ( data )=>{
       if( connectedUsers.length > 0 ){
         socket.broadcast.emit( 'tweet', data );
-        socket.emit.emit( 'tweet', data );
+        socket.emit( 'tweet', data );
       }
       else {
         pubSub.emit( 'streams:destroy' );
@@ -104,7 +104,7 @@ io.sockets.on( 'connection', ( socket )=>{
     pubSub.on( 'socket:livenews', ( data )=>{
       if( connectedUsers.length > 0 ){
         socket.broadcast.emit( 'livenews', data );
-        socket.emit.emit( 'livenews', data );
+        socket.emit( 'livenews', data );
       }
       else {
         pubSub.emit( 'streams:destroy' );
@@ -114,7 +114,7 @@ io.sockets.on( 'connection', ( socket )=>{
     pubSub.on( 'socket:progress', ( data )=>{
       if( connectedUsers.length > 0 ){
         socket.broadcast.emit( 'progress', data );
-        socket.emit.emit( 'progress', data );
+        socket.emit( 'progress', data );
       }
       else {
         pubSub.emit( 'streams:destroy' );
