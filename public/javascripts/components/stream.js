@@ -3,12 +3,12 @@ import tweetTmpl from '../../../views/includes/tweet.jade';
 
 export default class Stream {
   constructor( app ){
-    this.io = app.io;
+    this.emitter = app.emitter;
     this.bind();
   }
 
   bind(){
-    this.io.on( 'tweet', ( data )=>{
+    this.emitter.on( 'socket:tweet', ( data )=>{
       if( !this.tweetInDom( data.id ) ){
         this.renderTweet( data )
           .then( this.placeTweet.bind( this ) )

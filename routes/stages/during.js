@@ -6,7 +6,6 @@ var config = require( '../../data/config' ),
     getRank = require( '../../modules/rank' ),
     getJerseys = require( '../../modules/jerseys' ),
     getLiveNews = require( '../../modules/liveNews' ),
-    setupTweetStream = require( '../../modules/setupTweetStream' ),
     streamProgress = require( '../../modules/streamProgress' ),
     streamLiveNews = require( '../../modules/streamLiveNews' ),
 
@@ -16,7 +15,38 @@ var config = require( '../../data/config' ),
     TwitterHandler = new twitter();
 
 module.exports = function( res ){
-  var promises = [];
+  var promises = [],
+      streamStarted = false,
+      pubSub = res.pubSub;
+
+  pubSub.on( 'streams:start', ()=>{
+    if( !streamStarted ){
+      
+      if( config.useLiveNewsInsteadOfTwitter ){
+        return;
+      }
+
+      TwitterHandler.createStream( 'statuses/filter', { follow: 153403071,  with: 'user' } ).then( ( stream )=>{
+        stream.on( 'data', ( tweet )=>{
+      
+          TwitterHandler.clean( tweet ).then( ( cleanTweet )=>{
+            pubSub.emit( 'socket:tweet', cleanTweet[ 0 ] );
+          } )
+          .catch( ( error )=>{
+            pubSub.emit( 'socket:tweet:error', error );
+          } );
+      
+        } );
+
+        pubSub.once( 'streams:destroy', ()=>{
+          stream.destroy();
+        } );
+
+      } );
+
+      streamStarted = true;
+    }
+  } );
 
   getAppState().then( ( state )=>{
     
@@ -51,18 +81,14 @@ module.exports = function( res ){
       }
       else {
         
-        if( !config.useLiveNewsInsteadOfTwitter ){
-          setupTweetStream( res.io, { follow: 153403071,  with: 'user' } );
-        }
-
         if( !tmplData.noprogress ){
           setInterval( ()=>{
-            streamProgress( res.io, tmplData.info );
+            streamProgress( res.pubSub, tmplData.info );
 
             if( config.useLiveNewsInsteadOfTwitter ){
-              streamLiveNews( res.io );              
+              streamLiveNews( res.pubSub );              
             }
-          }, 2000 );
+          }, 20000 );
         }
 
         res.render( 'during', tmplData );

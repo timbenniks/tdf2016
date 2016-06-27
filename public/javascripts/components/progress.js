@@ -7,7 +7,7 @@ export default class Stream {
       return false;
     }
 
-    this.io = app.io;
+    this.emitter = app.emitter;
     this.currentProgress = '';
     this.setHeight = 0;
     
@@ -22,7 +22,7 @@ export default class Stream {
   }
 
   bind(){
-    this.io.on( 'progress', ( data )=>{
+     this.emitter.on( 'socket:progress', ( data )=>{
       if( this.currentProgress !== JSON.stringify( data ) ){
         this.currentProgress = JSON.stringify( data );
         this.renderProgress( data ).then( this.placeProgress.bind( this ) );

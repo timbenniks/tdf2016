@@ -10,7 +10,7 @@ var config = require( '../data/config' ),
 router.get( '/', ( req, res, next )=>{
   var time = new Date().getTime(),
       afterStageDate = new Date(),
-      afterStageTime;
+      afterStageTime;  
 
   afterStageDate.setHours( config.dayEndsAt, 0, 0, 0 );
   afterStageTime = afterStageDate.getTime();

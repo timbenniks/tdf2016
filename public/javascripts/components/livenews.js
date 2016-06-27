@@ -3,13 +3,13 @@ import newsTmpl from '../../../views/includes/livenews-item.jade';
 
 export default class Stream {
   constructor( app ){
-    this.io = app.io;
+    this.emitter = app.emitter;
     this.bind();
     this.currentLiveNews = '';
   }
 
   bind(){
-    this.io.on( 'livenews', ( data )=>{
+    this.emitter.on( 'socket:livenews', ( data )=>{
       if( this.currentLiveNews !== JSON.stringify( data ) ){
         this.currentLiveNews = JSON.stringify( data );
 
