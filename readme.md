@@ -14,7 +14,6 @@ This year the project has the following features:
 * Fullscreen mode for big screens like televisions and projectors.
 
 Todo:
-* socket streaming is not done properly. Needs rework. http://ikertxu.tumblr.com/post/56686134143/nodejs-socketio-and-the-twitter-streaming-api
 * Time trial progress tracking
 * Show a virtual leaderboard for mountain stages
 * Use node-schedule for automatic view switching
