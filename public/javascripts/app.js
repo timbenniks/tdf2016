@@ -9,8 +9,7 @@ import Emitter from 'tiny-emitter';
 
 class App {
   constructor(){
-    //tims-tdf-2016.herokuapp.com
-    this.io = require( 'socket.io-client' )( '//localhost:5100' );
+    this.io = require( 'socket.io-client' )( '//tims-tdf-2016.herokuapp.com' );
     this.wrapper = document.querySelector( '.section-holder' );
     this.emitter = new Emitter();
 
