@@ -11,7 +11,7 @@ blockquote( id!=tweet.id )
       if entity[ 0 ].type === 'video'
         figure.media
           .media-wrapper.video
-            video( src=entity[ 0 ].video_info.variants[ 0 ].url, autoplay, controls )
+            video( src=entity[ 0 ].video_info.variants[ 0 ].url, muted, controls )
 
       if entity[ 0 ].type === 'photo'
         figure.media
