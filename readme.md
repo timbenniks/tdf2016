@@ -22,8 +22,18 @@ Todo:
 * Use node-schedule for automatic view switching
 
 ## Run it yourself
-Add your twitter credentials in /data/config.json
+* Install Foreman globally
+* Create a .env file in the root of the project and add your credentials there.
 
+```
+NODE_ENV=development
+consumer_key=''
+consumer_secret=''
+access_token_key=''
+access_token_secret=''
+```
+
+With the above in place run:
 ```
 npm i
 npm start
