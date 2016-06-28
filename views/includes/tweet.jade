@@ -8,7 +8,7 @@ blockquote( id!=tweet.id )
 
     for entity in tweet.extended_entities
 
-      if entity[ 0 ].type === 'video'
+      if entity[ 0 ].type === 'video' && entity[ 0 ].video_info.variants[ 0 ].url.indexOf( '.mpd' ) === -1
         figure.media
           .media-wrapper.video
             video( src=entity[ 0 ].video_info.variants[ 0 ].url, muted, controls )

@@ -11,7 +11,7 @@ export default class Stream {
 
   bind(){
     this.emitter.on( 'socket:tweet', ( data )=>{
-      if( !this.tweetInDom( data.id ) ){
+      if( !this.tweetInDom( data.id ) && !this.isRT( tweet.text ) ){
         this.renderTweet( data )
           .then( this.placeTweet.bind( this ) )
           .catch( ( error )=>{
@@ -23,6 +23,10 @@ export default class Stream {
 
   tweetInDom( id ){
     return !!document.getElementById( id );
+  }
+
+  isRT( tweet ){
+    return tweet.indexOf( 'RT @' ) !== -1
   }
 
   renderTweet( data ){
