@@ -1,0 +1,39 @@
+extends layout
+
+block content
+
+  .section-holder.about
+    
+    header
+      img.logo( src="/images/logo.svg" )
+    
+      h1
+        span.chapeau Tim's TDF 2016
+        span.title About this website
+
+      .options
+        a.about( href="/" ) DASHBOARD
+    
+    .page-content
+      .about-content
+        article
+          h1 Tim's TDF 2016 dashboard
+          p This dashboard is an anually recurring project that is developed about one month before the Tour De France (the most epic cycling event of the year). Every time I try to find some sort of live data feed, hack it, morph it, and use it in my own way. 
+
+          p It mainly prevents me from watching television at work all day. Instead I have the live dashboard running on my second screen and enjoy its browser notifications.
+
+          p The project evolves every year and tries to use bleeding edge technology. I don't care about your browser as this project is all about experimentation.
+
+          p The project is open source and can be found on #[a(href="https://github.com/timbenniks/tdf2016", title="Tim's TDF 2016 on Github.", target="_blank") Github]. Visit my personal website on #[a(href="http://www.timbenniks.nl", title="Tim's personal website", target="_blank") timbenniks.com].
+
+        article
+          h2 Features
+          ul
+            li Isomorpic architecture with nodejs, shared templating and JavaScript.
+            li The dashboard has an open connection with Websockets for live data streaming of tweets and progress updates of the current stage, groups or attackers, leaderboards and virtual ranking. No ajax calls are made from the front-end.
+            li ES6 code in the front-end and back-end.
+            li Promises are used for all the things.
+            li Complex fullscreen dashboard like layout for all devices with flexbox.
+            li Native browser notifications for tweets and changes in groups of attacking riders
+            li Fullscreen mode for big screens like televisions and projectors.
+

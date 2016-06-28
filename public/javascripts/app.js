@@ -13,6 +13,10 @@ class App {
     this.wrapper = document.querySelector( '.section-holder' );
     this.emitter = new Emitter();
 
+    if( this.wrapper.classList.contains( 'about' ) ){
+      return;
+    }
+    
     new Fullscreen( this );
     new SocketHandler( this );
 

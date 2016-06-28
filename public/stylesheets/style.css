@@ -563,6 +563,48 @@ button:hover {
     order: 1;
   }
 }
+.about .about-content {
+  padding: 1em;
+}
+.about .about-content article {
+  padding: 1em;
+  background: rgba(255,255,255,0.3);
+  border-bottom: 1px solid #f9bc0d;
+  width: 100%;
+  margin: 0 auto 1em;
+  font-size: 1em;
+  max-width: 700px;
+}
+@media screen and ( min-width: 600px ) {
+  .about .about-content article {
+    -webkit-column-count: 2;
+    -moz-column-count: 2;
+    column-count: 2;
+    -webkit-column-gap: 4em;
+    -moz-column-gap: 4em;
+    column-gap: 4em;
+  }
+}
+.about .about-content article h1,
+.about .about-content article h2 {
+  margin: 0 0 1em 0;
+  text-transform: uppercase;
+  opacity: 0.6;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: alpha(opacity=60);
+}
+.about .about-content article p,
+.about .about-content article ul {
+  line-height: 1.8;
+  margin: 0 0 2em 0;
+}
+.about .about-content article p:last-child,
+.about .about-content article ul:last-child {
+  margin: 0;
+}
+.about .about-content article ul {
+  padding: 0 0 0 1.5em;
+}
 .flag {
   display: inline-block;
   width: 16px;
