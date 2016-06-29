@@ -575,16 +575,6 @@ button:hover {
   font-size: 1em;
   max-width: 700px;
 }
-@media screen and ( min-width: 600px ) {
-  .about .about-content article {
-    -webkit-column-count: 2;
-    -moz-column-count: 2;
-    column-count: 2;
-    -webkit-column-gap: 4em;
-    -moz-column-gap: 4em;
-    column-gap: 4em;
-  }
-}
 .about .about-content article h1,
 .about .about-content article h2 {
   margin: 0 0 1em 0;
@@ -604,6 +594,25 @@ button:hover {
 }
 .about .about-content article ul {
   padding: 0 0 0 1.5em;
+}
+.about .about-content article table {
+  font-size: 0.8em;
+  border-collapse: collapse;
+  width: 100%;
+}
+.about .about-content article table tr {
+  background: rgba(255,255,255,0.3);
+  border-bottom: 1px solid #f9bc0d;
+}
+.about .about-content article table th {
+  opacity: 0.6;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=60)";
+  filter: alpha(opacity=60);
+}
+.about .about-content article table td,
+.about .about-content article table th {
+  padding: 0.7em 1em;
+  text-align: left;
 }
 .flag {
   display: inline-block;
