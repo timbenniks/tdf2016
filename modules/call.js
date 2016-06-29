@@ -9,7 +9,7 @@ module.exports = function( url, identifier ){
       .accept( 'application/json' )
       .end( ( err, res )=>{
         if( err && err.status === 404 ){
-          reject( `${identifier} not reachable. URL: ${url}` );
+          reject( `${identifier} not reachable. URL: ${url.replace( '$$year$$', config.year )}` );
         }
         else if( err ) {
           reject( `Something went wrong while getting the ${identifier}. Error: ${err}` );
