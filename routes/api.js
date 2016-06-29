@@ -10,50 +10,81 @@ var config = require( '../data/config' ),
     getJerseys = require( '../modules/jerseys' ),
     getAfterNews = require( '../modules/afterNews' ),
     getAfterRank = require( '../modules/afterRank' ),
+    getLiveNews = require( '../modules/liveNews' ),
     getAfterPhotos = require( '../modules/afterPhotos' ),
     getTomorrow = require( '../modules/tomorrow' ),
     TwitterHandler = new twitter(),
     router = express.Router(),
 
-    renderDuringStage = ( res )=>{
-      let promises = [];
+    during = ( res, params )=>{
+      var promises = [];
+
+      if( params.stream && params.stream === 'twitter' ){
+        config.useLiveNewsInsteadOfTwitter = false;
+      }
+      else if( params.stream && params.stream === 'livenews' ){
+        config.useLiveNewsInsteadOfTwitter = true;
+      }
+
+      if( params.twitter_id ){
+        config.twitterAccountToFollow = params.twitter_id;
+      }
 
       getAppState().then( ( state )=>{
+        
+        if( params.stage ){
+          state.stage = params.stage;
+        }
+
         if( state.stage === '00R1' || state.stage === '00R2' ){
-          renderRestDay( res );
+          rest( res, params );
           return false;
         }
 
-        promises.push( TwitterHandler.get( 'statuses/user_timeline', { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true } ) )
+        promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) )
         promises.push( getStageInfo( state ) );
         promises.push( getProgress( state ) );
         promises.push( getRank( state ) );
         promises.push( getJerseys( state, false ) );
+        promises.push( getLiveNews( state ) );
+
         Promise.all( promises ).then( ( data )=>{
-          let apiData = {
+          var apiData = {
             title: config.title,
             tweets: data[ 0 ],
             info: data[ 1 ],
             progress: data[ 2 ],
             rank: data[ 3 ],
-            jerseys: data[ 4 ]
+            jerseys: data[ 4 ],
+            news: data[ 5 ],
+            livenews: config.useLiveNewsInsteadOfTwitter
           }
 
-          apiData.noprogress = ( apiData.info.type === 'prologue' || apiData.info.type === 'time trial' );
-          apiData.status = 'during';
-          res.json( apiData );
+          apiData.noprogress = ( apiData.info.type === 'prologue' || apiData.info.type === 'time trial' ) || !apiData.progress.stage;
+
+          if( !apiData.progress.stage && !apiData.rank.individual && !apiData.jerseys.yellow ){
+            res.json( { error: 'not enough data' } );
+          }
+          else {
+            apiData.status = 'during';
+            res.json( apiData );
+          }
         } )
         .catch( ( error )=>{ res.json( error ) } );
       } );
     },
     
-    renderAfterStage = ( res )=>{
+    after = ( res, params )=>{
       let promises = [];
 
       getAppState().then( ( state )=>{
 
+        if( params.stage ){
+          state.stage = params.stage;
+        }
+
         if( state.stage === '00R1' || state.stage === '00R2' ){
-          renderRestDay( res );
+          rest( res, params );
           return false;
         }
 
@@ -84,7 +115,7 @@ var config = require( '../data/config' ),
       } );
     },
 
-    renderRestDay = ( res )=>{
+    rest = ( res, params )=>{
       let promises = [];
 
       getAppState().then( ( state )=>{
@@ -110,18 +141,23 @@ var config = require( '../data/config' ),
     };
 
 router.get( '/', ( req, res, next )=>{
+  res.json( { error: 'What is the magic word?' } );
+} );
+
+router.get( '/all', ( req, res, next )=>{
   var time = new Date().getTime(),
       afterStageDate = new Date(),
-      afterStageTime;
-  
+      afterStageTime;  
+
   afterStageDate.setHours( config.dayEndsAt, 0, 0, 0 );
   afterStageTime = afterStageDate.getTime();
-
+  
+  // Render after stage view after 18:00.
   if( time > afterStageTime ){
-    renderAfterStage( res );
+    after( res, req.query );
   }
   else {
-    renderDuringStage( res );
+    during( res, req.query );
   }
 } );
 
@@ -140,13 +176,21 @@ router.get( '/progress', ( req, res, next )=>{
     
   getAppState().then( ( state )=>{
     var promises = [];
-    promises.push( TwitterHandler.get( 'statuses/user_timeline', { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true } ) )
+      
+    if( req.query.stage ){
+      state.stage = req.query.stage;
+    }
+
+    promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) );
     promises.push( getProgress( state ) );
+    promises.push( getLiveNews( state ) );
 
     Promise.all( promises ).then( ( data )=>{
       let apiData = {
         tweets: data[ 0 ],
-        progress: data[ 1 ]
+        progress: data[ 1 ],
+        news: data[ 2 ],
+        livenews: config.useLiveNewsInsteadOfTwitter
       }
 
       res.json( apiData );
@@ -154,4 +198,5 @@ router.get( '/progress', ( req, res, next )=>{
     .catch( ( error )=>{ res.json( error ) } );
   } );
 } );
+
 module.exports = router;

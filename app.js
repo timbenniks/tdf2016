@@ -13,6 +13,7 @@ var http = require( 'http' ),
     browserify = require( 'browserify-middleware' ),
     babelify = require( 'babelify' ),
     jadeify = require( 'jadeify' ),
+    cors = require( 'express-cors' ),
     home = require( './routes/index' ),
     api = require( './routes/api' ),
     about = require( './routes/about' ),
@@ -32,6 +33,16 @@ app.use( ( req, res, next )=>{
   res.pubSub = pubSub;
   next();
 });
+
+app.use( ( req, res, next )=>{
+  res.header( 'X-powered-by', 'Tim\'s TDF 2016 dashboard' )
+  next();
+} );
+
+app.use( cors({
+  allowedOrigins: [ '*' ],
+  methods: [ 'GET' ]
+} ) );
 
 // uncomment after placing your favicon in /public
 app.use( favicon( path.join( __dirname, 'public', 'favicon.ico' ) ) );
