@@ -70,7 +70,7 @@ var config = require( '../data/config' ),
             res.json( apiData );
           }
         } )
-        .catch( ( error )=>{ res.json( error ) } );
+        .catch( ( error )=>{ res.json( { error: error } ) } );
       } );
     },
     
@@ -111,7 +111,7 @@ var config = require( '../data/config' ),
           apiData.status = 'after';
           res.json( apiData );
         } )
-        .catch( ( error )=>{ res.json( error ) } );
+        .catch( ( error )=>{ res.json( { error: error } ) } );
       } );
     },
 
@@ -136,7 +136,7 @@ var config = require( '../data/config' ),
           apiData.status = 'rest';
           res.json( apiData );
         } )
-        .catch( ( error )=>{ res.json( error ) } );
+        .catch( ( error )=>{ res.json( { error:  error } ) } );
       } );
     };
 
@@ -195,7 +195,7 @@ router.get( '/progress', ( req, res, next )=>{
 
       res.json( apiData );
     } )
-    .catch( ( error )=>{ res.json( error ) } );
+    .catch( ( error )=>{ res.json( { error: error } ) } );
   } );
 } );
 
