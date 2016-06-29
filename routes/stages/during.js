@@ -14,10 +14,21 @@ var config = require( '../../data/config' ),
 
     TwitterHandler = new twitter();
 
-module.exports = function( res ){
+module.exports = function( res, params ){
   var promises = [],
       streamStarted = false,
       pubSub = res.pubSub;
+
+  if( params.stream && params.stream === 'twitter' ){
+    config.useLiveNewsInsteadOfTwitter = false;
+  }
+  else if( params.stream && params.stream === 'livenews' ){
+    config.useLiveNewsInsteadOfTwitter = true;
+  }
+
+  if( params.twitter_id ){
+    config.twitterAccountToFollow = params.twitter_id;
+  }
 
   pubSub.on( 'streams:start', ()=>{
     if( !streamStarted ){
@@ -26,7 +37,7 @@ module.exports = function( res ){
         return;
       }
 
-      TwitterHandler.createStream( 'statuses/filter', { follow: 153403071,  with: 'user' } ).then( ( stream )=>{
+      TwitterHandler.createStream( 'statuses/filter', { follow: config.twitterAccountToFollow,  with: 'user' } ).then( ( stream )=>{
         stream.on( 'data', ( tweet )=>{
       
           TwitterHandler.clean( tweet ).then( ( cleanTweet )=>{
@@ -50,12 +61,16 @@ module.exports = function( res ){
 
   getAppState().then( ( state )=>{
     
+    if( params.stage ){
+      state.stage = params.stage;
+    }
+
     if( state.stage === '00R1' || state.stage === '00R2' ){
-      rest( res );
+      rest( res, params );
       return false;
     }
 
-    promises.push( TwitterHandler.get( 'statuses/user_timeline', { screen_name: 'letour', count: 10, trim_user: true, exclude_replies: true } ) )
+    promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) )
     promises.push( getStageInfo( state ) );
     promises.push( getProgress( state ) );
     promises.push( getRank( state ) );

@@ -18,8 +18,8 @@ module.exports = function( state ){
       }
       else {
         
-        var stageImg = `${config.alternativePhotosUrl}/${applicableStage}/CARTE.jpg`,
-            stafgeProfile = `${config.alternativePhotosUrl}/${applicableStage}/PROFIL.jpg`;
+        var stageImg = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${applicableStage}/CARTE.jpg`,
+            stafgeProfile = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${applicableStage}/PROFIL.jpg`;
 
         state.stage = applicableStage;
 

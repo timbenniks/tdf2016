@@ -10,15 +10,7 @@ module.exports = function( state ){
   var stage = state.stage,
 
   getRiderForID = ( riders, id )=>{
-    var result;
-
-    riders.forEach( ( rider )=>{
-      if( rider.no === id ){
-        result = rider;
-      }
-    } );
-
-    return result;
+    return riders.find( r => r.no === id );
   },
 
   buildTimeRank = ( riders, list, which )=>{

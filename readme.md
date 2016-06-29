@@ -16,7 +16,14 @@ This year the project has the following features:
 * Native browser notifications for tweets and changes in groups of attacking riders
 * Fullscreen mode for big screens like televisions and projectors.
 
-Todo:
+## Query Parameters:
+| Param | Meaning | Example | options |
+|------------|-------------------------------------------------|-----------|------------------------------------|
+| stage | Used for debug to see data for a specific stage. | 1100 | All stage names before the current |
+| stream | Show twitter or livenews. | livenews | twitter, livenews |
+| twitter_id | Which account to follow during stages. | 153403071 | Any valid twitter id. |
+
+## Todo:
 * Time trial progress tracking
 * Show a virtual leaderboard for mountain stages
 * Use node-schedule for automatic view switching

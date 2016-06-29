@@ -11,7 +11,7 @@ module.exports = function( state ){
       .then( ( photosData )=>{
 
         var photos = photosData.p.map( ( photoId )=>{
-          return `${photosBaseUrl}/${stage}/${photoId}.${ext}`
+          return `${photosBaseUrl.replace( '$$year$$', config.year )}/${stage}/${photoId}.${ext}`
         } ),
         unique = [ ...new Set( photos ) ];
 

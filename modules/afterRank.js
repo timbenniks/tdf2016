@@ -8,19 +8,11 @@ require( 'moment-duration-format' );
 module.exports = function( state ){
   var stage = state.stage;
   
-  const getRiderForID = ( riders, id )=>{
-    var result;
+  var getRiderForID = ( riders, id )=>{
+    return riders.find( r => r.no === id );
+  },
 
-    riders.forEach( ( rider )=>{
-      if( rider.no === id ){
-        result = rider;
-      }
-    } );
-
-    return result;
-  };
-
-  const buildTimeRank = ( riders, list )=>{
+  buildTimeRank = ( riders, list )=>{
     var rankTime = [];
     for( var i = 0; i < list.length; i++ ){
       if( i === 0 ){

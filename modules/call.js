@@ -1,10 +1,11 @@
-var request = require( 'superagent' );
+var request = require( 'superagent' ),
+    config = require( '../data/config.js' );
 
 module.exports = function( url, identifier ){
 
   return new Promise( ( resolve, reject )=>{
     request
-      .get( url )
+      .get( url.replace( '$$year$$', config.year ) )
       .accept( 'application/json' )
       .end( ( err, res )=>{
         if( err && err.status === 404 ){

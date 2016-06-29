@@ -14,13 +14,17 @@ var config = require( '../../data/config' ),
 
     TwitterHandler = new twitter();
 
-module.exports = function( res ){
+module.exports = function( res, params ){
   var promises = [];
 
   getAppState().then( ( state )=>{
 
+    if( params.stage ){
+      state.stage = params.stage;
+    }
+
     if( state.stage === '00R1' || state.stage === '00R2' ){
-      rest( res );
+      rest( res, params );
       return false;
     }
 

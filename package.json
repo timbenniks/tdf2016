@@ -6,6 +6,9 @@
   "scripts": {
     "start": "nf start"
   },
+  "engines": {
+   "node": "5.11.1"
+  },
   "dependencies": {
     "babel-polyfill": "^6.9.1",
     "babel-preset-es2015": "^6.9.0",
