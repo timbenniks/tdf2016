@@ -14,6 +14,7 @@ var http = require( 'http' ),
     babelify = require( 'babelify' ),
     jadeify = require( 'jadeify' ),
     cors = require( 'express-cors' ),
+    compression = require( 'compression' ),
     home = require( './routes/index' ),
     api = require( './routes/api' ),
     about = require( './routes/about' ),
@@ -28,6 +29,8 @@ let connectedUsers = [];
 // view engine setup
 app.set( 'views', path.join( __dirname, 'views' ) );
 app.set( 'view engine', 'jade' );
+
+app.use( compression() );
 
 app.use( ( req, res, next )=>{
   res.pubSub = pubSub;
@@ -57,7 +60,7 @@ app.use( stylus.middleware( {
   compile: (str, path)=>{
     return stylus( str )
       .set( 'filename', path )
-      .set( 'compress', false )
+      .set( 'compress', true )
       .use( nib() )
       .import( 'nib' );
   }
@@ -67,7 +70,7 @@ app.use( stylus.middleware( {
 browserify.settings({
   transform: [ 
     [ 'babelify', { 'presets': ['es2015'] } ], 
-    [ 'jadeify', { 'compileDebug': false, 'pretty': true } ] 
+    [ 'jadeify', { 'compileDebug': false, 'pretty': false } ] 
   ]
 });
 
