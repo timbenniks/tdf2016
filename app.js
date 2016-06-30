@@ -30,6 +30,11 @@ let connectedUsers = [];
 app.set( 'views', path.join( __dirname, 'views' ) );
 app.set( 'view engine', 'jade' );
 
+app.use( cors({
+  allowedOrigins: [ '*localhost:*' ],
+  methods: [ 'GET' ]
+} ) );
+
 app.use( compression() );
 
 app.use( ( req, res, next )=>{
@@ -38,14 +43,10 @@ app.use( ( req, res, next )=>{
 });
 
 app.use( ( req, res, next )=>{
-  res.header( 'X-powered-by', 'Tim\'s TDF 2016 dashboard' )
+  res.header( 'X-powered-by', 'Tim\'s TDF 2016 dashboard' );
+  res.header( 'Access-Control-Allow-Origin', '*' );
   next();
 } );
-
-app.use( cors({
-  allowedOrigins: [ '*' ],
-  methods: [ 'GET' ]
-} ) );
 
 // uncomment after placing your favicon in /public
 app.use( favicon( path.join( __dirname, 'public', 'favicon.ico' ) ) );
