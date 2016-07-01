@@ -4,11 +4,11 @@ var call = require( './call' ),
 
 module.exports = function( state ){
   var stage = state.stage,
-      checkpoints = state.checkpoints;
+      route = state.route;
       
   return new Promise( ( resolve, reject )=>{
-    call( `${config.baseUrl}/checkpoints.${checkpoints}.json`, 'checkpoints' )
-      .then( ( checkpoints )=>{
+    call( `${config.baseUrl}/route.${route}.json`, 'checkpoints' )
+      .then( ( route )=>{
 
         var time = false;
 
@@ -16,14 +16,7 @@ module.exports = function( state ){
           resolve( time );
         }
 
-        var cp = checkpoints[ stage ].cp;
-
-        for( var i = 0; i < cp.length; i++ ){
-          if( cp[ i ].h ){
-            time = cp[ i ].h[ 0 ]
-            break;
-          }
-        }
+        time = route[ stage ].startTime;
 
         if( time ){
           resolve( moment.duration( time, 'seconds' ).format( 'mm:ss', { trim: false } ) );

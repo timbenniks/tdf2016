@@ -1,7 +1,7 @@
 var config = {
   title: 'Tim\'s TDF 2016',
-  start: '2016-07-02',
-  end: '2016-07-24',
+  start: '2016-07-02 12:00:00',
+  end: '2016-07-24 20:00:00',
   showBefore: true,
   dayEndsAt: 18, // shows afterstage screen at hour.
   debugStage: false, // needs to be a string if used e.g: '1100' 

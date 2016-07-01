@@ -3,8 +3,11 @@
 var config = require( '../data/config' ),
     express = require( 'express' ),
     beforeTour = require( './stages/beforeTour' ),
+    before = require( './stages/before' ),
     during = require( './stages/during' ),
     after = require( './stages/after' ),
+    getState = require( '../modules/state' ),
+    getStartTime = require( '../modules/startTime' ),
     router = express.Router();
 
 router.get( '/', ( req, res, next )=>{
@@ -32,7 +35,19 @@ router.get( '/', ( req, res, next )=>{
     after( res, req.query );
   }
   else {
-    during( res, req.query );
+    getState()
+      .then( getStartTime )
+      .then( ( sTime )=>{
+        var startDateTime = new Date();
+        startDateTime.setHours( sTime.split( ':' )[ 0 ], sTime.split( ':' )[ 1 ], 0, 0 );
+        
+        if( time < startDateTime.getTime() ){
+          before( res, req.query );
+        }
+        else {
+          during( res, req.query );
+        }
+      } );
   }
 } );
 

@@ -38,6 +38,13 @@ header
     top: 50%
     transform: translateY( -50% )
     left: 4.7em
+    max-width: 195px
+    
+    @media screen and ( min-width: 374px )
+      max-width: 250px
+      
+    @media screen and ( min-width: 560px )
+      max-width: 100%
     
     span
       display: block
@@ -45,7 +52,7 @@ header
       &.chapeau
         font-size: 0.6em
         margin: 0 0 0.5em
-        opacity: 0.6
+        opacity: 0.6    
   
   @media screen and ( min-width: 768px )
     height: 6em

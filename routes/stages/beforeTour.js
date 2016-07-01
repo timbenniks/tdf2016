@@ -12,7 +12,7 @@ module.exports = function( res ){
   pubSub.on( 'streams:start', ()=>{
     if( !streamStarted ){
       
-      TwitterHandler.createStream( 'statuses/filter', { track: 'tdf2016', filter_level: 'none', language: 'en,fr,nl' } ).then( ( stream )=>{
+      TwitterHandler.createStream( 'statuses/filter', { track: 'tdf2016', filter_level: 'low', language: 'en,fr,nl' } ).then( ( stream )=>{
         stream.on( 'data', ( tweet )=>{
       
           TwitterHandler.clean( tweet ).then( ( cleanTweet )=>{
