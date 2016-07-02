@@ -51,7 +51,9 @@ module.exports = function( state ){
             resolve( rank );
           } )
           .catch( ( error )=>{
-            reject( error );
+            // resolve empty rank instead of causing a crash
+            resolve( [] );
+            //reject( error );
           } );
       } )
       .catch( ( error )=>{

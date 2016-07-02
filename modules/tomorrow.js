@@ -18,8 +18,10 @@ module.exports = function( state ){
       }
       else {
         
-        var stageImg = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${applicableStage}/CARTE.jpg`,
-            stafgeProfile = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${applicableStage}/PROFIL.jpg`;
+        var stageForImage = ( applicableStage.charAt( 0 ) === '0' ) ? applicableStage.substring( 1 ) : applicableStage;
+
+        var stageImg = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${stageForImage}/CARTE.jpg`,
+            stafgeProfile = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${stageForImage}/PROFIL.jpg`;
 
         state.stage = applicableStage;
 
