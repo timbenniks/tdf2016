@@ -15,7 +15,7 @@ router.get( '/', ( req, res, next )=>{
       afterStageDate = new Date(),
       afterStageTime;  
 
-  afterStageDate.setHours( config.dayEndsAt, 0, 0, 0 );
+  afterStageDate.setHours( config.dayEndsAt - 2, 0, 0, 0 );
   afterStageTime = afterStageDate.getTime();
   
   if( req.query.stage ){
