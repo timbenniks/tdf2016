@@ -39,7 +39,7 @@ router.get( '/', ( req, res, next )=>{
       .then( getStartTime )
       .then( ( sTime )=>{
         var startDateTime = new Date();
-        startDateTime.setHours( sTime.split( ':' )[ 0 ], sTime.split( ':' )[ 1 ], 0, 0 );
+        startDateTime.setHours( sTime.split( ':' )[ 0 ] - 2, sTime.split( ':' )[ 1 ], 0, 0 );
         
         if( time < startDateTime.getTime() ){
           before( res, req.query );
