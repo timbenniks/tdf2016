@@ -1,6 +1,6 @@
 var config = {
   title: 'Tim\'s TDF 2016',
-  start: '2016-07-02 11:00:00',
+  start: '2016-07-02 10:00:00',
   end: '2016-07-24 20:00:00',
   showBefore: true,
   dayEndsAt: 18, // shows afterstage screen at hour.
