@@ -33,6 +33,10 @@ class App {
       }
     }
 
+    if( this.wrapper.classList.contains( 'after' ) ){
+      new Rank( this );
+    }
+
     if( this.wrapper.classList.contains( 'rest' ) ){
       new Rank( this );
       new Stream( this );

@@ -18,6 +18,7 @@ var http = require( 'http' ),
     home = require( './routes/index' ),
     api = require( './routes/api' ),
     about = require( './routes/about' ),
+    bot = require( './routes/bot' ),
     EventEmitter = require( 'events' ).EventEmitter;
 
 const app = express();
@@ -84,6 +85,7 @@ app.use( express.static( path.join( __dirname, 'public' ) ) );
 app.use( '/', home );
 app.use( '/api/', api );
 app.use( '/about/', about );
+app.use( '/webhook/', bot );
 
 io.sockets.on( 'connection', ( socket )=>{
   
