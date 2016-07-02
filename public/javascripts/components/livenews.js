@@ -4,13 +4,14 @@ import newsTmpl from '../../../views/includes/livenews-item.jade';
 export default class Stream {
   constructor( app ){
     this.emitter = app.emitter;
+    this.notifier = app.notifier;
     this.bind();
     this.currentLiveNews = '';
   }
 
   bind(){
     this.emitter.on( 'socket:livenews', ( data )=>{
-      if( this.currentLiveNews !== JSON.stringify( data ) && this.currentLiveNews.length > 0 ){
+      if( this.currentLiveNews !== JSON.stringify( data ) ){
         this.currentLiveNews = JSON.stringify( data );
 
         var finalNewsHtml = '';
@@ -19,6 +20,7 @@ export default class Stream {
           finalNewsHtml += this.renderNews( item );
         } );
 
+        this.notifier.notify( `${data[ 0 ].time}: ${data[ 0 ].title}\n${data[ 0 ].desc.replace( /\n\n/g, '\n' )}`, 'news' );
         this.placeNews( finalNewsHtml );
       }
     } );

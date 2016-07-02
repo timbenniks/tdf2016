@@ -10,6 +10,7 @@ export default class Stream {
     this.emitter = app.emitter;
     this.currentProgress = '';
     this.setHeight = 0;
+    this.notifier = app.notifier;
     
     this.bind();
 
@@ -26,10 +27,30 @@ export default class Stream {
       if( this.currentProgress !== JSON.stringify( data ) ){
         this.currentProgress = JSON.stringify( data );
         this.renderProgress( data ).then( this.placeProgress.bind( this ) );
+        this.notify( data );
       }
     } );
 
     window.addEventListener( 'resize', this.alignHeights.bind( this ) );
+  }
+
+  notify( data ){
+    var text = '';
+
+    if( data.groups.length === 1 ){
+      return;
+    }
+
+    data.groups.forEach( ( group, index )=>{
+      if( index === 0 ){
+        text += `${group.title} (${group.runnersNo})\n`;
+      }
+      else {
+        text += `${group.title} (${group.runnersNo}) at ${ group.delay }\n`;
+      }
+    } );
+
+    this.notifier.notify( text, 'groups' );
   }
 
   alignHeights(){

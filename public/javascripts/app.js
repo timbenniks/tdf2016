@@ -12,6 +12,7 @@ class App {
     this.io = require( 'socket.io-client' )( '//tims-tdf-2016.herokuapp.com' );
     this.wrapper = document.querySelector( '.section-holder' );
     this.emitter = new Emitter();
+    this.notifier = new Notify( this );
 
     if( this.wrapper.classList.contains( 'about' ) ){
       return;
@@ -22,7 +23,6 @@ class App {
 
     if( this.wrapper.classList.contains( 'during' ) ){
       new Rank( this );
-      new Notify( this );
       new Progress( this );
 
       if( this.wrapper.classList.contains( 'tweet-stream' ) ){
@@ -35,7 +35,6 @@ class App {
 
     if( this.wrapper.classList.contains( 'rest' ) ){
       new Rank( this );
-      new Notify( this );
       new Stream( this );
     }
 

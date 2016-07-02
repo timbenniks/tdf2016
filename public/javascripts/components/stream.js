@@ -6,12 +6,14 @@ export default class Stream {
     this.stream = document.querySelector( '.stream' );
     this.items = this.stream.getElementsByTagName( 'blockquote' );
     this.emitter = app.emitter;
+    this.notifier = app.notifier;
     this.bind();
   }
 
   bind(){
     this.emitter.on( 'socket:tweet', ( data )=>{
       if( !this.tweetInDom( data.id ) && !this.isRT( data.text ) ){
+        this.notifier.notify( data, 'tweet' );
         this.renderTweet( data )
           .then( this.placeTweet.bind( this ) )
           .catch( ( error )=>{
