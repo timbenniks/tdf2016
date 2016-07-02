@@ -22,7 +22,7 @@ var config = require( '../data/config' ),
         } );
     },
 
-    senRichMessage = ( sender )=>{
+    sendRichMessage = ( sender )=>{
       let messageData = {
         "attachment": {
           "type": "template",
@@ -90,7 +90,7 @@ router.post( '/', ( req, res )=>{
     if( event.message && event.message.text ){
       let text = event.message.text;
         if( text === 'awesome' ){
-          sendGenericMessage( sender );
+          sendRichMessage( sender );
           continue;
         }
         
