@@ -5,7 +5,6 @@ module.exports = function( state ){
   return new Promise( ( resolve, reject )=>{
     getRank( state )
       .then( ( rank )=>{
-
         // no rank, no jerseys
         if( !rank || !rank.individual ){
           resolve( {} );

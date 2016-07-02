@@ -30,7 +30,7 @@ module.exports = function( res, params ){
 
     promises.push( getStageInfo( state ) );
     promises.push( getRank( state ) );
-    promises.push( getJerseys( state, true ) );
+    promises.push( getJerseys( state ) );
     promises.push( getAfterNews( state ) );
     promises.push( getAfterRank( state ) );
     promises.push( getAfterPhotos( state ) );
