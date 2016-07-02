@@ -1,10 +1,9 @@
 section.jerseys
 
-  if !jerseys.yellow && !jerseys.white && !jerseys.polka_dot && !jerseys.green
-    figure.jersey-wrapper.yellow
-      p There are no jerseys yet...
+  if !jerseys || ( !jerseys.yellow && !jerseys.white && !jerseys.polka_dot && !jerseys.green )
+    p.error No jersey data could be found, something went wrong.
 
-  if jerseys.yellow
+  if jerseys && jerseys.yellow
     figure.jersey-wrapper.yellow
       img( src="/images/jerseys/yellow.png" )
       img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.yellow.no }.jpg" )
@@ -13,7 +12,7 @@ section.jerseys
         p=jerseys.yellow.team
         p #{jerseys.yellow[ 'individual-time' ]}
 
-  if jerseys.white
+  if jerseys && jerseys.white
     figure.jersey-wrapper.white
       img( src="/images/jerseys/white.png" )
       img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.white.no }.jpg" )
@@ -22,7 +21,7 @@ section.jerseys
         p=jerseys.white.team
         p #{jerseys.white[ 'white-time' ]}
 
-  if jerseys.polka_dot
+  if jerseys && jerseys.polka_dot
     figure.jersey-wrapper.polka_dot
       img( src="/images/jerseys/polka_dots.png" )
       img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.polka_dot.no }.jpg" )
@@ -31,7 +30,7 @@ section.jerseys
         p=jerseys.polka_dot.team
         p #{jerseys.polka_dot.climb} points
 
-  if jerseys.green
+  if jerseys && jerseys.green
     figure.jersey-wrapper.green
       img( src="/images/jerseys/green.png" )
       img.profile( src="http://www.letour.fr/PHOTOS/TDF/2015/RIDERS/#{ jerseys.green.no }.jpg" )

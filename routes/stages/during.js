@@ -84,7 +84,7 @@ module.exports = function( res, params ){
         info: data[ 1 ],
         progress: data[ 2 ],
         rank: data[ 3 ],
-        jerseys: data[ 4 ],
+        jerseys: data[ 3 ],
         news: data[ 5 ],
         livenews: config.useLiveNewsInsteadOfTwitter
       }

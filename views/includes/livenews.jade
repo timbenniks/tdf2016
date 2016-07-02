@@ -1,3 +1,6 @@
 section.stream.livenews
+  if !news || news.length === 0
+    p.error No news could be found, something went wrong.
+
   for item in news
     include livenews-item.jade

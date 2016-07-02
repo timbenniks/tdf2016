@@ -31,6 +31,7 @@ module.exports = function( res, params ){
       startDateTime = new Date();
       startDateTime.setHours( starts.split( ':' )[ 0 ], starts.split( ':' )[ 1 ], 0, 0 );
       tmplData.starts = moment( startDateTime ).fromNow();
+      tmplData.startTime = starts;
 
       res.render( 'before', tmplData );
     } )

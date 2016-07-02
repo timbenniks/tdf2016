@@ -13,7 +13,7 @@ figure.profile-stats-wrapper
       p #{progress.kmRemaining}km
   
   .progress-profile
-    img.profile( src="http://www.letour.fr/le-tour/2015/img/profils/#{ ( progress.stage.charAt( 0 ) === '0' ) ? progress.stage.substring( 1 ) : progress.stage }.png", alt="Profile for stage." )
+    img.profile( src="http://www.letour.fr/le-tour/2016/img/profils/#{ ( progress.stage.charAt( 0 ) === '0' ) ? progress.stage.substring( 1 ) : progress.stage }.png", alt="Profile for stage." )
     .progress-percentage( style="width: #{ ( ( progress.kmCompleted / ( progress.kmCompleted + progress.kmRemaining ) ) * 100 ).toFixed( 0 ) }%" )
 
 .groups-wrapper

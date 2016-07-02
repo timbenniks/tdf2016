@@ -7,7 +7,7 @@ module.exports = function( state ){
       .then( ( rank )=>{
 
         // no rank, no jerseys
-        if( !rank.individual ){
+        if( !rank || !rank.individual ){
           resolve( {} );
         }
 

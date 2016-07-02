@@ -10,7 +10,7 @@ export default class Stream {
 
   bind(){
     this.emitter.on( 'socket:livenews', ( data )=>{
-      if( this.currentLiveNews !== JSON.stringify( data ) ){
+      if( this.currentLiveNews !== JSON.stringify( data ) && this.currentLiveNews.length > 0 ){
         this.currentLiveNews = JSON.stringify( data );
 
         var finalNewsHtml = '';

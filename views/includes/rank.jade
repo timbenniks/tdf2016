@@ -1,22 +1,22 @@
 section.rank
 
-  if !rank.individual && !rank.white && !rank.sprinters && !rank.climbers
-    p no rank known yet
+  if !rank || ( !rank.individual && !rank.white && !rank.sprinters && !rank.climbers )
+    p.error No rank data could be found, something went wrong.
 
   .switch-tables-wrapper
-    if rank.individual
+    if rank && rank.individual
       button.switch.active( data-switch="individual") yellow
     
-    if rank.white
+    if rank && rank.white
       button.switch( data-switch="white") white
     
-    if rank.climbers
+    if rank && rank.climbers
       button.switch( data-switch="climbers") polka dot
     
-    if rank.sprinters
+    if rank && rank.sprinters
       button.switch( data-switch="sprinters") green
 
-  if rank.individual
+  if rank && rank.individual
     table.switchable.individual
       tr
         th.classification RANK
@@ -34,7 +34,7 @@ section.rank
           td.time=rider['individual-time']
           td.behind=rider['individual-behind']
 
-  if rank.climbers
+  if rank && rank.climbers
     table.switchable.climbers
       tr
         th.classification RANK
@@ -50,7 +50,7 @@ section.rank
           td.team=rider.team
           td.points=rider.climb
 
-  if rank.sprinters 
+  if rank && rank.sprinters 
     table.switchable.sprinters
       tr
         th.classification RANK
@@ -66,7 +66,7 @@ section.rank
           td.team=rider.team
           td.points=rider.sprint
 
-  if rank.white
+  if rank && rank.white
     table.switchable.white
       tr
         th.classification RANK

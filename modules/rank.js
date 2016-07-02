@@ -72,7 +72,9 @@ module.exports = function( state ){
           resolve( ranks );
         } )
         .catch( ( error )=>{
-          reject( error );
+          console.log( error );
+          // resolve no rank intead of killing the whole app
+          resolve( {} );
         } );
     
       } );

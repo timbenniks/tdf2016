@@ -93,7 +93,9 @@ module.exports = function( state ){
         resolve( news.reverse() );
       } )
       .catch( ( error )=>{
-        reject( error );
+        // resolve as no news when an error occurs
+        resolve( [] );
+        console.log( error );
       } );
   } );
 };
