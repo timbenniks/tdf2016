@@ -3,6 +3,12 @@ const Notify = require( 'notifyjs' ).default;
 export default class Notifications {
   constructor( app ){
     this.button = document.querySelector( 'button.notifications' );
+
+    if( !( 'Notification' in window ) ){
+      this.button.style.display = 'none';
+      return false;
+    }
+
     this.bind(); 
 
     if( !Notify.needsPermission ){
@@ -18,6 +24,10 @@ export default class Notifications {
   }
 
   notify( text, title ){
+    if( !( 'Notification' in window ) ){
+      return false;
+    }
+
     if( !Notify.needsPermission ){
       let notification = new Notify( `Tim\'s TDF 2016 ${title}`, {
         body: text,

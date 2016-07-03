@@ -4,6 +4,11 @@ export default class Fullscreen {
   constructor( app ){
     this.button = document.querySelector( 'button.fullscreen' );
 
+    if( !document.fullscreenEnabled ){
+      this.button.style.display = 'none';
+      return false;
+    }
+
     this.bind();
     this.fullscreenMode = false;
     window.addEventListener( 'resize', this.checkSize.bind( this ) );

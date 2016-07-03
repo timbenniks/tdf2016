@@ -46,3 +46,16 @@ With the above in place run:
 npm i
 npm start
 ```
+
+## Potential dimention data hack:
+* http://fep-api.dimensiondata.com/rider/6
+* http://fep-api.dimensiondata.com/race/6/stages/current
+* http://fep-api.dimensiondata.com/stages/99/group-telemetry
+* http://fep-api.dimensiondata.com/stages/99/route (big, but awesome)
+* http://fep-api.dimensiondata.com/stages/98/riderclassification
+* http://fep-api.dimensiondata.com/stages/99/weather
+* http://fep-api.dimensiondata.com/stages/99/overallridersclassification?$orderby=GeneralClassificationRank&$filter=GeneralClassificationRank%20gt%200
+* http://fep-api.dimensiondata.com/stages/99/overallridersclassification?$orderby=SprintClassificationRank&$filter=SprintClassificationRank%20gt%200
+* http://fep-api.dimensiondata.com/stages/99/overallridersclassification?$orderby=MountainClassificationRank&$filter=MountainClassificationRank%20gt%200
+* http://fep-api.dimensiondata.com/stages/99/overallridersclassification?$orderby=YouthClassificationRank&$filter=YouthClassificationRank%20gt%200
+* http://fep-api.dimensiondata.com/stages/99/activity-feed?siteGuid={D37109C5-1DEB-4022-9216-6883024A832B}&$filter=IsShowOnProfile%20eq%20true
