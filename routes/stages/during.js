@@ -74,7 +74,7 @@ module.exports = function( res, params ){
     promises.push( getStageInfo( state ) );
     promises.push( getProgress( state ) );
     promises.push( getRank( state ) );
-    promises.push( getJerseys( state, false ) );
+    promises.push( getJerseys( state ) );
     promises.push( getLiveNews( state ) );
 
     Promise.all( promises ).then( ( data )=>{
@@ -84,7 +84,7 @@ module.exports = function( res, params ){
         info: data[ 1 ],
         progress: data[ 2 ],
         rank: data[ 3 ],
-        jerseys: data[ 3 ],
+        jerseys: data[ 4 ],
         news: data[ 5 ],
         livenews: config.useLiveNewsInsteadOfTwitter
       }

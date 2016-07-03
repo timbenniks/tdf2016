@@ -2,10 +2,10 @@ var moment = require( 'moment' ),
     call = require( './call' ),
     config = require( '../data/config.js' );
 
-module.exports = function( availStage, route, useTomorrow ){
+module.exports = function( availStage, route, yesterdayOrTomorrow ){
   
-  var findWorkableStage = ( stages, availStage, tomorrow )=>{
-    if( stages[ availStage ].type !== 'REP' && !tomorrow ){
+  var findWorkableStage = ( stages, availStage, when )=>{
+    if( stages[ availStage ].type !== 'REP' && !when ){
       return availStage;
     }
 
@@ -24,10 +24,10 @@ module.exports = function( availStage, route, useTomorrow ){
     var result = false; 
     for( var i = 0; i < workableStages.length; i++ ){
       if( workableStages[ i ].id.toString() === availStage ){
-        if( tomorrow ){
+        if( when === 'tomorrow' ){
           result = ( availStage !== '2100' ) ? workableStages[ i + 1 ].id : false;
         }
-        else {
+        else if( when === 'yesterday' ){
           result = ( availStage !== '0100' ) ? workableStages[ i - 1 ].id : false;
         }
       }
@@ -37,10 +37,12 @@ module.exports = function( availStage, route, useTomorrow ){
   };
 
   return new Promise( ( resolve, reject )=>{
+    var when = false;
+
     call( `${config.baseUrl}/route.${route}.json`, 'applicable stage' )
       .then( ( stages )=>{
-        var tomorrow = !!useTomorrow,
-            stage = findWorkableStage( stages, availStage, tomorrow );
+        when = ( yesterdayOrTomorrow === 'tomorrow' ) ? 'tomorrow' : 'yesterday';
+        stage = findWorkableStage( stages, availStage, when );
         
         resolve( stage );
       } )

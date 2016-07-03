@@ -5,11 +5,10 @@ var call = require( './call' ),
 
 module.exports = function( state ){
   var stage = state.stage,
-      route = state.route,
-      useTomorrow = true;
-
+      route = state.route;
+      
   return new Promise( ( resolve, reject )=>{
-    findApplicableStage( stage, route, useTomorrow ).then( ( applicableStage )=>{
+    findApplicableStage( stage, route, 'tomorrow' ).then( ( applicableStage )=>{
       
       if( !applicableStage ){
         resolve({

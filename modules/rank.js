@@ -55,7 +55,8 @@ module.exports = function( state ){
         resolve( {} );
       }
 
-      findApplicableStage( state.stage, state.route, false ).then( ( stage )=>{
+      findApplicableStage( state.stage, state.route, 'yesterday' ).then( ( stage )=>{
+
         call( `${config.baseUrl}/gprank${stage}.json`, 'rank' ).then( ( data )=>{
           var sprinters = ( data.ipg ) ? buildPointsRank( riders, data.ipg.r, 'sprint' ) : false,
               individual = ( data.itg ) ? buildTimeRank( riders, data.itg.r, 'individual' ) : false,
