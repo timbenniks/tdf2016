@@ -5,6 +5,7 @@ export default class Stream {
   constructor( app ){
     this.emitter = app.emitter;
     this.notifier = app.notifier;
+    this.sharer = app.sharer;
     this.bind();
     this.currentLiveNews = '';
   }
@@ -47,5 +48,6 @@ export default class Stream {
 
   placeNews( newsHtml ){
     document.querySelector( '.stream' ).innerHTML = newsHtml;
+    this.sharer.rebind();
   }
 }

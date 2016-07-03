@@ -17,7 +17,12 @@ var config = {
     access_token_key: process.env.access_token_key,
     access_token_secret: process.env.access_token_secret
   },
-  fb_token: process.env.fb_token
+  fb_token: process.env.fb_token,
+  dimentionData: {
+    cours: 6,
+    siteGuid: '{D37109C5-1DEB-4022-9216-6883024A832B}',
+    baseurl: 'http://fep-api.dimensiondata.com/'
+  }
 }
 
 module.exports = config;

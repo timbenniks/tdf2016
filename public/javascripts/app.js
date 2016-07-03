@@ -6,6 +6,7 @@ import Rank from './components/rank';
 import Fullscreen from './components/fullscreen';
 import Notify from './components/notify';
 import Weather from './components/weather';
+import Share from './components/share';
 import Emitter from 'tiny-emitter';
 
 class App {
@@ -32,6 +33,7 @@ class App {
         new Stream( this );
       }
       else {
+        this.sharer = new Share( this );
         new LiveNews( this );
       }
     }

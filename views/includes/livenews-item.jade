@@ -1,4 +1,5 @@
 blockquote( class=item.status, id=item.id )
+  button.share share
   p.title #{item.time} &ndash; #{item.title}
   p.desc!=item.desc.replace( /\n\n/g, '<br />' )
   
