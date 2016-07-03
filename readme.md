@@ -29,6 +29,11 @@ This year the project has the following features:
 * Show a virtual leaderboard for mountain stages
 * Use node-schedule for automatic view switching
 
+## Data sources
+* dimensiondata.com
+* letour.fr
+* twitter.com
+
 ## Run it yourself
 * Install Foreman globally
 * Create a .env file in the root of the project and add your credentials there.
@@ -47,7 +52,7 @@ npm i
 npm start
 ```
 
-## Potential dimention data hack:
+## Potential dimention data parse:
 * http://fep-api.dimensiondata.com/rider/6
 * http://fep-api.dimensiondata.com/race/6/stages/current
 * http://fep-api.dimensiondata.com/stages/99/group-telemetry
