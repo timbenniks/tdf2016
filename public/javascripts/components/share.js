@@ -31,7 +31,7 @@ export default class Share {
     FB.ui({
       method: 'share',
       hashtag: 'tdf2016',
-      quote: `${title} ${desc}`,
+      quote: `${title}.\n\n ${desc}`,
       href: window.location.href,
     }, function(response){});
   }
