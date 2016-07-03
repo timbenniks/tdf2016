@@ -5,6 +5,7 @@ import Progress from './components/progress';
 import Rank from './components/rank';
 import Fullscreen from './components/fullscreen';
 import Notify from './components/notify';
+import Weather from './components/weather';
 import Emitter from 'tiny-emitter';
 
 class App {
@@ -22,6 +23,7 @@ class App {
     new SocketHandler( this );
 
     if( this.wrapper.classList.contains( 'during' ) ){
+      new Weather( this );
       new Rank( this );
       new Progress( this );
 
@@ -34,6 +36,7 @@ class App {
     }
 
     if( this.wrapper.classList.contains( 'after' ) ){
+      new Weather( this );
       new Rank( this );
     }
 

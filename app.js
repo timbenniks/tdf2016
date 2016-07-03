@@ -19,6 +19,7 @@ var http = require( 'http' ),
     api = require( './routes/api' ),
     about = require( './routes/about' ),
     bot = require( './routes/bot' ),
+    weather = require( './routes/weather' ),
     EventEmitter = require( 'events' ).EventEmitter;
 
 const app = express();
@@ -86,6 +87,7 @@ app.use( '/', home );
 app.use( '/api/', api );
 app.use( '/about/', about );
 app.use( '/webhook/', bot );
+app.use( '/weather/', weather );
 
 io.sockets.on( 'connection', ( socket )=>{
   
