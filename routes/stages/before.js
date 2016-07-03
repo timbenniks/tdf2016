@@ -29,7 +29,8 @@ module.exports = function( res, params ){
       starts = data[ 1 ];
 
       startDateTime = new Date();
-      startDateTime.setHours( starts.split( ':' )[ 0 ], starts.split( ':' )[ 1 ], 0, 0 );
+      // heroku server time fix
+      startDateTime.setHours( starts.split( ':' )[ 0 ] - 2, starts.split( ':' )[ 1 ], 0, 0 );
       tmplData.starts = moment( startDateTime ).fromNow();
       tmplData.startTime = starts;
 
