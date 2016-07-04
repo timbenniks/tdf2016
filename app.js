@@ -20,6 +20,7 @@ var http = require( 'http' ),
     about = require( './routes/about' ),
     bot = require( './routes/bot' ),
     weather = require( './routes/weather' ),
+    map = require( './routes/map' ),
     EventEmitter = require( 'events' ).EventEmitter;
 
 const app = express();
@@ -88,6 +89,7 @@ app.use( '/api/', api );
 app.use( '/about/', about );
 app.use( '/webhook/', bot );
 app.use( '/weather/', weather );
+app.use( '/map/', map );
 
 io.sockets.on( 'connection', ( socket )=>{
   

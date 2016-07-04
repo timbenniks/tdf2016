@@ -3,7 +3,6 @@
 var config = require( '../data/config' ),
     express = require( 'express' ),
     request = require( 'superagent' ),
-    cheerio = require( 'cheerio' ),
     router = express.Router();
 
 router.get( '/', ( req, res )=>{
@@ -12,7 +11,7 @@ router.get( '/', ( req, res )=>{
     .accept( 'application/json' )
     .end( ( err, state )=>{
        request
-        .get( `http://fep-api.dimensiondata.com/stages/${state.body.StageId}/weather` )
+        .get( `http://fep-api.dimensiondata.com/stages/${state.body.StageId}/weather?DistanceFromStart=0` )
         .accept( 'application/json' )
         .end( ( err, weather )=>{
           var resut = {

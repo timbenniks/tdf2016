@@ -52,6 +52,9 @@ npm i
 npm start
 ```
 
+## Messenger bot research
+* https://howdy.ai/botkit/
+
 ## Potential dimention data parse:
 * http://fep-api.dimensiondata.com/rider/6
 * http://fep-api.dimensiondata.com/race/6/stages/current
