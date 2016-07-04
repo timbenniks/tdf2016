@@ -53,7 +53,8 @@ module.exports = function(){
           route: state.jsonVersions.route,
           starters: ( state.jsonVersions.starters ) ? state.jsonVersions.starters : false,
           jerseys: jerseys,
-          checkpoints: state.jsonVersions.checkpoints
+          checkpoints: state.jsonVersions.checkpoints,
+          cities: state.jsonVersions.cities_en
         } );
       } )
       .catch( ( error )=>{

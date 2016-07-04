@@ -2,11 +2,13 @@ extends layout
 
 block content
 
-  .section-holder.before-stage
+  .section-holder.after
     include includes/header.jade
     
     .page-content
-      .before-content
-        article
-          img( src="/images/logo.png", width="200" )
-          h1 The stage will start #{starts}
+      section.news-data
+        include includes/about-today.jade
+      
+      section.rank-data
+        include includes/jerseys.jade
+        include includes/rank.jade

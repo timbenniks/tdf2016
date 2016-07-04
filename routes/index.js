@@ -15,7 +15,7 @@ router.get( '/', ( req, res, next )=>{
       afterStageDate = new Date(),
       afterStageTime;  
 
-  afterStageDate.setHours( config.dayEndsAt - 2, 0, 0, 0 );
+  afterStageDate.setHours( config.dayEndsAt - config.serverTimeOffset, 0, 0, 0 );
   afterStageTime = afterStageDate.getTime();
   
   if( req.query.stage ){
@@ -39,7 +39,7 @@ router.get( '/', ( req, res, next )=>{
       .then( getStartTime )
       .then( ( sTime )=>{
         var startDateTime = new Date();
-        startDateTime.setHours( sTime.split( ':' )[ 0 ] - 2, sTime.split( ':' )[ 1 ], 0, 0 );
+        startDateTime.setHours( sTime.split( ':' )[ 0 ] - config.serverTimeOffset, sTime.split( ':' )[ 1 ], 0, 0 );
         
         if( time < startDateTime.getTime() ){
           before( res, req.query );

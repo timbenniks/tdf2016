@@ -20,13 +20,13 @@ module.exports = function( state ){
         var stageForImage = ( applicableStage.charAt( 0 ) === '0' ) ? applicableStage.substring( 1 ) : applicableStage;
 
         var stageImg = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${stageForImage}/CARTE.jpg`,
-            stafgeProfile = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${stageForImage}/PROFIL.jpg`;
+            stageProfile = `${config.alternativePhotosUrl.replace( '$$year$$', config.year )}/${stageForImage}/PROFIL.jpg`;
 
         state.stage = applicableStage;
 
         getStageInfo( state ).then( ( stageInfoForTomorrow )=>{  
           stageInfoForTomorrow.route = stageImg;
-          stageInfoForTomorrow.profile = stafgeProfile;
+          stageInfoForTomorrow.profile = stageProfile;
           resolve( stageInfoForTomorrow );
         } )
         .catch( ( error )=>{

@@ -2,84 +2,84 @@ section.rank
 
   if !rank || ( !rank.individual && !rank.white && !rank.sprinters && !rank.climbers )
     p.error No rank data could be found, something went wrong.
+  else
+    .switch-tables-wrapper
+      if rank.individual
+        button.switch.active( data-switch="individual") yellow
+      
+      if rank.white
+        button.switch( data-switch="white") white
+      
+      if rank.climbers
+        button.switch( data-switch="climbers") polka dot
+      
+      if rank.sprinters
+        button.switch( data-switch="sprinters") green
 
-  .switch-tables-wrapper
-    if rank && rank.individual
-      button.switch.active( data-switch="individual") yellow
-    
-    if rank && rank.white
-      button.switch( data-switch="white") white
-    
-    if rank && rank.climbers
-      button.switch( data-switch="climbers") polka dot
-    
-    if rank && rank.sprinters
-      button.switch( data-switch="sprinters") green
-
-  if rank && rank.individual
-    table.switchable.individual
-      tr
-        th.classification RANK
-        th.rider RIDER
-        th.no NO
-        th.team TEAM
-        th.time TIME
-        th.behind BEHIND
-      each rider, index in rank.individual
-        tr( data-lang=rider.lang )
-          td.classification=index+1
-          td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
-          td.no=rider.no
-          td.team=rider.team
-          td.time=rider['individual-time']
-          td.behind=rider['individual-behind']
-
-  if rank && rank.climbers
-    table.switchable.climbers
-      tr
-        th.classification RANK
-        th.rider RIDER
-        th.no NO
-        th.team TEAM
-        th.points POINTS
-      each rider, index in rank.climbers
+    if rank.individual
+      table.switchable.individual
         tr
-          td.classification=index+1
-          td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
-          td.no=rider.no
-          td.team=rider.team
-          td.points=rider.climb
+          th.classification RANK
+          th.rider RIDER
+          th.no NO
+          th.team TEAM
+          th.time TIME
+          th.behind BEHIND
+        each rider, index in rank.individual
+          tr( data-lang=rider.lang )
+            td.classification=index+1
+            td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+            td.no=rider.no
+            td.team=rider.team
+            td.time=rider['individual-time']
+            td.behind=rider['individual-behind']
 
-  if rank && rank.sprinters 
-    table.switchable.sprinters
-      tr
-        th.classification RANK
-        th.rider RIDER
-        th.no NO
-        th.team TEAM
-        th.points POINTS
-      each rider, index in rank.sprinters
+    if rank.climbers
+      table.switchable.climbers
         tr
-          td.classification=index+1
-          td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
-          td.no=rider.no
-          td.team=rider.team
-          td.points=rider.sprint
+          th.classification RANK
+          th.rider RIDER
+          th.no NO
+          th.team TEAM
+          th.points POINTS
+        each rider, index in rank.climbers
+          tr
+            td.classification=index+1
+            td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+            td.no=rider.no
+            td.team=rider.team
+            td.points=rider.climb
 
-  if rank && rank.white
-    table.switchable.white
-      tr
-        th.classification RANK
-        th.rider RIDER
-        th.no NO
-        th.team TEAM
-        th.time TIME
-        th.behind BEHIND
-      each rider, index in rank.white
+    if rank.sprinters 
+      table.switchable.sprinters
         tr
-          td.classification=index+1
-          td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
-          td.no=rider.no
-          td.team=rider.team
-          td.time=rider['white-time']
-          td.behind=rider['white-behind']
+          th.classification RANK
+          th.rider RIDER
+          th.no NO
+          th.team TEAM
+          th.points POINTS
+        each rider, index in rank.sprinters
+          tr
+            td.classification=index+1
+            td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+            td.no=rider.no
+            td.team=rider.team
+            td.points=rider.sprint
+
+    if rank.white
+      table.switchable.white
+        tr
+          th.classification RANK
+          th.rider RIDER
+          th.no NO
+          th.team TEAM
+          th.time TIME
+          th.behind BEHIND
+        each rider, index in rank.white
+          tr
+            td.classification=index+1
+            td.rider #[span.flag( class="flag-#{rider.lang}" )] #{rider.name}
+            td.no=rider.no
+            td.team=rider.team
+            td.time=rider['white-time']
+            td.behind=rider['white-behind']

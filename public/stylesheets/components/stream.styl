@@ -16,9 +16,15 @@
     background: rgba( #fff, .3 )
     border-bottom: 1px solid #f9bc0d
     
+    &:hover
+      button.share
+        opacity: 1
+        
     button.share
       float: right
       margin: 0
+      opacity: 0
+      transition: opacity 300ms
 
     .rest & 
     .no-tour &

@@ -1,0 +1,59 @@
+.about-today
+  .about-description
+    margin: 1em
+    padding: 1em
+    background: rgba( #fff, .3 )
+    border-bottom: 1px solid #f9bc0d
+
+    @media screen and ( min-width: 1000px )
+      display: flex
+
+    article
+      width: 100%
+      margin: 0 auto 1em
+      font-size: 1em
+      max-width: 700px
+      
+      @media screen and ( min-width: 1000px )
+        &:last-child
+          margin: 0 0 0 1em
+    
+      h1
+        margin: 0 0 0.5em 0
+        text-transform: uppercase
+        opacity: 0.6
+      
+      p
+        font-siuze: 1em
+        line-height: 1.5
+        margin: 0
+        
+      img
+        display: block
+        width: 100%
+        height: auto
+        margin: 0 0 1em 0
+        
+  .about-profile-route
+    padding 1em
+
+    img
+      display: block
+      width: 100%
+      height: auto
+      margin: 0 0 1em 0
+      
+    @media screen and ( min-width: 1300px )
+      overflow: hidden
+      margin: 1em
+      padding: 1em
+      background: rgba( #fff, .3 )
+      border-bottom: 1px solid #f9bc0d
+        
+      img
+        width: 50%
+        float: left
+        
+        &:last-child
+          margin: 0 0 0 1em
+          width: calc( 50% - 1em )

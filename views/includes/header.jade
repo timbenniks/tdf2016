@@ -1,10 +1,14 @@
 header
-  img.logo( src="/images/logo.svg" )
+  img.logo( src="/images/alt-logo.svg" )
   
   h1
     if info.distance > 0 
       span.chapeau #{info.date} &ndash; #{info.startsAt} &ndash; #{info.distance}km
-      span.title #{info.start} &ndash; #{info.finish}
+      span.title
+        if starts
+          | #{info.start} &ndash; #{info.finish}: starts #{starts}
+        else
+          | #{info.start} &ndash; #{info.finish}
     else
       span.chapeau #{info.date} &ndash; #{ info.type }
       span.title #{info.start}

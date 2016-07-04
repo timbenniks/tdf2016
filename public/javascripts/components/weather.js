@@ -10,6 +10,11 @@ export default class Weather {
       .accept( 'application/json' )
       .end( ( err, res )=>{
         const weather = res.body;
+
+        if(!weather.temp){
+          return;
+        }        
+
         this.content += ` (${ weather.temp }°, wind: ${ weather.wind }, humidity: ${ weather.humidity }%)`;
         this.chapeau.innerHTML = this.content;
       } );

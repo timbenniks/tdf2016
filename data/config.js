@@ -11,6 +11,8 @@ var config = {
   baseUrl: 'http://www.letour.fr/useradgents/$$year$$/json',
   photosUrl: 'http://www.letour.fr/useradgents/$$year$$/photos',
   alternativePhotosUrl: 'http://www.letour.fr/PHOTOS/TDF/$$year$$',
+  citiesUrl: 'http://www.letour.fr/useradgents/$$year$$/cities',
+  serverTimeOffset: 2,
   twitter: {
     consumer_key: process.env.consumer_key,
     consumer_secret: process.env.consumer_secret,

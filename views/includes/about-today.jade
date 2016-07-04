@@ -1,0 +1,16 @@
+section.about-today
+ 
+  .about-description
+    article
+      h1 start: #{info.start}
+      img( src=today.cities.start.img )
+      p=today.cities.start.desc
+
+    article
+      h1 Finish: #{info.finish}
+      img( src=today.cities.finish.img )
+      p=today.cities.finish.desc
+
+  .about-profile-route
+    img.profile( src=today.profile )
+    img.route( src=today.route )
