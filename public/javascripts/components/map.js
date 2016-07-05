@@ -1,6 +1,6 @@
 import GoogleMapsLoader from 'google-maps';
 import request from 'superagent';
-import MarkerClusterer from '../vendor/markerclusterer';
+//import MarkerClusterer from '../vendor/markerclusterer';
 import mapWindowTmpl from '../../../views/includes/map-window.jade';
 import moment from 'moment';
 
@@ -193,30 +193,30 @@ export default class Maps {
       } );
     } );
 
-    if( this.cluster ){
-      this.cluserMarkerStyle = {
-        url: '/map/m1.png',
-        width: 78/2.5,
-        height: 98/2.5,
-        lineHeight: 30,
-        anchor: [ 0, 0 ],
-        textColor: "#fff",
-        textSize: 10,
-        backgroundSize: `${78/2.5}px ${98/2.5}px`
-      }
+    // if( this.cluster ){
+    //   this.cluserMarkerStyle = {
+    //     url: '/map/m1.png',
+    //     width: 78/2.5,
+    //     height: 98/2.5,
+    //     lineHeight: 30,
+    //     anchor: [ 0, 0 ],
+    //     textColor: "#fff",
+    //     textSize: 10,
+    //     backgroundSize: `${78/2.5}px ${98/2.5}px`
+    //   }
 
-      this.cluserOptions = {
-        imagePath: '/map/m',
-        gridSize: 8,
-        maxZoom: 15,
-        zoomOnClick: true,
-        averageCenter: true,
-        minimumClusterSize: 2,
-        styles: [ this.cluserMarkerStyle, this.cluserMarkerStyle, this.cluserMarkerStyle ]
-      }
+    //   this.cluserOptions = {
+    //     imagePath: '/map/m',
+    //     gridSize: 8,
+    //     maxZoom: 15,
+    //     zoomOnClick: true,
+    //     averageCenter: true,
+    //     minimumClusterSize: 2,
+    //     styles: [ this.cluserMarkerStyle, this.cluserMarkerStyle, this.cluserMarkerStyle ]
+    //   }
 
-      this.clusterer = new MarkerClusterer( this.map, this.markers, this.cluserOptions );
-    }
+    //   this.clusterer = new MarkerClusterer( this.map, this.markers, this.cluserOptions );
+    // }
   }
 
   plotRouteOnMap( data ){
@@ -353,26 +353,19 @@ export default class Maps {
 
   closeWindow(){
     return new Promise( ( resolve, reject )=>{
-      this.mapWindowHolder.classList.remove( 'show' );
+      this.mapWindowHolder.classList.remove( 'active' );
       this.mapWindow = document.querySelector( '.map-window' );
       this.defaultIconState();
 
-      setTimeout( ()=>{
-        this.mapWindowHolder.classList.remove( 'active' );
-        if( this.mapWindow ){
-          this.mapWindowHolder.removeChild( document.querySelector( '.map-window' ) );
-        }
-        resolve();
-      }, 300 );
+      if( this.mapWindow ){
+        this.mapWindowHolder.removeChild( document.querySelector( '.map-window' ) );
+      }
+      resolve();
     } );
   }
   
   openWindow( html ){
     this.mapWindowHolder.insertAdjacentHTML( 'beforeend', html );
     this.mapWindowHolder.classList.add( 'active' );
-    
-    setTimeout( ()=>{
-      this.mapWindowHolder.classList.add( 'show' );
-    }, 10 );
   }
 }
