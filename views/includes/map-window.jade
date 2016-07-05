@@ -1,27 +1,63 @@
 .map-window
   h1 #{group.name} (#{group.size})
 
-  if group.speed !== 0
-    p.speed speed: #{group.speed}
+  .stats
+    if group.speed !== 0
+      .stat-wrapper
+        span.title speed
+        span.content.speed #{group.speed}
 
-  if group.avgSpeed !== 0
-    p.speed avgSpeed: #{group.avgSpeed}
+    if group.avgSpeed !== 0
+      .stat-wrapper
+        span.title Average speed
+        span.content.speed #{group.avgSpeed}
 
-  p.slope slope: #{group.slope}%
-  p.to-finish dist until finish: #{group.distToFinish}km
+    .stat-wrapper
+      span.title steepness
+      span.content.slope #{group.slope}%
+  
+    .stat-wrapper
+      span.title to finish
+      span.content.distance #{group.distToFinish}km
 
-  if group.gapNextGroupDist !== false
-    p.next-group-dist next group dist #{group.gapNextGroupDist}km
+  .times
+    if group.gapNextGroupDist !== false
+      .time-wrapper
+        span.title to next group
+        span.content.distance #{group.gapNextGroupDist}km
 
-  if group.gapPrevGroupDist !== false
-    p.prev-group-dist prev group dist #{group.gapPrevGroupDist}km
+    if group.gapPrevGroupDist !== false
+      .time-wrapper
+        span.title from prev group
+        span.content.distance #{group.gapPrevGroupDist}km
+    
+    if group.gapLeadingGroupTime !== false
+      .time-wrapper
+        span.title to leading group
+        span.content.time #{group.gapLeadingGroupTime}
 
-  if group.gapLeadingGroupTime !== false
-    p.leading-group-time leading group time #{group.gapLeadingGroupTime}
+    if group.gapNextGroupTime !== false
+      .time-wrapper
+        span.title to next group
+        span.content.time #{group.gapNextGroupTime}
 
-  if group.gapNextGroupTime !== false
-    p.next-group-time next group time #{group.gapNextGroupTime}
+  if group.jerseys.yellow || group.jerseys.polka_dot || group.jerseys.green || group.jerseys.white 
+   .jerseys
+     if group.jerseys.yellow 
+      span.yersey.y
+     
+     if group.jerseys.polka_dot 
+      span.yersey.g
+     
+     if group.jerseys.green 
+      span.yersey.w
+     
+     if group.jerseys.white 
+      span.yersey.r
 
-  ul
+  ul.riders
     for rider in group.riders
-      li=rider.lastName
+      li
+        img.pic( src=rider.photo, width="40" )
+        span.name #{rider.firstName} #{rider.lastName}
+        span.rider-stats #{rider.speed.toFixed( 1 )}km/h

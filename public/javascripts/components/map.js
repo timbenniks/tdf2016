@@ -118,6 +118,11 @@ export default class Maps {
 
       getRiderForBib = ( bib )=>{
         return this.riders.find( r => r.Id === bib );
+      },
+
+      capitalize = function( str ){
+        var s = str.toLowerCase(); 
+        return s.charAt( 0 ).toUpperCase() + s.slice( 1 );
       };
 
       this.groups.Groups.forEach( ( group )=>{
@@ -149,7 +154,7 @@ export default class Maps {
               bib: rider.Bib,
               posInGroup: ( rider.PositionInTheGroup ) ? rider.PositionInTheGroup : false,
               firstName: getRiderForBib( rider.Bib ).FirstName, 
-              lastName: getRiderForBib( rider.Bib ).LastName,
+              lastName: capitalize( getRiderForBib( rider.Bib ).LastName ),
               team: {
                 name: getRiderForBib( rider.Bib ).TeamName,
                 code: getRiderForBib( rider.Bib ).TeamCode
