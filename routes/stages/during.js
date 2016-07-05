@@ -70,7 +70,7 @@ module.exports = function( res, params ){
       return false;
     }
 
-    promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) )
+    //promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) )
     promises.push( getStageInfo( state ) );
     promises.push( getProgress( state ) );
     promises.push( getRank( state ) );
@@ -80,12 +80,12 @@ module.exports = function( res, params ){
     Promise.all( promises ).then( ( data )=>{
       var tmplData = {
         title: config.title,
-        tweets: data[ 0 ],
-        info: data[ 1 ],
-        progress: data[ 2 ],
-        rank: data[ 3 ],
-        jerseys: data[ 4 ],
-        news: data[ 5 ],
+        //tweets: data[ 0 ],
+        info: data[ 0 ],
+        progress: data[ 1 ],
+        rank: data[ 2 ],
+        jerseys: data[ 3 ],
+        news: data[ 4 ],
         livenews: config.useLiveNewsInsteadOfTwitter
       }
 
