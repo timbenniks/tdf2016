@@ -5,7 +5,7 @@ module.exports = function( url, identifier ){
 
   return new Promise( ( resolve, reject )=>{
     request
-      .get( url.replace( '$$year$$', config.year ) + '?_=' + Date.now().toString() )
+      .get( url.replace( '$$year$$', config.year ) )
       .accept( 'application/json' )
       .end( ( err, res )=>{
         if( err && err.status === 404 ){

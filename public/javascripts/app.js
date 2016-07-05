@@ -12,8 +12,7 @@ import Emitter from 'tiny-emitter';
 
 class App {
   constructor(){
-    
-    //this.io = require( 'socket.io-client' )( '//tims-tdf-2016.herokuapp.com' );    
+    this.io = require( 'socket.io-client' )( '//tims-tdf-2016.herokuapp.com' );    
     this.wrapper = document.querySelector( '.section-holder' );
     this.emitter = new Emitter();
     this.notifier = new Notify( this );
@@ -23,7 +22,7 @@ class App {
     }
 
     new Fullscreen( this );
-    //new SocketHandler( this );
+    new SocketHandler( this );
 
     if( this.wrapper.classList.contains( 'map' ) ){
       new Maps( this );

@@ -1,7 +1,52 @@
 .map
   #map
+  #map-window-holder
     position: absolute
-    top: 60px
+    top: 75px
     left: 0
-    height: calc( 100% - 60px )
+    height: calc( 100% - 75px )
     width: 100%
+    
+    @media screen and ( min-width: 600px )
+      height: calc( 100% - 60px )
+      top: 60px
+    
+  #map-window-holder
+    display: none
+    opacity: 0
+    width: 100%
+    left: auto
+    right: 0
+    background: rgba( #fff, 0.9 )
+    border: none
+    transition: opacity 300ms
+    overflow: auto
+    background: lighten( #f9bc0d, 35 )
+    font-size: 1em
+
+    &.active
+      display: block
+      
+    &.show
+      opacity: 1
+    
+    .close-window
+      position: absolute
+      right: 1em
+      top 1em
+      margin: 0
+      
+    .map-window
+      margin: 1em
+      
+      h1
+        text-transform: uppercase
+        color: rgba( #000, 0.6 )
+        margin: 0 0 1em 0
+        font-size: 1.2
+
+    @media screen and ( min-width: 800px )
+      background: rgba( lighten( #f9bc0d, 35 ), 0.8 )
+      border-left: 1px solid #f9bc0d
+      width: 300px
+

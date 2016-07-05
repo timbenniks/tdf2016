@@ -47,7 +47,7 @@ module.exports = function( state ){
                 progress.groups.push({
                   title: group.t,
                   runnersNo: ( group.n ) ? group.n : 0,
-                  delay: ( group.d ) ? moment.duration( group.d, 'seconds' ).format( 'mm:ss', { trim: false } ) : '04:11',
+                  delay: ( group.d ) ? moment.duration( group.d, 'seconds' ).format( 'mm:ss', { trim: false } ) : '00:00',
                   jerseys: ( group.j ) ? group.j.split( '' ) : [],
                   riders: mappedRiders
                 } );

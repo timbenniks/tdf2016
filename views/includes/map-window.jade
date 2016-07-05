@@ -1,0 +1,27 @@
+.map-window
+  h1 #{group.name} (#{group.size})
+
+  if group.speed !== 0
+    p.speed speed: #{group.speed}
+
+  if group.avgSpeed !== 0
+    p.speed avgSpeed: #{group.avgSpeed}
+
+  p.slope slope: #{group.slope}%
+  p.to-finish dist until finish: #{group.distToFinish}km
+
+  if group.gapNextGroupDist !== false
+    p.next-group-dist next group dist #{group.gapNextGroupDist}km
+
+  if group.gapPrevGroupDist !== false
+    p.prev-group-dist prev group dist #{group.gapPrevGroupDist}km
+
+  if group.gapLeadingGroupTime !== false
+    p.leading-group-time leading group time #{group.gapLeadingGroupTime}
+
+  if group.gapNextGroupTime !== false
+    p.next-group-time next group time #{group.gapNextGroupTime}
+
+  ul
+    for rider in group.riders
+      li=rider.lastName
