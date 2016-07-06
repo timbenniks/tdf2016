@@ -26,6 +26,7 @@ class App {
 
     if( this.wrapper.classList.contains( 'map' ) ){
       new Maps( this );
+      new Weather( this );
     }
 
     if( this.wrapper.classList.contains( 'during' ) ){

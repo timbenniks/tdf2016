@@ -1,7 +1,7 @@
 import GoogleMapsLoader from 'google-maps';
 import request from 'superagent';
-//import MarkerClusterer from '../vendor/markerclusterer';
-import mapWindowTmpl from '../../../views/includes/map-window.jade';
+import mapWindowGroupTmpl from '../../../views/includes/map-window-group.jade';
+import mapWindowInterestTmpl from '../../../views/includes/map-window-interest.jade';
 import moment from 'moment';
 
 import 'babel-polyfill';
@@ -12,7 +12,6 @@ export default class Maps {
     this.emitter = app.emitter;
     this.routePoly = false;
     this.markers = [];
-    this.allGroups = [];
     this.mapWindowHolder = document.getElementById( 'map-window-holder' );
     this.closeBtn = this.mapWindowHolder.querySelector( '.close-window' );
     this.cluster = false;
@@ -27,19 +26,8 @@ export default class Maps {
       google.maps.event.addDomListener( window, 'resize', this.fitBoundsToRoute.bind( this ) );
     } );
 
-    this.emitter.on( 'marker:clicked', ( marker )=>{
-      this.onMarkerClick( marker );
-    });
-    
-    this.emitter.on( 'markers:update', ( data )=>{
-      // clear markers, add new markers
-    });
-
-    this.closeBtn.addEventListener( 'click', ()=>{
-      this.closeWindow().then( ()=>{
-        this.fitBoundsToMarkers();
-      } ); 
-    }, false );
+    this.emitter.on( 'marker:clicked', this.onMarkerClick.bind( this ) );
+    this.closeBtn.addEventListener( 'click', this.onClosePanelClick.bind( this ) );
   }
 
   initializeMap(){
@@ -68,16 +56,22 @@ export default class Maps {
       scaledSize: new google.maps.Size( 78/2.5, 98/2.5 )
     }
 
+    this.markerOptionsInterest = {
+      size: new google.maps.Size( 40, 40 ),
+      origin: new google.maps.Point( 0, 0 ),
+      anchor: new google.maps.Point( 0, 4 ),
+      scaledSize: new google.maps.Size( 15, 15 )
+    }
+
     this.map = new google.maps.Map( document.getElementById( 'map' ), this.mapOptions );
-    this.getRouteData()
-      .then( this.plotRouteOnMap.bind( this ) )
-      .then( ()=>{
-        this.plotStartMarker();
-        this.plotFinishMarker();
-        this.getGroups()
-          .then( this.mapGroupData.bind( this ) )
-          .then( this.placeGroups.bind( this ) );
-      } );
+    
+    // set it all in motion
+    this.getRouteData().then( ( routeData )=>{
+      this.plotRoute( routeData );
+      this.plotPointsOfInterest();
+      this.getGroups()
+        .then( this.plotGroups.bind( this ) );
+    } );
   }
 
   getRouteData(){
@@ -86,12 +80,55 @@ export default class Maps {
         .get( `/map/route` )
         .accept( 'application/json' )
         .end( ( err, res )=>{
-          if( err ){
-            reject( err );
-          }
-
+          if( err ){ reject( err ); }
           resolve( res.body );
         } );
+    } );
+  }
+
+  plotRoute( data ){
+    this.routePoly = new google.maps.Polyline({
+      path: data.route,
+      geodesic: true,
+      strokeColor: '#fac018',
+      strokeOpacity: 0.9,
+      strokeWeight: 3
+    } );
+
+    this.routePoly.setMap( this.map );
+    this.fitBoundsToRoute();
+
+    this.pointsOfInterest = data.pointsOfInterest;
+    this.start = data.route[ 0 ];
+    this.finish = data.route[ data.route.length - 1 ];
+  }
+
+  plotPointsOfInterest(){
+    // plot start marker
+    this.plotMarker({
+      latlng: { lat: this.start.lat, lng: this.start.lng },
+      identifier: 'start',
+      icon: '/map/start.png',
+      type: 'start'
+    } );
+    
+    // plot finish marker
+    this.plotMarker({
+      latlng: { lat: this.finish.lat, lng: this.finish.lng },
+      identifier: 'finish',
+      icon: '/map/finish.png',
+      type: 'finish'
+    } );
+
+    this.pointsOfInterest.forEach( ( point )=>{
+      if( point.tf === 0 ){ return; }
+
+      this.plotMarker({
+        latlng: { lat: point.lat, lng: point.lng },
+        identifier: `${point.type}-${point.checkpoint_id}`,
+        icon: ( point.type === 'sprint' ) ? '/map/sprint.png' : `/map/cat${point.climb_cat}.png`,
+        type: 'interest'
+      } );
     } );
   }
 
@@ -101,83 +138,17 @@ export default class Maps {
         .get( `/map/groups` )
         .accept( 'application/json' )
         .end( ( err, res )=>{
-          if( err ){
-            reject( err );
-          }
-
+          if( err ){ reject( err ); }
           resolve( res.body );
         } );
     } );
   }
 
-  mapGroupData( groupData ){
-    return new Promise( ( resolve, reject )=>{
-      this.riders = groupData.riders;
-      this.groups = groupData.groups;
-      let mappedGroups = [],
+  plotGroups( groups ){
+    if( groups.length === 0 ){
+      return;
+    }
 
-      getRiderForBib = ( bib )=>{
-        return this.riders.find( r => r.Id === bib );
-      },
-
-      capitalize = function( str ){
-        var s = str.toLowerCase(); 
-        return s.charAt( 0 ).toUpperCase() + s.slice( 1 );
-      };
-
-      this.groups.Groups.forEach( ( group )=>{
-        mappedGroups.push({
-          name: group.GroupName,
-          key: group.GroupNameKey,
-          slope: group.Slope,
-          avgSpeed: group.GroupAverageSpeed.toFixed( 1 ),
-          speed: group.GroupSpeed.toFixed( 1 ),
-          distFromStart: group.GroupDistanceFromStart.toFixed( 1 ),
-          distToFinish: group.GroupDistanceToFinish.toFixed( 1 ),
-          gapPrevGroupDist: ( group.GapPreviousGroupD ) ? group.GapPreviousGroupD.toFixed( 1 ) : false,
-          gapNextGroupDist: ( group.GapFromNextGroupD ) ? group.GapFromNextGroupD .toFixed( 1 ): false,
-          gapLeadingGroupTime: ( group.GapToLeadingGroupT ) ? moment.duration( group.GapToLeadingGroupT, 'seconds' ).format( 'mm:ss', { trim: false } ) : false,
-          gapNextGroupTime: ( group.GapToPreviousGroupT ) ? moment.duration( group.GapToPreviousGroupT, 'seconds' ).format( 'mm:ss', { trim: false } ) : false,
-          id: group.GroupId,
-          lat: group.GroupLatitude,
-          lng: group.GroupLongitude,
-          size: group.GroupSize,
-          jerseys: {
-            yellow: group.HasGeneralClassificationJersey,
-            polka_dot: group.HasMountainJersey,
-            green: group.HasSprintJersey,
-            white: group.HasYouthJersey
-          },
-          riders: group.Riders.map( ( rider )=>{
-            return {
-              speed: ( rider.CurrentSpeed ) ? rider.CurrentSpeed : false,
-              bib: rider.Bib,
-              posInGroup: ( rider.PositionInTheGroup ) ? rider.PositionInTheGroup : false,
-              firstName: getRiderForBib( rider.Bib ).FirstName, 
-              lastName: capitalize( getRiderForBib( rider.Bib ).LastName ),
-              team: {
-                name: getRiderForBib( rider.Bib ).TeamName,
-                code: getRiderForBib( rider.Bib ).TeamCode
-              },
-              nationality: getRiderForBib( rider.Bib ).Nationality,
-              countryCode: getRiderForBib( rider.Bib ).CountryCode,
-              photo: getRiderForBib( rider.Bib ).PhotoUri,
-              classification: {
-                general: getRiderForBib( rider.Bib ).GeneralClassification,
-                sprint: getRiderForBib( rider.Bib ).SprintClassification
-              }
-            }
-          } )
-        } );
-      } );
-
-      this.allGroups = mappedGroups;
-
-      resolve( mappedGroups );
-    } );
-  }
-
-  placeGroups( groups ){
     groups.forEach( ( group )=>{
       let icon = '/map/group.png';
 
@@ -197,57 +168,11 @@ export default class Maps {
         type: 'group'
       } );
     } );
-
-    // if( this.cluster ){
-    //   this.cluserMarkerStyle = {
-    //     url: '/map/m1.png',
-    //     width: 78/2.5,
-    //     height: 98/2.5,
-    //     lineHeight: 30,
-    //     anchor: [ 0, 0 ],
-    //     textColor: "#fff",
-    //     textSize: 10,
-    //     backgroundSize: `${78/2.5}px ${98/2.5}px`
-    //   }
-
-    //   this.cluserOptions = {
-    //     imagePath: '/map/m',
-    //     gridSize: 8,
-    //     maxZoom: 15,
-    //     zoomOnClick: true,
-    //     averageCenter: true,
-    //     minimumClusterSize: 2,
-    //     styles: [ this.cluserMarkerStyle, this.cluserMarkerStyle, this.cluserMarkerStyle ]
-    //   }
-
-    //   this.clusterer = new MarkerClusterer( this.map, this.markers, this.cluserOptions );
-    // }
   }
 
-  plotRouteOnMap( data ){
-    return new Promise( ( resolve, reject )=>{
-      this.routePoly = new google.maps.Polyline({
-        path: data,
-        geodesic: true,
-        strokeColor: '#fac018',
-        strokeOpacity: 1.0,
-        strokeWeight: 4
-      } );
-
-      this.routePoly.setMap( this.map );
-      this.fitBoundsToRoute();
-
-      this.start = data[ 0 ];
-      this.finish = data[ data.length - 1 ];
-
-      resolve();
-    } );
-  }
-
+  // utility functions
   fitBoundsToMarkers(){
-    if( this.markers.length < 1 ){
-      return;
-    }
+    if( this.markers.length < 1 ){ return; }
 
     let markersToFitBoundsTo = this.markers.filter( marker => marker.type === 'group' );
 
@@ -260,9 +185,7 @@ export default class Maps {
   }
 
   fitBoundsToRoute(){
-    if( !this.routePoly ){
-      return;
-    }
+    if( !this.routePoly ){ return; }
 
     this.bounds = new google.maps.LatLngBounds();
     this.routePoly.getPath().forEach( (e)=>{
@@ -272,7 +195,7 @@ export default class Maps {
     this.map.fitBounds( this.bounds );
   }
 
-  defaultIconState(){
+  resetDefaultIconState(){
     this.markers.forEach( ( marker )=>{
 
       if( marker.type === 'group' ){
@@ -289,24 +212,6 @@ export default class Maps {
     } );
   }
 
-  plotStartMarker(){
-    this.plotMarker({
-      latlng: { lat: this.start.lat, lng: this.start.lng },
-      identifier: 'start',
-      icon: '/map/start.png',
-      type: 'start'
-    } );
-  }
-  
-  plotFinishMarker(){
-    this.plotMarker({
-      latlng: { lat: this.finish.lat, lng: this.finish.lng },
-      identifier: 'finish',
-      icon: '/map/finish.png',
-      type: 'finish'
-    } );
-  }
-
   plotMarker( opts ){
     let markerOpts = {
       position: opts.latlng,
@@ -316,7 +221,7 @@ export default class Maps {
       type: ( opts.type ) ? opts.type : false
     }
 
-    if( opts.icon ){
+    if( opts.icon && ( opts.type === 'group' || opts.type === 'start' || opts.type === 'finish' ) ){
       markerOpts.icon = {
         url: opts.icon,
         size: this.markerOptions.size,
@@ -326,24 +231,59 @@ export default class Maps {
       }
     }
 
+    if( opts.icon && opts.type === 'interest' ){
+      markerOpts.icon = {
+        url: opts.icon,
+        size: this.markerOptionsInterest.size,
+        origin: this.markerOptionsInterest.origin,
+        anchor: this.markerOptionsInterest.anchor,
+        scaledSize: this.markerOptionsInterest.scaledSize
+      }
+    }
+
     let marker = new google.maps.Marker( markerOpts );
-    marker.addListener( 'click', ()=>{
-      this.emitter.emit( 'marker:clicked', marker );
-    } );
+  
+    if( marker.type !== 'start' || marker.type !== 'finish' ){ 
+      marker.addListener( 'click', ()=>{
+        this.emitter.emit( 'marker:clicked', marker );
+      } );
+    }    
     
     this.markers.push( marker );
   }
 
   onMarkerClick( marker ){
     if( marker.type === 'start' || marker.type === 'finish' ){ return; }
-
-    this.fitBoundsToMarkers();
-    //this.map.setCenter( marker.getPosition() );
     
-    this.closeWindow().then( ()=>{
+    this.closeWindow();
+    this.map.setCenter( marker.getPosition() );
+    this.map.setZoom( 16 );
+  
+    if( marker.type === 'interest' ){
+      this.getCheckpoint( marker.identifier.split( '-' )[ 1 ] )
+        .then( ( checkpointData )=>{
+          if( checkpointData.alt > 0 ){
+            this.openWindow( mapWindowInterestTmpl( { interest: checkpointData } ) );
+          }
+        } );
+    }
+
+    if( marker.type === 'group' ){
       this.setIcon( marker, '/map/selected.png' );
-      this.openWindow( mapWindowTmpl( { group: marker.content } ) );  
-    } );      
+      this.openWindow( mapWindowGroupTmpl( { group: marker.content } ) );
+    }
+  }
+
+  getCheckpoint( id ){
+    return new Promise( ( resolve, reject )=>{
+      request
+        .get( `/map/checkpoint/${id}` )
+        .accept( 'application/json' )
+        .end( ( err, res )=>{
+          if( err ){ reject( err ); }
+          resolve( res.body );
+        } );
+    } );
   }
 
   setIcon( marker, icon ){
@@ -356,21 +296,23 @@ export default class Maps {
     } );
   }
 
-  closeWindow(){
-    return new Promise( ( resolve, reject )=>{
-      this.mapWindowHolder.classList.remove( 'active' );
-      this.mapWindow = document.querySelector( '.map-window' );
-      this.defaultIconState();
+  onClosePanelClick(){
+    this.closeWindow();
+    this.fitBoundsToMarkers();
+  }
 
-      if( this.mapWindow ){
-        this.mapWindowHolder.removeChild( document.querySelector( '.map-window' ) );
-      }
-      resolve();
-    } );
+  closeWindow(){
+    this.mapWindowHolder.classList.remove( 'active' );
+    this.mapWindow = document.querySelector( '.map-window' );
+    this.resetDefaultIconState();
+
+    if( this.mapWindow ){
+      this.mapWindowHolder.querySelector( '.map-window-content-wrapper' ).innerHTML = '';
+    }
   }
   
   openWindow( html ){
-    this.mapWindowHolder.insertAdjacentHTML( 'beforeend', html );
+    this.mapWindowHolder.querySelector( '.map-window-content-wrapper' ).innerHTML = html;
     this.mapWindowHolder.classList.add( 'active' );
   }
 }

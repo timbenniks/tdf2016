@@ -1,0 +1,23 @@
+.map-window
+  h1 #{interest.name}
+
+  .stats
+    if interest.alt !== 0
+      .stat-wrapper
+        span.title Altitude
+        span.content.speed #{interest.alt}
+
+    if interest.angle !== 0
+      .stat-wrapper
+        span.title Steepness
+        span.content.speed #{interest.angle}%
+
+    if interest.classification !== 0
+      .stat-wrapper
+        span.title Category
+        span.content.slope #{interest.classification}
+  
+    if interest.howFar !== 0
+      .stat-wrapper
+        span.title Length
+        span.content.distance #{interest.howFar}km
