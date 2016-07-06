@@ -1,8 +1,24 @@
 .map
   
   .map-banner
+    display: none
     height: 3em
-    background: #000
+    justify-content: space-around
+    
+    @media screen and ( min-width: 768px )
+      display: flex
+
+    &.active
+      .banner-stat
+        opacity: 1
+    p
+      line-height: 3em
+      font-size: 1em
+      text-transform: uppercase
+      color: rgba( #000, 0.6 )
+      
+      &.banner-stat
+        opacity: 0
 
   #map
   #map-window-holder
@@ -11,10 +27,11 @@
     left: 0
     height: calc( 100% - 75px )
     width: 100%
-    
-    @media screen and ( min-width: 600px )
-      height: calc( 100% - 60px )
-      top: 60px
+     
+    @media screen and ( min-width: 768px )
+      height: calc( 100% - 90px )
+      top: 90px
+
     
   #map-window-holder
     display: none

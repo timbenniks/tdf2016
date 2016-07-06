@@ -51,4 +51,8 @@ router.get( '/', ( req, res, next )=>{
   }
 } );
 
+router.get( '/video', ( req, res, next )=>{
+  res.render( 'video', { title: 'Tim\s TDF 2016' } );
+} );
+
 module.exports = router;

@@ -3,7 +3,7 @@ header
   
   h1
     if info.distance > 0 
-      span.chapeau #{info.date} &ndash; #{info.startsAt} &ndash; #{info.distance}km
+      span.chapeau( data-start=info.startsAt ) #{info.date} &ndash; #{info.startsAt} &ndash; #{info.distance}km
       span.title
         if starts
           | #{info.start} &ndash; #{info.finish}: starts #{starts}

@@ -1,0 +1,24 @@
+extends layout
+
+block content
+
+  .section-holder.map
+    header
+      img.logo( src="/images/logo.svg" )
+    
+      h1
+        span.chapeau Tim's TDF 2016
+        span.title Video stream
+ 
+    .page-content
+      style.
+        iframe {
+          width: 630px;
+          height: 360px;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate( -50%, -50% );
+        }
+
+      iframe( src='http://nowlive.xyz/stream.php?id=82&width=630&height=360&stretching=uniform&p=1', frameborder="0", scrolling="no" )

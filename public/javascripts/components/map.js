@@ -69,9 +69,18 @@ export default class Maps {
     this.getRouteData().then( ( routeData )=>{
       this.plotRoute( routeData );
       this.plotPointsOfInterest();
-      this.getGroups()
-        .then( this.plotGroups.bind( this ) );
+      this.renderGroups();
     } );
+  }
+
+  renderGroups(){
+    this.getGroups()
+      .then( this.plotGroups.bind( this ) );
+      // .then( ()=>{
+      //   setTimeout( ()=>{
+      //     this.renderGroups();
+      //   }, 10000 );
+      // } );
   }
 
   getRouteData(){
@@ -145,29 +154,60 @@ export default class Maps {
   }
 
   plotGroups( groups ){
-    if( groups.length === 0 ){
-      return;
-    }
-
-    groups.forEach( ( group )=>{
-      let icon = '/map/group.png';
-
-      if( group.key === 'Group_Back_of_the_Race' || group.key.indexOf( 'Straggler' ) !== -1 ){
-        icon = '/map/grey.png';
+    return new Promise( ( resolve, reject )=>{
+      if( groups.length === 0 ){
+        return;
       }
 
-      if( group.key === 'Group_Peloton' ){
-        icon = '/map/peloton.png';
-      }
-
-      this.plotMarker( {
-        latlng: { lat: group.lat, lng: group.lng }, 
-        identifier: group.name,
-        icon: icon,
-        content: group,
-        type: 'group'
+      this.markers.forEach( ( marker, index )=>{
+        if( marker.type === 'group' ){
+          marker.setMap( null );
+          this.markers.splice( index, 1 );
+        }
       } );
+
+      groups.forEach( ( group )=>{
+        let icon = '/map/group.png';
+
+        if( group.key === 'Group_Back_of_the_Race' || group.key.indexOf( 'Straggler' ) !== -1 ){
+          icon = '/map/grey.png';
+        }
+
+        if( group.key === 'Group_Peloton' ){
+          icon = '/map/peloton.png';
+        }
+
+        this.plotMarker( {
+          latlng: { lat: group.lat, lng: group.lng }, 
+          identifier: group.name,
+          icon: icon,
+          content: group,
+          type: 'group'
+        } );
+      } );
+
+      this.updateStats( groups[ 0 ] );
+      resolve();
     } );
+  }
+
+  updateStats( data ){
+    let avgSpeed = data.avgSpeed,
+        toGo = data.distToFinish,
+        steepness = data.slope,
+        banner = document.querySelector( '.map-banner' ),
+
+        startTime = document.querySelector( '[ data-start ]' ).dataset.start,
+        start = moment( new Date().setHours( Number( startTime.split( ':' )[ 0 ] ) + 2, startTime.split( ':' )[ 1 ], 0, 0 ) ),
+        now = moment(),
+        diff = moment.duration( now.diff( start ) ).asMilliseconds(),
+        drivenFor = moment.duration( diff, 'milliseconds' ).format( 'hh:mm:ss' );
+    
+    banner.querySelector( '.time-driven-placeholder' ).innerText = drivenFor;
+    banner.querySelector( '.to-go-placeholder' ).innerText = toGo;
+    banner.querySelector( '.steepness-placeholder' ).innerText = steepness;
+    banner.querySelector( '.avg-speed-placeholder' ).innerText = avgSpeed;
+    banner.classList.add( 'active' );
   }
 
   // utility functions
