@@ -1,11 +1,12 @@
 .map
-  
   .map-banner
     display: none
     height: 3em
-    justify-content: space-around
+    background: rgba( #fff, 0.35 )
+    border-bottom: 1px solid #fac018
     
     @media screen and ( min-width: 768px )
+      justify-content: flex-start
       display: flex
 
     &.active
@@ -16,12 +17,13 @@
       font-size: 1em
       text-transform: uppercase
       color: rgba( #000, 0.6 )
+      margin: 0 0 0 2em
       
       &.banner-stat
         opacity: 0
 
   #map
-  #map-window-holder
+  .map-window-holder
     position: absolute
     top: 75px
     left: 0
@@ -33,7 +35,7 @@
       top: 90px
 
     
-  #map-window-holder
+  .map-window-holder
     display: none
     width: 100%
     left: auto
@@ -43,6 +45,18 @@
     overflow: auto
     background: lighten( #f9bc0d, 35 )
     font-size: 1em
+    
+    @media screen and ( min-width: 800px )
+      background: rgba( lighten( #f9bc0d, 35 ), 0.9 )
+      width: 450px
+      height: auto
+      max-height: 450px
+      left: 50%
+      right: auto
+      top: 50%
+      transform: translate( -50%, -50% )
+      position: absolute
+      box-shadow: 0 0 10px rgba( #000, .1 )
 
     &.active
       display: block
@@ -52,25 +66,51 @@
       right: 1em
       top 1em
       margin: 0
+      background: rgba( #f9bc0d, 0.25 )
       
     .map-window
-      margin: 1em
-      
       h1
         text-transform: uppercase
         color: rgba( #000, 0.6 )
         margin: 0 0 1em 0
-        font-size: 1.2
+        background: rgba( #fff, 0.6 )
+        border-bottom: 1px solid rgba( #f9bc0d, 0.5 )
+        padding: 0.5em
         
+    .riders-points
+      background: rgba( #fff, 0.4 )
+      border-bottom: 1px solid rgba( #f9bc0d, 0.5 )
+      padding: 1em
+      margin: 1em
+      overflow: hidden
+      list-style: none
+      
+      li
+        background: rgba( #fff, 0.4 )
+        border-bottom: 1px solid #f9bc0d
+        padding: 1em
+        margin: 0
+    
+    .riders
+      @media screen and ( min-width: 800px )
+        display: flex
+        flex-wrap: wrap
+        justify-content: flex-start
+
     .stats
     .times
     .riders
       background: rgba( #fff, 0.4 )
-      border-bottom: 1px solid #f9bc0d
+      border-bottom: 1px solid rgba( #f9bc0d, 0.5 )
       padding: 1em
-      margin: 0 0 1em 0
+      margin: 1em
       overflow: hidden
       list-style: none
+      
+      @media screen and ( min-width: 800px )
+        display: flex
+        flex-wrap: wrap
+        justify-content: space-around
       
       .stat-wrapper
       .time-wrapper
@@ -78,6 +118,11 @@
         float: left
         margin: 0 0 1.5em 0
         
+        @media screen and ( min-width: 800px )
+          width: auto
+          float: none
+          margin: 0
+
         &:nth-child( 3 )
         &:last-child
           margin: 0
@@ -99,6 +144,12 @@
         padding: 0
         margin: 0 0 .5em 0
         overflow: hidden
+        
+        @media screen and ( min-width: 800px )
+          width: 50%
+          
+          &:nth-child(2n)
+            width: calc( 50% - 1em )
         
         img
           display: block
@@ -122,12 +173,3 @@
           font-size: 0.9em
           color: rgba( #000, 0.6 )
           margin: 5px 0 0 0
-            
-    @media screen and ( min-width: 800px )
-      background: rgba( lighten( #f9bc0d, 35 ), 0.9 )
-      border-left: 1px solid #f9bc0d
-      width: 300px
-      
-    @media screen and ( min-width: 1300px )
-      width: 500px
-

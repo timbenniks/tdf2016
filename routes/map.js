@@ -115,13 +115,13 @@ router.get( '/route', ( req, res )=>{
       var route = [],
           pointsOfInterest = [];
 
-      routeData.forEach( ( routePoint )=>{
+      routeData.forEach( ( routePoint, index )=>{
         route.push({
           lat: routePoint.Latitude,
           lng: routePoint.Longitude
         } );
 
-        if( routePoint.PointOfInterestType !== 0 ){
+        if( index === 0 ){
           pointsOfInterest.push({
             fs: routePoint.DistanceFromStart,
             tf: routePoint.DistanceToFinish,
@@ -129,7 +129,34 @@ router.get( '/route', ( req, res )=>{
             lng: routePoint.Longitude,
             climb_cat: ( routePoint.ClimbCategory !== 0 ) ? routePoint.ClimbCategory : false,
             alt: routePoint.Altitude,
-            type: ( routePoint.PointOfInterestType === 1 ) ? 'sprint' : 'climb',
+            type: 'start',
+            checkpoint_id: routePoint.PointOfInterestPK
+          } );
+        }
+
+        if( routePoint.PointOfInterestType !== 0 ){
+          var type = '';
+
+          if( routePoint.PointOfInterestType === 1 ){
+            type = 'sprint';
+          }
+
+          if( routePoint.PointOfInterestType === 2 ){
+            type = 'climb';
+          }
+
+          if( routePoint.DistanceToFinish === 0 ){
+            type = 'finish';
+          }
+
+          pointsOfInterest.push({
+            fs: routePoint.DistanceFromStart,
+            tf: routePoint.DistanceToFinish,
+            lat: routePoint.Latitude,
+            lng: routePoint.Longitude,
+            climb_cat: ( routePoint.ClimbCategory !== 0 ) ? routePoint.ClimbCategory : false,
+            alt: routePoint.Altitude,
+            type: type,
             checkpoint_id: routePoint.PointOfInterestPK
           } );
         }

@@ -1,23 +1,32 @@
-.map-window
-  h1 #{interest.name}
-
-  .stats
-    if interest.alt !== 0
-      .stat-wrapper
-        span.title Altitude
-        span.content.speed #{interest.alt}
-
-    if interest.angle !== 0
-      .stat-wrapper
-        span.title Steepness
-        span.content.speed #{interest.angle}%
-
-    if interest.classification !== 0
-      .stat-wrapper
-        span.title Category
-        span.content.slope #{interest.classification}
+.map-window-holder( id="interest-" + identifier )
+  button.close-window close
   
-    if interest.howFar !== 0
-      .stat-wrapper
-        span.title Length
-        span.content.distance #{interest.howFar}km
+  .map-window
+    h1 #{interest.name} #{ ( interest.alt === 0 ) ? "(sprint)": undefined }
+
+    if interest.alt !== 0
+      .stats
+        if interest.alt !== 0
+          .stat-wrapper
+            span.title Altitude
+            span.content.speed #{interest.alt}
+
+        if interest.angle !== 0
+          .stat-wrapper
+            span.title Steepness
+            span.content.speed #{interest.angle}%
+
+        if interest.classification !== 0
+          .stat-wrapper
+            span.title Category
+            span.content.slope #{interest.classification}
+      
+        if interest.howFar !== 0
+          .stat-wrapper
+            span.title Length
+            span.content.distance #{interest.howFar}km
+
+    if interest.arrivals.length > 0
+      ul.riders-points
+        for rider in interest.arrivals
+          li #{rider.RiderFirstName} #{rider.RiderLastName.toLowerCase()} scored #{rider.Points} #{ ( rider.Points > 1 ) ? "points" : "point" }

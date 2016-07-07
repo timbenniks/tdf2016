@@ -1,358 +1,146 @@
-import GoogleMapsLoader from 'google-maps';
-import request from 'superagent';
-import mapWindowGroupTmpl from '../../../views/includes/map-window-group.jade';
-import mapWindowInterestTmpl from '../../../views/includes/map-window-interest.jade';
-import moment from 'moment';
-
 import 'babel-polyfill';
 import 'moment-duration-format';
+
+import moment from 'moment';
+import DataHandler from './mapData';
+import PopupsHandler from './mapPopups';
+import MapsHandler from './mapMaps';
+
+import mapBannerTmpl from '../../../views/includes/map-banner.jade';
 
 export default class Maps {
   constructor( app ){
     this.emitter = app.emitter;
-    this.routePoly = false;
-    this.markers = [];
-    this.mapWindowHolder = document.getElementById( 'map-window-holder' );
-    this.closeBtn = this.mapWindowHolder.querySelector( '.close-window' );
-    this.cluster = false;
+    this.interestMarkers = [];
+    this.groupMarkers = [];
 
-    this.bind();
-  }
+    this.dataHandler = new DataHandler( this );
+    this.popupHandler = new PopupsHandler( this );
+    this.mapHandler = new MapsHandler( this );
 
-  bind(){
-    GoogleMapsLoader.KEY = 'AIzaSyBom_Va46C1Qh66p6d4e9QWd8J7U6oMElM';
-    GoogleMapsLoader.load( ( google )=> {
-      google.maps.event.addDomListener( window, 'load', this.initializeMap.bind( this ) );
-      google.maps.event.addDomListener( window, 'resize', this.fitBoundsToRoute.bind( this ) );
-    } );
+    this.emitter.on( 'map:ready', ()=>{
+      this.dataHandler.getRouteData().then( ( routeData )=>{
+        this.mapHandler.plotRoute( routeData.route );
+        this.plotPointsOfInterest( routeData.pointsOfInterest );
+        this.renderInterestPopups( routeData.pointsOfInterest );
+      } );
 
-    this.emitter.on( 'marker:clicked', this.onMarkerClick.bind( this ) );
-    this.closeBtn.addEventListener( 'click', this.onClosePanelClick.bind( this ) );
-  }
-
-  initializeMap(){
-    this.mapOptions = {
-      zoom: 15,
-      styles: [{"featureType":"water","stylers":[{"color":"#dddddd"},{"visibility":"on"}]},{"featureType":"landscape","stylers":[{"color":"#f2f2f2"}]},{"featureType":"road","stylers":[{"saturation":-100},{"lightness":45}]},{"featureType":"road.highway","stylers":[{"visibility":"simplified"}]},{"featureType":"road.arterial","elementType":"labels.icon","stylers":[{"visibility":"off"}]},{"featureType":"administrative","elementType":"labels.text.fill","stylers":[{"color":"#444444"}]},{"featureType":"transit","stylers":[{"visibility":"off"}]},{"featureType":"poi","stylers":[{"visibility":"off"}]}],
-      panControl: false,
-      zoomControl: true,
-      zoomControlOptions: {
-        position: google.maps.ControlPosition.LEFT_TOP,
-        style: google.maps.ZoomControlStyle.SMALL
-      },
-      mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      overviewMapControl: false,
-      scrollwheel: true,
-      mapTypeId: google.maps.MapTypeId.TERRAIN,
-      center: { lat: 48.8566140, lng: 2.3522219 }
-    };
-
-    this.markerOptions = {
-      size: new google.maps.Size( 78, 98 ),
-      origin: new google.maps.Point( 0, 0 ),
-      anchor: new google.maps.Point( 15, 37 ),
-      scaledSize: new google.maps.Size( 78/2.5, 98/2.5 )
-    }
-
-    this.markerOptionsInterest = {
-      size: new google.maps.Size( 40, 40 ),
-      origin: new google.maps.Point( 0, 0 ),
-      anchor: new google.maps.Point( 0, 4 ),
-      scaledSize: new google.maps.Size( 15, 15 )
-    }
-
-    this.map = new google.maps.Map( document.getElementById( 'map' ), this.mapOptions );
-    
-    // set it all in motion
-    this.getRouteData().then( ( routeData )=>{
-      this.plotRoute( routeData );
-      this.plotPointsOfInterest();
       this.renderGroups();
     } );
+
+    this.mapHandler.loadMap();
   }
 
   renderGroups(){
-    this.getGroups()
-      .then( this.plotGroups.bind( this ) );
-      // .then( ()=>{
-      //   setTimeout( ()=>{
-      //     this.renderGroups();
-      //   }, 10000 );
-      // } );
-  }
+    this.dataHandler.getGroups().then( ( groups )=>{
+      this.plotGroups( groups );
+      this.updateStats( groups[ 0 ] );
+      this.renderGroupPopups();
 
-  getRouteData(){
-    return new Promise( ( resolve, reject )=>{
-      request
-        .get( `/map/route` )
-        .accept( 'application/json' )
-        .end( ( err, res )=>{
-          if( err ){ reject( err ); }
-          resolve( res.body );
-        } );
+      setTimeout( this.renderGroups.bind( this ), 10000 );
     } );
   }
 
-  plotRoute( data ){
-    this.routePoly = new google.maps.Polyline({
-      path: data.route,
-      geodesic: true,
-      strokeColor: '#fac018',
-      strokeOpacity: 0.9,
-      strokeWeight: 3
-    } );
-
-    this.routePoly.setMap( this.map );
-    this.fitBoundsToRoute();
-
-    this.pointsOfInterest = data.pointsOfInterest;
-    this.start = data.route[ 0 ];
-    this.finish = data.route[ data.route.length - 1 ];
-  }
-
-  plotPointsOfInterest(){
-    // plot start marker
-    this.plotMarker({
-      latlng: { lat: this.start.lat, lng: this.start.lng },
-      identifier: 'start',
-      icon: '/map/start.png',
-      type: 'start'
-    } );
-    
-    // plot finish marker
-    this.plotMarker({
-      latlng: { lat: this.finish.lat, lng: this.finish.lng },
-      identifier: 'finish',
-      icon: '/map/finish.png',
-      type: 'finish'
-    } );
-
-    this.pointsOfInterest.forEach( ( point )=>{
-      if( point.tf === 0 ){ return; }
-
-      this.plotMarker({
+  plotPointsOfInterest( pointsOfInterest ){
+    pointsOfInterest.forEach( ( point )=>{
+      let markerOpts = {
         latlng: { lat: point.lat, lng: point.lng },
         identifier: `${point.type}-${point.checkpoint_id}`,
-        icon: ( point.type === 'sprint' ) ? '/map/sprint.png' : `/map/cat${point.climb_cat}.png`,
-        type: 'interest'
-      } );
-    } );
-  }
+        type: point.type,
+        climb_cat: point.climb_cat
+      }
 
-  getGroups(){
-    return new Promise( ( resolve, reject )=>{
-      request
-        .get( `/map/groups` )
-        .accept( 'application/json' )
-        .end( ( err, res )=>{
-          if( err ){ reject( err ); }
-          resolve( res.body );
+      let marker = this.mapHandler.plotMarker( markerOpts );
+
+      if( [ 'start', 'finish' ].indexOf( marker.type ) === -1 ){
+        marker.addListener( 'click', ()=>{
+          this.onMarkerClick( marker );
         } );
+      }
+
+      this.interestMarkers.push( marker );
     } );
   }
 
   plotGroups( groups ){
-    return new Promise( ( resolve, reject )=>{
-      if( groups.length === 0 ){
-        return;
-      }
-
-      this.markers.forEach( ( marker, index )=>{
-        if( marker.type === 'group' ){
-          marker.setMap( null );
-          this.markers.splice( index, 1 );
-        }
+    if( this.groupMarkers.length ){
+      this.groupMarkers.forEach( ( marker )=>{
+        marker.setMap( null );
       } );
 
-      groups.forEach( ( group )=>{
-        let icon = '/map/group.png';
-
-        if( group.key === 'Group_Back_of_the_Race' || group.key.indexOf( 'Straggler' ) !== -1 ){
-          icon = '/map/grey.png';
-        }
-
-        if( group.key === 'Group_Peloton' ){
-          icon = '/map/peloton.png';
-        }
-
-        this.plotMarker( {
-          latlng: { lat: group.lat, lng: group.lng }, 
-          identifier: group.name,
-          icon: icon,
-          content: group,
-          type: 'group'
-        } );
-      } );
-
-      this.updateStats( groups[ 0 ] );
-      resolve();
-    } );
-  }
-
-  updateStats( data ){
-    let avgSpeed = data.avgSpeed,
-        toGo = data.distToFinish,
-        steepness = data.slope,
-        banner = document.querySelector( '.map-banner' ),
-
-        startTime = document.querySelector( '[ data-start ]' ).dataset.start,
-        start = moment( new Date().setHours( Number( startTime.split( ':' )[ 0 ] ) + 2, startTime.split( ':' )[ 1 ], 0, 0 ) ),
-        now = moment(),
-        diff = moment.duration( now.diff( start ) ).asMilliseconds(),
-        drivenFor = moment.duration( diff, 'milliseconds' ).format( 'hh:mm:ss' );
-    
-    banner.querySelector( '.time-driven-placeholder' ).innerText = drivenFor;
-    banner.querySelector( '.to-go-placeholder' ).innerText = toGo;
-    banner.querySelector( '.steepness-placeholder' ).innerText = steepness;
-    banner.querySelector( '.avg-speed-placeholder' ).innerText = avgSpeed;
-    banner.classList.add( 'active' );
-  }
-
-  // utility functions
-  fitBoundsToMarkers(){
-    if( this.markers.length < 1 ){ return; }
-
-    let markersToFitBoundsTo = this.markers.filter( marker => marker.type === 'group' );
-
-    this.bounds = new google.maps.LatLngBounds();
-    markersToFitBoundsTo.forEach( ( marker )=>{
-      this.bounds.extend( marker.getPosition() );
-    } );
-
-    this.map.fitBounds( this.bounds );
-  }
-
-  fitBoundsToRoute(){
-    if( !this.routePoly ){ return; }
-
-    this.bounds = new google.maps.LatLngBounds();
-    this.routePoly.getPath().forEach( (e)=>{
-      this.bounds.extend( e );
-    } );
-
-    this.map.fitBounds( this.bounds );
-  }
-
-  resetDefaultIconState(){
-    this.markers.forEach( ( marker )=>{
-
-      if( marker.type === 'group' ){
-        this.setIcon( marker, '/map/group.png' );
-      }
-
-      if( marker.content && marker.content.key === 'Group_Peloton' ){
-        this.setIcon( marker, '/map/peloton.png' );
-      }
-
-      if( marker.content && ( marker.content.key === 'Group_Back_of_the_Race' || marker.content.key.indexOf( 'Straggler' ) !== -1 ) ){
-        this.setIcon( marker, '/map/grey.png' );
-      }
-    } );
-  }
-
-  plotMarker( opts ){
-    let markerOpts = {
-      position: opts.latlng,
-      map: this.map,
-      identifier: opts.identifier,
-      content: ( opts.content ) ? opts.content : false,
-      type: ( opts.type ) ? opts.type : false
+      this.groupMarkers = [];
     }
 
-    if( opts.icon && ( opts.type === 'group' || opts.type === 'start' || opts.type === 'finish' ) ){
-      markerOpts.icon = {
-        url: opts.icon,
-        size: this.markerOptions.size,
-        origin: this.markerOptions.origin,
-        anchor: this.markerOptions.anchor,
-        scaledSize: this.markerOptions.scaledSize
-      }
-    }
+    groups.forEach( ( group )=>{
+      let type = 'group';
 
-    if( opts.icon && opts.type === 'interest' ){
-      markerOpts.icon = {
-        url: opts.icon,
-        size: this.markerOptionsInterest.size,
-        origin: this.markerOptionsInterest.origin,
-        anchor: this.markerOptionsInterest.anchor,
-        scaledSize: this.markerOptionsInterest.scaledSize
-      }
-    }
+      group.key = group.name.toLowerCase().replace( / /g, '_' );
 
-    let marker = new google.maps.Marker( markerOpts );
-  
-    if( marker.type !== 'start' || marker.type !== 'finish' ){ 
+      if( group.key === 'back_of_the_race' || group.key.indexOf( 'straggler' ) !== -1 ){
+        type = 'group-straggler';
+      }
+
+      if( group.key === 'peloton' ){
+        type = 'group-peloton';
+      }
+
+      let markerOpts = {
+        latlng: { lat: group.lat, lng: group.lng },
+        identifier: `${type}-${group.key}`,
+        type: type,
+        content: group
+      }
+
+      let marker = this.mapHandler.plotMarker( markerOpts );
+
       marker.addListener( 'click', ()=>{
-        this.emitter.emit( 'marker:clicked', marker );
+        this.onMarkerClick( marker );
       } );
-    }    
+      
+      this.groupMarkers.push( marker );
+    } );
+  }
+
+  renderInterestPopups(){
+    let markersToRenderFor = this.interestMarkers.filter( m => m.type !== 'start' && m.type !== 'finish' ),
+        promises = [];
     
-    this.markers.push( marker );
+    markersToRenderFor.forEach( ( marker )=>{
+      this.dataHandler.getCheckpoint( marker.identifier.split( '-' )[ 1 ] )
+        .then( ( checkpointData )=>{
+          this.popupHandler.renderInterest( checkpointData );
+        } )
+        .catch( ( error )=>{
+          console.log( error );
+        } );
+    } );
+  }
+
+  renderGroupPopups(){
+    this.popupHandler.cleanGroups();
+    this.popupHandler.renderGroups( this.groupMarkers );
   }
 
   onMarkerClick( marker ){
-    if( marker.type === 'start' || marker.type === 'finish' ){ return; }
+    this.popupHandler.show( marker.identifier );
+  }
+
+  updateStats( data ){
+    let banner = document.querySelector( '.map-banner' ),
+        tmplData = {
+          avgSpeed: data.speed,
+          toGo: data.distToFinish,
+          steepness: data.slope
+        },
+
+        startTime = document.querySelector( '[ data-start ]' ).dataset.start,
+        start = moment( new Date().setHours( startTime.split( ':' )[ 0 ], startTime.split( ':' )[ 1 ], 0, 0 ) ),
+        now = moment(),
+        diff = moment.duration( now.diff( start ) ).asMilliseconds(),
+        riddenFor = moment.duration( diff, 'milliseconds' ).format( 'hh:mm:ss' );
     
-    this.closeWindow();
-    this.map.setCenter( marker.getPosition() );
-    this.map.setZoom( 16 );
-  
-    if( marker.type === 'interest' ){
-      this.getCheckpoint( marker.identifier.split( '-' )[ 1 ] )
-        .then( ( checkpointData )=>{
-          if( checkpointData.alt > 0 ){
-            this.openWindow( mapWindowInterestTmpl( { interest: checkpointData } ) );
-          }
-        } );
-    }
-
-    if( marker.type === 'group' ){
-      this.setIcon( marker, '/map/selected.png' );
-      this.openWindow( mapWindowGroupTmpl( { group: marker.content } ) );
-    }
-  }
-
-  getCheckpoint( id ){
-    return new Promise( ( resolve, reject )=>{
-      request
-        .get( `/map/checkpoint/${id}` )
-        .accept( 'application/json' )
-        .end( ( err, res )=>{
-          if( err ){ reject( err ); }
-          resolve( res.body );
-        } );
-    } );
-  }
-
-  setIcon( marker, icon ){
-    marker.setIcon({
-      url: icon,
-      size: this.markerOptions.size,
-      origin: this.markerOptions.origin,
-      anchor: this.markerOptions.anchor,
-      scaledSize: this.markerOptions.scaledSize
-    } );
-  }
-
-  onClosePanelClick(){
-    this.closeWindow();
-    this.fitBoundsToMarkers();
-  }
-
-  closeWindow(){
-    this.mapWindowHolder.classList.remove( 'active' );
-    this.mapWindow = document.querySelector( '.map-window' );
-    this.resetDefaultIconState();
-
-    if( this.mapWindow ){
-      this.mapWindowHolder.querySelector( '.map-window-content-wrapper' ).innerHTML = '';
-    }
-  }
-  
-  openWindow( html ){
-    this.mapWindowHolder.querySelector( '.map-window-content-wrapper' ).innerHTML = html;
-    this.mapWindowHolder.classList.add( 'active' );
+    tmplData.riddenFor = riddenFor;
+    banner.innerHTML = mapBannerTmpl( tmplData );
+    banner.classList.add( 'active' );
   }
 }
