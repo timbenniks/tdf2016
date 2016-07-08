@@ -45,7 +45,7 @@ export default class Maps {
         this.renderGroupPopups();
       }
 
-      //setTimeout( this.renderGroups.bind( this ), 10000 );
+      setTimeout( this.renderGroups.bind( this ), 10000 );
     } )
     .catch( ( error )=>{
       console.log( error );
