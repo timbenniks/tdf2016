@@ -2,8 +2,9 @@ extends layout
 
 block content
 
-  .section-holder.map
+  .section-holder.map( data-start=info.startsAt )
     include includes/header.jade
+    
     .map-banner
       include includes/map-banner.jade
  

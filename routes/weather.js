@@ -14,14 +14,14 @@ router.get( '/', ( req, res )=>{
         .get( `http://fep-api.dimensiondata.com/stages/${state.body.StageId}/weather?DistanceFromStart=0` )
         .accept( 'application/json' )
         .end( ( err, weather )=>{
-          var resut = {
-            temp: weather.body.Temperature,
-            wind: `${weather.body.AverageWindSpeed}km/h`,
-            wind_direction: weather.body.WindDirection,
-            humidity: weather.body.HumidityPercentage,
+          var result = {
+            temp: ( weather.body ) ? weather.body.Temperature : false, 
+            wind: ( weather.body ) ? `${weather.body.AverageWindSpeed}km/h` : false,
+            wind_direction: ( weather.body ) ? weather.body.WindDirection : false,
+            humidity: ( weather.body ) ? weather.body.HumidityPercentage : false
           };
 
-          res.json( resut );
+          res.json( result );
         });
     } );
 } );

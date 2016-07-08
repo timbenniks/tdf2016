@@ -2,40 +2,33 @@ import request from 'superagent';
 import 'babel-polyfill';
 
 export default class DataHandler {
-  constructor(){}
-
-  getRouteData(){
-    return new Promise( ( resolve, reject )=>{
-      request
-        .get( `/map/route` )
-        .accept( 'application/json' )
-        .end( ( err, res )=>{
-          if( err ){ reject( err ); }
-          resolve( res.body );
-        } );
-    } );
+  constructor(){
+    this.urls = {
+      route: '/map/route/',
+      groups: '/map/groups/',
+      checkpoint: '/map/checkpoint/'
+    }    
   }
 
-  getGroups(){
+  call( identifier, extraProp = '' ){
     return new Promise( ( resolve, reject )=>{
       request
-        .get( `/map/groups` )
+        .get( this.urls[ identifier ] + extraProp )
         .accept( 'application/json' )
         .end( ( err, res )=>{
-          if( err ){ reject( err ); }
-          resolve( res.body );
-        } );
-    } );
-  }
-
-  getCheckpoint( id ){
-    return new Promise( ( resolve, reject )=>{
-      request
-        .get( `/map/checkpoint/${id}` )
-        .accept( 'application/json' )
-        .end( ( err, res )=>{
-          if( err ){ reject( err ); }
-          resolve( res.body );
+          if( err && err.status === 404 ){
+            reject( `${identifier} not reachable. URL: ${this.urls[ identifier ]}` );
+          }
+          else if( err ) {
+            reject( `Something went wrong while getting the ${identifier}. Error: ${err}` );
+          }
+          try {
+            resolve( res.body );
+          }
+          catch( e ){
+            console.log( 'error:', e );
+            reject( `Something went wrong while getting the ${identifier}. Error: ${err}` );
+          }
         } );
     } );
   }

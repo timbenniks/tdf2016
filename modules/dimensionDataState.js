@@ -19,7 +19,7 @@ module.exports = function(){
           stage: state.StageId,
           prevStage: state.PreviousStageId,
           date: state.StageDate,
-          startsAt: moment( date ).format( 'hh:mm' ),
+          startsAt: moment( date ).format( 'HH:mm' ),
           start: state.DepartingTown,
           finish: state.ArrivingTown,
           distance: state.TotalDistance,

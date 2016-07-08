@@ -13,30 +13,40 @@ export default class Maps {
     this.emitter = app.emitter;
     this.interestMarkers = [];
     this.groupMarkers = [];
+    this.starts = document.querySelector( '[data-start]' ).dataset.start;
+    this.startsAt = new Date().setHours( this.starts.split( ':' )[ 0 ], this.starts.split( ':' )[ 1 ], 0, 0 );
 
     this.dataHandler = new DataHandler( this );
     this.popupHandler = new PopupsHandler( this );
     this.mapHandler = new MapsHandler( this );
 
     this.emitter.on( 'map:ready', ()=>{
-      this.dataHandler.getRouteData().then( ( routeData )=>{
+      this.dataHandler.call( 'route' ).then( ( routeData )=>{
         this.mapHandler.plotRoute( routeData.route );
         this.plotPointsOfInterest( routeData.pointsOfInterest );
         this.renderInterestPopups( routeData.pointsOfInterest );
       } );
 
-      this.renderGroups();
+      if( new Date().getTime() > this.startsAt ){
+        this.renderGroups();
+      }
     } );
 
     this.mapHandler.loadMap();
   }
 
   renderGroups(){
-    this.dataHandler.getGroups().then( ( groups )=>{
-      this.plotGroups( groups );
-      this.updateStats( groups[ 0 ] );
-      this.renderGroupPopups();
+    this.dataHandler.call( 'groups' ).then( ( groups )=>{
+      if( groups.length > 0 ){
+        this.plotGroups( groups );
+        this.updateStats( groups[ 0 ] );
+        this.renderGroupPopups();
+      }
 
+      setTimeout( this.renderGroups.bind( this ), 10000 );
+    } )
+    .catch( ( error )=>{
+      console.log( error );
       setTimeout( this.renderGroups.bind( this ), 10000 );
     } );
   }
@@ -106,7 +116,7 @@ export default class Maps {
         promises = [];
     
     markersToRenderFor.forEach( ( marker )=>{
-      this.dataHandler.getCheckpoint( marker.identifier.split( '-' )[ 1 ] )
+      this.dataHandler.call( 'checkpoint', marker.identifier.split( '-' )[ 1 ] )
         .then( ( checkpointData )=>{
           this.popupHandler.renderInterest( checkpointData );
         } )
