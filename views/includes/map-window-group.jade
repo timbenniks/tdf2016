@@ -8,13 +8,13 @@
     .stats
       if group.speed !== "0.0"
         .stat-wrapper
-          span.title speed
-          span.content.speed #{group.speed}km/h
+          span.title speed (km/h)
+          span.content.speed #{group.speed}
 
       if group.avgSpeed !== "0.0"
         .stat-wrapper
-          span.title Average speed
-          span.content.speed #{group.avgSpeed}km/h
+          span.title Average speed (km/h)
+          span.content.speed #{group.avgSpeed}
 
       if group.steepness
         .stat-wrapper
@@ -22,8 +22,8 @@
           span.content.slope #{group.slope}%
       
       .stat-wrapper
-        span.title to finish
-        span.content.distance #{group.distToFinish}km
+        span.title to finish (km)
+        span.content.distance #{group.distToFinish}
 
     if group.gapNextGroupDist !== false || group.gapPrevGroupDist !== false || group.gapLeadingGroupTime !== false || group.gapNextGroupTime !== false
       .times
@@ -51,16 +51,16 @@
     if group.jerseys.yellow || group.jerseys.polka_dot || group.jerseys.green || group.jerseys.white 
      .jerseys
        if group.jerseys.yellow 
-        span.yersey.y
+        img.yersey( src="/images/jerseys/yellow.png", alt="Yellow jersey", width="25" )
        
        if group.jerseys.polka_dot 
-        span.yersey.g
+        img.yersey( src="/images/jerseys/polka_dots.png", alt="Yellow jersey", width="25" )
        
        if group.jerseys.green 
-        span.yersey.w
+        img.yersey( src="/images/jerseys/green.png", alt="Yellow jersey", width="25" )
        
        if group.jerseys.white 
-        span.yersey.r
+        img.yersey( src="/images/jerseys/white.png", alt="Yellow jersey", width="25" )
 
     if group.riders.length > 0
       ul.riders

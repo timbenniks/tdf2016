@@ -7,20 +7,46 @@ var config = require( '../data/config' ),
     getDimensionDataRouteData = require( '../modules/dimensionDataRouteData' ),
     getDimensionDataGroups = require( '../modules/dimensionDataGroups' ),
     getDimensionDataCheckpoint = require( '../modules/dimensionDataCheckpoint' ),
+    getLiveNews = require( '../modules/liveNews' ),
+    streamLiveNews = require( '../modules/streamLiveNews' ),
+    getAppState = require( '../modules/state' ),
+
     router = express.Router();
 
 router.get( '/', ( req, res )=>{
-  getDimensionDataState()
-    .then( ( state )=>{
-      var info = {
-        date: moment( state.date ).format( "D MMMM YYYY" ),
-        startsAt: state.startsAt,
-        distance: state.distance,
-        start: state.start,
-        finish: state.finish
+  var promises = [],
+      pubSub = res.pubSub; 
+ 
+  getAppState().then( ( appState )=>{
+    
+    promises.push( getDimensionDataState() );
+    promises.push( getLiveNews( appState ) );
+    
+    Promise.all( promises ).then( ( data )=>{
+      
+      var tmplData = {
+        title: config.title,
+        state: data[ 0 ],
+        news: data[ 1 ]
       }
-      res.render( 'map', { title: 'Tim\'s TDF 2016', state: state, info: info } );      
-    } )
+      
+      tmplData.info = {
+        date: moment( data[ 0 ].date ).format( "D MMMM YYYY" ),
+        startsAt: data[ 0 ].startsAt,
+        distance: data[ 0 ].distance,
+        start: data[ 0 ].start,
+        finish: data[ 0 ].finish
+      }
+
+      setInterval( ()=>{
+        if( config.useLiveNewsInsteadOfTwitter ){
+          streamLiveNews( res.pubSub );              
+        }
+      }, 20000 );
+
+      res.render( 'map', tmplData );
+    } );
+  } );
 } );
 
 router.get( '/groups', ( req, res )=>{

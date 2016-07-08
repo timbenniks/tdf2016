@@ -5,6 +5,7 @@ import moment from 'moment';
 import DataHandler from './mapData';
 import PopupsHandler from './mapPopups';
 import MapsHandler from './mapMaps';
+import MapsNews from './mapNews';
 
 import mapBannerTmpl from '../../../views/includes/map-banner.jade';
 
@@ -19,6 +20,7 @@ export default class Maps {
     this.dataHandler = new DataHandler( this );
     this.popupHandler = new PopupsHandler( this );
     this.mapHandler = new MapsHandler( this );
+    this.newsHandler = new MapsNews( this );
 
     this.emitter.on( 'map:ready', ()=>{
       this.dataHandler.call( 'route' ).then( ( routeData )=>{
@@ -43,7 +45,7 @@ export default class Maps {
         this.renderGroupPopups();
       }
 
-      setTimeout( this.renderGroups.bind( this ), 10000 );
+      //setTimeout( this.renderGroups.bind( this ), 10000 );
     } )
     .catch( ( error )=>{
       console.log( error );
@@ -138,7 +140,7 @@ export default class Maps {
   updateStats( data ){
     let banner = document.querySelector( '.map-banner' ),
         tmplData = {
-          avgSpeed: data.speed,
+          avgSpeed: data.avgSpeed || data.speed,
           toGo: data.distToFinish,
           steepness: data.slope
         },

@@ -1,13 +1,15 @@
 import 'babel-polyfill';
 import newsTmpl from '../../../views/includes/livenews-item.jade';
+import newsBannerTmpl from '../../../views/includes/news-banner-item.jade';
 
 export default class Stream {
-  constructor( app ){
+  constructor( app, sideBarOrBanner = 'sidebar' ){
     this.emitter = app.emitter;
     this.notifier = app.notifier;
     this.sharer = app.sharer;
     this.bind();
     this.currentLiveNews = '';
+    this.sideBarOrBanner = sideBarOrBanner;
   }
 
   bind(){
@@ -43,11 +45,24 @@ export default class Stream {
   }
 
   renderNews( data ){
-    return newsTmpl( { item: data } );
+    if( this.sideBarOrBanner === 'sidebar' ){
+      return newsTmpl( { item: data } );
+    }
+    
+    if( this.sideBarOrBanner === 'banner' ){
+      return newsBannerTmpl( { item: data } );
+    }
   } 
 
   placeNews( newsHtml ){
-    document.querySelector( '.stream' ).innerHTML = newsHtml;
-    this.sharer.rebind();
+    if( this.sideBarOrBanner === 'sidebar' ){
+      document.querySelector( '.stream' ).innerHTML = newsHtml;
+      this.sharer.rebind();
+    }
+    
+    if( this.sideBarOrBanner === 'banner' ){
+      document.querySelector( '.news-banner-slides').innerHTML = newsHtml;
+      this.emitter.emit( 'newsbanner:update' );
+    }
   }
 }
