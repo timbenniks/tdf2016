@@ -6,7 +6,7 @@ var config = require( '../data/config' ),
     router = express.Router();
 
 module.exports = function( state ){
-  var routeURL = state.routeURL;
+  var routeURL = `http:${state.routeURL}`;
 
   return new Promise( ( resolve, reject )=>{
     call( routeURL, 'Dimention Data Route' )

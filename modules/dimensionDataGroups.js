@@ -7,8 +7,8 @@ var config = require( '../data/config' ),
     router = express.Router();
 
 module.exports = function( state ){
-  var raceURL = state.raceURL,
-      altRadeURL = state.raceURLAso,
+  var raceURL = `http:${state.raceURL}`,
+      altRadeURL = `http:${state.raceURLAso}`,
       today = new Date();
 
   return new Promise( ( resolve, reject )=>{
