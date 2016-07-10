@@ -1,8 +1,13 @@
 if !tomorrow.error
   section.tomorrow
-    h1
-      span.chapeau TOMORROW &ndash; #{tomorrow.startsAt} &ndash; #{tomorrow.distance}km
-      span.title #{ tomorrow.start } &ndash; #{tomorrow.finish}
+    if tomorrow.distance !== 0
+      h1
+        span.chapeau TOMORROW &ndash; #{tomorrow.startsAt} &ndash; #{tomorrow.distance}km
+        span.title #{ tomorrow.start } &ndash; #{tomorrow.finish}
     
-    //-img.route( src=tomorrow.route )
-    img.profile( src=tomorrow.profile )
+      img.profile( src=tomorrow.profile )
+
+    else
+      h1
+        span.chapeau TOMORROW
+        span.title Restday in #{ tomorrow.start }

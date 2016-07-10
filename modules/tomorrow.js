@@ -13,9 +13,15 @@ module.exports = function( state ){
       if( !applicableStage ){
         resolve({
           error: 'There is no tomorrow'
-        })
+        } );
       }
       else {
+
+        // if( applicableStage === '00R1' || applicableStage === '00R2' ){
+        //   resolve({
+        //     error: 'Tomorrow is a rest day'
+        //   } )
+        // }
         
         var stageForImage = ( applicableStage.charAt( 0 ) === '0' ) ? applicableStage.substring( 1 ) : applicableStage;
 

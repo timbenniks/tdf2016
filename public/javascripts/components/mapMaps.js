@@ -115,6 +115,10 @@ export default class MapsHandler {
       icon: this.getIcon( opts.type, opts.climb_cat )
     }
 
+    // if( opts.content && opts.content.size ) {
+    //   markerOpts.label = opts.content.size.toString();
+    // }
+
     return new google.maps.Marker( markerOpts );
   }
 
