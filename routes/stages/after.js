@@ -9,9 +9,6 @@ var config = require( '../../data/config' ),
     getAfterPhotos = require( '../../modules/afterPhotos' ),
     getTomorrow = require( '../../modules/tomorrow' ),
 
-    beforeTour = require( './beforeTour' ),
-    rest = require( './rest' ),
-
     TwitterHandler = new twitter();
 
 module.exports = function( res, params ){
@@ -21,11 +18,6 @@ module.exports = function( res, params ){
 
     if( params.stage ){
       state.stage = params.stage;
-    }
-
-    if( state.stage === '00R1' || state.stage === '00R2' ){
-      rest( res, params );
-      return false;
     }
 
     promises.push( getStageInfo( state ) );

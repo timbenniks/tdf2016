@@ -8,9 +8,7 @@ var config = require( '../../data/config' ),
     getLiveNews = require( '../../modules/liveNews' ),
     streamProgress = require( '../../modules/streamProgress' ),
     streamLiveNews = require( '../../modules/streamLiveNews' ),
-
     beforeTour = require( './beforeTour' ),
-    rest = require( './rest' ),
 
     TwitterHandler = new twitter();
 
@@ -63,11 +61,6 @@ module.exports = function( res, params ){
     
     if( params.stage ){
       state.stage = params.stage;
-    }
-
-    if( state.stage === '00R1' || state.stage === '00R2' ){
-      rest( res, params );
-      return false;
     }
 
     //promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) )

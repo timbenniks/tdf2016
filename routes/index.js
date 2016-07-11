@@ -6,6 +6,7 @@ var config = require( '../data/config' ),
     before = require( './stages/before' ),
     during = require( './stages/during' ),
     after = require( './stages/after' ),
+    rest = require( './stages/rest' ),
     getState = require( '../modules/state' ),
     getStartTime = require( '../modules/startTime' ),
     router = express.Router();
@@ -29,26 +30,31 @@ router.get( '/', ( req, res, next )=>{
       return false;
     }
   }
-  
-  // Render after stage view after 18:00.
-  if( time > afterStageTime ){
-    after( res, req.query );
-  }
-  else {
-    getState()
-      .then( getStartTime )
-      .then( ( sTime )=>{
-        var startDateTime = new Date();
-        startDateTime.setHours( sTime.split( ':' )[ 0 ] - config.serverTimeOffset, sTime.split( ':' )[ 1 ], 0, 0 );
+
+  getState().then( ( state )=>{
+    if( state.stage === '00R1' || state.stage === '00R2' ){
+      rest( res, req.query );
+    }
+    else {
+      if( time > afterStageTime ){
+        after( res, req.query );
+      }
+      else {
+        getStartTime( state ).then( ( sTime )=>{
+          var startDateTime = new Date();
+          startDateTime.setHours( sTime.split( ':' )[ 0 ] - config.serverTimeOffset, sTime.split( ':' )[ 1 ], 0, 0 );
         
-        if( time < startDateTime.getTime() ){
-          before( res, req.query );
-        }
-        else {
-          during( res, req.query );
-        }
-      } );
-  }
+          if( time < startDateTime.getTime() ){
+            before( res, req.query );
+          }
+          else {
+            during( res, req.query );
+          }
+        } );
+      }
+    }
+  } );
+  
 } );
 
 router.get( '/video', ( req, res, next )=>{
