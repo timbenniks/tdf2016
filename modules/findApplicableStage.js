@@ -4,7 +4,20 @@ var moment = require( 'moment' ),
 
 module.exports = function( availStage, route, yesterdayOrTomorrow ){
   
-  var findWorkableStage = ( stages, availStage, when )=>{
+  var dynamicSort = ( property )=>{
+    var sortOrder = 1;
+    if( property[ 0 ] === '-' ){
+      sortOrder = -1;
+      property = property.substr( 1 );
+    }
+
+    return ( a, b )=>{
+      var result = ( a[ property ] < b[ property ]) ? -1 : ( a[ property] > b[ property ]) ? 1 : 0;
+      return result * sortOrder;
+    }
+  },
+
+  findWorkableStage = ( stages, availStage, when )=>{
     if( stages[ availStage ].type !== 'REP' && !when ){
       return availStage;
     }
@@ -17,18 +30,35 @@ module.exports = function( availStage, route, yesterdayOrTomorrow ){
         type: stages[ stage ].type,
         date: stages[ stage ].date,
         start: stages[ stage ].start,
-        finish: stages[ stage ].finish
+        finish: stages[ stage ].finish,
+        dayIndex: stages[ stage ].dayIndex
       } );
     }
 
-    var result = false; 
+    workableStages.sort( dynamicSort( 'dayIndex' ) );
+
+    var result = false;
+
     for( var i = 0; i < workableStages.length; i++ ){
       if( workableStages[ i ].id.toString() === availStage ){
+        
         if( when === 'tomorrow' ){
-          result = ( availStage !== '2100' ) ? workableStages[ i + 1 ].id : false;
+          if( availStage !== '2100' ){
+            result = workableStages[ i + 1 ].id
+          }
+
+          if( result === '00R1' || result === '00R2' ){
+            result = workableStages[ i + 2 ].id 
+          }
         }
         else if( when === 'yesterday' ){
-          result = ( availStage !== '0100' ) ? workableStages[ i - 1 ].id : false;
+          if( availStage !== '0100' ){
+            result = workableStages[ i - 1 ].id 
+          }
+
+          if( result === '00R1' || result === '00R2' ){
+            result = workableStages[ i - 2 ].id 
+          }
         }
       }
     }
