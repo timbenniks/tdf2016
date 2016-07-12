@@ -1,6 +1,5 @@
 import 'babel-polyfill';
 import newsTmpl from '../../../views/includes/livenews-item.jade';
-import newsBannerTmpl from '../../../views/includes/news-banner-item.jade';
 
 export default class Stream {
   constructor( app, sideBarOrBanner = 'sidebar' ){
@@ -23,7 +22,10 @@ export default class Stream {
           finalNewsHtml += this.renderNews( item );
         } );
 
-        this.notifier.notify( `${data[ 0 ].time}: ${data[ 0 ].title}\n${data[ 0 ].desc.replace( /\n\n/g, '\n' )}`, 'news' );
+        if( data.length > 0 ){
+          this.notifier.notify( `${data[ 0 ].time}: ${data[ 0 ].title}\n${data[ 0 ].desc.replace( /\n\n/g, '\n' )}`, 'news' );
+        }
+        
         this.placeNews( finalNewsHtml );
       }
     } );
@@ -45,13 +47,7 @@ export default class Stream {
   }
 
   renderNews( data ){
-    if( this.sideBarOrBanner === 'sidebar' ){
-      return newsTmpl( { item: data } );
-    }
-    
-    if( this.sideBarOrBanner === 'banner' ){
-      return newsBannerTmpl( { item: data } );
-    }
+    return newsTmpl( { item: data } );
   } 
 
   placeNews( newsHtml ){
@@ -60,8 +56,8 @@ export default class Stream {
       this.sharer.rebind();
     }
     
-    if( this.sideBarOrBanner === 'banner' ){
-      document.querySelector( '.news-banner-slides').innerHTML = newsHtml;
+    if( this.sideBarOrBanner === 'map' ){
+      document.querySelector( '#map-news').innerHTML = newsHtml;
       this.emitter.emit( 'newsbanner:update' );
     }
   }

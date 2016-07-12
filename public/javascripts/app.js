@@ -27,7 +27,7 @@ class App {
     if( this.wrapper.classList.contains( 'map' ) ){
       new Maps( this );
       new Weather( this );
-      new LiveNews( this, 'banner' );
+      new LiveNews( this, 'map' );
     }
 
     if( this.wrapper.classList.contains( 'during' ) ){

@@ -1,25 +1,39 @@
 import GoogleMapsLoader from 'google-maps';
-import {lory} from 'lory.js';
 import 'babel-polyfill';
 
 export default class MapsNews {
   constructor( mapHandler ){
     this.emitter = mapHandler.emitter;
-    this.sliderNode = document.getElementById( 'news' );
-
-    this.slider = lory( this.sliderNode, {
-      infinite: false,
-      classNameFrame: 'news-banner-frame',
-      classNameSlideContainer: 'news-banner-slides',
-      infinite: false,
-      slidesToScroll: 1,
-      enableMouseEvents: true
-    } );
-
-    this.emitter.on( 'newsbanner:update', this.resetSlider.bind( this ) );
+    this.toggler = document.querySelector( '.map-show-news' );
+    this.newsWrapper = document.getElementById( 'news-sidebar-holder' );
+    this.bind();
+    this.emitter.on( 'panels:rebind', this.rebind.bind( this ) );
+    this.emitter.on( 'newsbanner:update', this.onNewNews.bind( this ) );
   }
 
-  resetSlider(){
-    this.slider.setup();
+  bind(){
+    this.toggler.addEventListener( 'click', this.onTogglerClick.bind( this ) );
+  }
+
+  rebind(){
+    this.toggler = document.querySelector( '.map-show-news' );
+    this.toggler.removeEventListener( 'click', this.onTogglerClick.bind( this ) );
+    this.bind();
+  }
+
+  onTogglerClick(){
+    console.log( 'clicking news' );
+    this.emitter.emit( 'panels:toggle' );
+    this.newsWrapper.classList.add( 'active' );
+  }
+
+  deActivate(){
+    if( this.newsWrapper.classList.contains( 'active' ) ){
+      this.newsWrapper.classList.remove( 'active' ); 
+    }
+  }
+
+  onNewNews(){
+    console.log( 'new news' );
   }
 }

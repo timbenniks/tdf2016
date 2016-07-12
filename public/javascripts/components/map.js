@@ -5,7 +5,8 @@ import moment from 'moment';
 import DataHandler from './mapData';
 import PopupsHandler from './mapPopups';
 import MapsHandler from './mapMaps';
-import MapsNews from './mapNews';
+import NewsHandler from './mapNews';
+import GroupsHandler from './mapGroups';
 
 import mapBannerTmpl from '../../../views/includes/map-banner.jade';
 
@@ -20,19 +21,25 @@ export default class Maps {
     this.dataHandler = new DataHandler( this );
     this.popupHandler = new PopupsHandler( this );
     this.mapHandler = new MapsHandler( this );
-    this.newsHandler = new MapsNews( this );
+    this.newsHandler = new NewsHandler( this );
+    this.groupsHandler = new GroupsHandler( this );
 
     this.emitter.on( 'map:ready', ()=>{
-      this.dataHandler.call( 'route' ).then( ( routeData )=>{
-        this.mapHandler.plotRoute( routeData.route );
-        this.plotPointsOfInterest( routeData.pointsOfInterest );
-        this.renderInterestPopups( routeData.pointsOfInterest );
-      } );
+      // this.dataHandler.call( 'route' ).then( ( routeData )=>{
+      //   this.mapHandler.plotRoute( routeData.route );
+      //   this.plotPointsOfInterest( routeData.pointsOfInterest );
+      //   this.renderInterestPopups( routeData.pointsOfInterest );
+      // } );
 
       if( new Date().getTime() > this.startsAt ){
         this.renderGroups();
       }
     } );
+
+    this.emitter.on( 'panels:toggle', ()=>{
+      this.newsHandler.deActivate();
+      this.groupsHandler.deActivate();
+    });
 
     this.mapHandler.loadMap();
   }
@@ -42,7 +49,7 @@ export default class Maps {
       if( groups.length > 0 ){
         this.plotGroups( groups );
         this.updateStats( groups[ 0 ] );
-        this.renderGroupPopups();
+        this.renderGroupPopupsAndSidebar();
       }
 
       setTimeout( this.renderGroups.bind( this ), 10000 );
@@ -128,9 +135,12 @@ export default class Maps {
     } );
   }
 
-  renderGroupPopups(){
+  renderGroupPopupsAndSidebar(){
     this.popupHandler.cleanGroups();
     this.popupHandler.renderGroups( this.groupMarkers );
+
+    this.groupsHandler.cleanGroups();
+    this.groupsHandler.renderGroups( this.groupMarkers  );
   }
 
   onMarkerClick( marker ){
@@ -154,5 +164,7 @@ export default class Maps {
     tmplData.riddenFor = riddenFor;
     banner.innerHTML = mapBannerTmpl( tmplData );
     banner.classList.add( 'active' );
+
+    this.emitter.emit( 'panels:rebind' );
   }
 }
