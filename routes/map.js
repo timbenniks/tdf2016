@@ -39,7 +39,7 @@ router.get( '/', ( req, res )=>{
           team: rider.TeamName,
           teamCode: rider.TeamCode,
           countryCode: rider.CountryCode.toLowerCase(),
-          photo: rider.PhotoUri,
+          photo: rider.PhotoUri.replace( 'http://', '//' ),
           classificationGeneral: ( rider.GeneralClassification ) ? rider.GeneralClassification : false,
           classfication:{
             yellow: rider.GeneralClassificationRank,
@@ -126,7 +126,7 @@ router.get( '/groups', ( req, res )=>{
               team: getRiderForBib( rider.Bib ).TeamName,
               teamCode: getRiderForBib( rider.Bib ).TeamCode,
               countryCode: getRiderForBib( rider.Bib ).CountryCode.toLowerCase(),
-              photo: getRiderForBib( rider.Bib ).PhotoUri,
+              photo: getRiderForBib( rider.Bib ).PhotoUri.replace( 'http://', '//' ),
               classificationGeneral: getRiderForBib( rider.Bib ).GeneralClassification,
               classfication:{
                 yellow: getRiderForBib( rider.Bib ).GeneralClassificationRank,
