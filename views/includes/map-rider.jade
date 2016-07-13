@@ -1,0 +1,9 @@
+li( data-lang=rider.countryCode )
+  img.pic( src=rider.photo, width="40" )
+  span.name
+    span.flag( class="flag-" + rider.countryCode )
+    | #{rider.name} 
+  span.team
+    | #{rider.teamCode}, in 
+    if rider.classificationGeneral
+      | #{ ( rider.classificationGeneral.split( ', ' )[ 0 ] === '1' ) ? rider.classificationGeneral.split( ', ' )[ 0 ] + 'st' : rider.classificationGeneral.split( ', ' )[ 0 ] + 'th'} place at #{ ( rider.classificationGeneral.split( ', ' )[ 1 ] !== '00:00:00' ) ? '+' + rider.classificationGeneral.split( ', ' )[ 1 ] : undefined}

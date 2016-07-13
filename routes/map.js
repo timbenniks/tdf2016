@@ -4,6 +4,7 @@ var config = require( '../data/config' ),
     express = require( 'express' ),
     moment = require( 'moment' ),
     getDimensionDataState = require( '../modules/dimensionDataState' ),
+    getDimensionDataRiders = require( '../modules/dimensionDataRiders' ),
     getDimensionDataRouteData = require( '../modules/dimensionDataRouteData' ),
     getDimensionDataGroups = require( '../modules/dimensionDataGroups' ),
     getDimensionDataCheckpoint = require( '../modules/dimensionDataCheckpoint' ),
@@ -21,6 +22,7 @@ router.get( '/', ( req, res )=>{
     
     promises.push( getDimensionDataState() );
     promises.push( getLiveNews( appState ) );
+    promises.push( getDimensionDataRiders() );
     
     Promise.all( promises ).then( ( data )=>{
       
@@ -30,6 +32,24 @@ router.get( '/', ( req, res )=>{
         news: data[ 1 ]
       }
       
+      tmplData.riders = data[ 2 ].map( ( rider )=>{
+        return {
+          name: rider.FirstName + ' ' + rider.LastName, 
+          lastName: rider.LastName, 
+          team: rider.TeamName,
+          teamCode: rider.TeamCode,
+          countryCode: rider.CountryCode.toLowerCase(),
+          photo: rider.PhotoUri,
+          classificationGeneral: ( rider.GeneralClassification ) ? rider.GeneralClassification : false,
+          classfication:{
+            yellow: rider.GeneralClassificationRank,
+            green: rider.SprintClassificationRank,
+            white: rider.YouthClassificationRank,
+            polka_dot: rider.MountainClassificationRank
+          }
+        }
+      } )
+
       tmplData.info = {
         date: moment( data[ 0 ].date ).format( "D MMMM YYYY" ),
         startsAt: data[ 0 ].startsAt,
@@ -45,6 +65,9 @@ router.get( '/', ( req, res )=>{
       }, 20000 );
 
       res.render( 'map', tmplData );
+    } )
+    .catch( ( error )=>{
+      res.render( 'error', { message: JSON.stringify( error ), error: error } );
     } );
   } );
 } );

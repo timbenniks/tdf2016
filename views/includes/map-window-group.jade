@@ -65,10 +65,4 @@
     if group.riders.length > 0
       ul.riders
         for rider in group.riders
-          li( data-lang=rider.countryCode )
-            img.pic( src=rider.photo, width="40" )
-            span.name
-              span.flag( class="flag-" + rider.countryCode )
-              | #{rider.name} 
-            span.team
-              | #{rider.teamCode}, in #{rider.classificationGeneral.split( ', ' )[ 0 ]}th place at #{rider.classificationGeneral.split( ', ' )[ 1 ]}
+          include map-rider.jade

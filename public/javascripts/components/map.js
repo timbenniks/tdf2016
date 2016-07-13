@@ -7,6 +7,7 @@ import PopupsHandler from './mapPopups';
 import MapsHandler from './mapMaps';
 import NewsHandler from './mapNews';
 import GroupsHandler from './mapGroups';
+import RidersHandler from './mapRiders';
 
 import mapBannerTmpl from '../../../views/includes/map-banner.jade';
 
@@ -23,6 +24,7 @@ export default class Maps {
     this.mapHandler = new MapsHandler( this );
     this.newsHandler = new NewsHandler( this );
     this.groupsHandler = new GroupsHandler( this );
+    //this.ridersHandler = new RidersHandler( this );
 
     this.emitter.on( 'map:ready', ()=>{
       this.dataHandler.call( 'route' ).then( ( routeData )=>{
@@ -31,14 +33,15 @@ export default class Maps {
         this.renderInterestPopups( routeData.pointsOfInterest );
       } );
 
-      //if( new Date().getTime() > this.startsAt ){
+      if( new Date().getTime() > this.startsAt ){
         this.renderGroups();
-     // }
+      }
     } );
 
     this.emitter.on( 'panels:toggle', ()=>{
       this.newsHandler.deActivate();
       this.groupsHandler.deActivate();
+      //this.ridersHandler.deActivate();
     });
 
     this.mapHandler.loadMap();
@@ -52,7 +55,7 @@ export default class Maps {
         this.renderGroupPopupsAndSidebar();
       }
 
-      //setTimeout( this.renderGroups.bind( this ), 10000 );
+      setTimeout( this.renderGroups.bind( this ), 10000 );
     } )
     .catch( ( error )=>{
       console.log( error );

@@ -78,7 +78,7 @@ module.exports = function( state ){
   };
 
   return new Promise( ( resolve, reject )=>{
-    call( `${config.baseUrl}/livenews${stage}_en.json`, 'after news' )
+    call( `${config.baseUrl}/livenews${stage}_en.json`, 'live news' )
       .then( ( liveNews )=>{
         var news = liveNews.d.map( ( newsItem )=>{
           return {

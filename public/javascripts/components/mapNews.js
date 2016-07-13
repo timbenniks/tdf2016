@@ -22,7 +22,6 @@ export default class MapsNews {
   }
 
   onTogglerClick(){
-    console.log( 'clicking news' );
     this.emitter.emit( 'panels:toggle' );
     this.newsWrapper.classList.add( 'active' );
   }
@@ -33,7 +32,5 @@ export default class MapsNews {
     }
   }
 
-  onNewNews(){
-    console.log( 'new news' );
-  }
+  onNewNews(){}
 }
