@@ -194,7 +194,7 @@
     right: 0
     height: calc( 100% - 90px )
     width: 320px
-    background: rgba( #f9bc0d, 0.8 )
+    background: rgba( #f9bc0d, 0.9 )
     border-left: 1px solid #f9bc0d
     overflow: auto
     padding: 1em 0 0 0
@@ -214,6 +214,16 @@
         color: rgba( #000, 0.6 )
         margin: 0 0 1em
         
+        .group-jerseys
+          float: right
+          
+          img
+            width: 13px
+            height: auto
+            margin: 0 0 0 0.5em
+            position: relative
+            top: -1px
+        
       p
         font-size: 1em
         margin: 0 0 .5em
@@ -227,7 +237,25 @@
         padding: 0
         
         li
-          line-height: 1.5
+          line-height: 1
+          background: rgba( 255, 255, 255, 0.3 )
+          border-bottom: 1px solid #f9bc0d
+          padding: .3em .5em .5em
+          overflow: hidden
+          position: relative
+          
+          .flag
+            margin: 0 0.5em 0 0
+            position: relative
+            top: 2px
+          
+          .name
+            float: left
+          
+          .place
+            float: right
+            position: relative
+            top: 2px
 
     blockquote
       margin: 0 1em 1em

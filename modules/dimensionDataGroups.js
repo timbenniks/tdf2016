@@ -11,6 +11,9 @@ module.exports = function( state ){
       altRadeURL = `http:${state.raceURLAso}`,
       today = new Date();
 
+
+  raceURL = 'http://fep-api.dimensiondata.com/stages/107/group-telemetry';
+
   return new Promise( ( resolve, reject )=>{
     getDimensionDataRiders()
       .then( ( riders )=>{
@@ -19,21 +22,21 @@ module.exports = function( state ){
           .then( ( groups )=>{
             var resultTimeStamp = new Date( groups.TimeStamp );
             
-            if( today.setHours( 0, 0, 0, 0 ) !== resultTimeStamp.setHours( 0, 0, 0, 0 ) ){
+            // if( today.setHours( 0, 0, 0, 0 ) !== resultTimeStamp.setHours( 0, 0, 0, 0 ) ){
 
-              console.log( `Using ${altRadeURL} for groups because ${raceURL} has not yet been updated with the latest data...` );
+            //   console.log( `Using ${altRadeURL} for groups because ${raceURL} has not yet been updated with the latest data...` );
 
-              call( altRadeURL, 'Dimension Data Alt Groups' )
-                .then( ( groups )=>{
-                  resolve( { riders: riders, groups: groups } );
-                } )
-                .catch( ( error )=>{
-                  reject( error );
-                } );
-            }
-            else {
+            //   call( altRadeURL, 'Dimension Data Alt Groups' )
+            //     .then( ( groups )=>{
+            //       resolve( { riders: riders, groups: groups } );
+            //     } )
+            //     .catch( ( error )=>{
+            //       reject( error );
+            //     } );
+            // }
+            //else {
               resolve( { riders: riders, groups: groups } );
-            }
+            //}
           } )
           .catch( ( error )=>{
             reject( error );

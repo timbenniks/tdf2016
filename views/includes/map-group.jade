@@ -1,42 +1,36 @@
 .map-sidebar-group( id=identifier )
-  h2 #{group.name} (#{group.size})
+  h2 
+    | #{group.name} (#{group.size})
+    if group.jerseys.yellow || group.jerseys.polka_dot || group.jerseys.green || group.jerseys.white 
+      span.group-jerseys
+        if group.jerseys.yellow 
+          img.yersey( src="/images/jerseys/yellow.png", alt="Yellow jersey", width="15" )
+       
+        if group.jerseys.polka_dot 
+          img.yersey( src="/images/jerseys/polka_dots.png", alt="Yellow jersey", width="15" )
+       
+        if group.jerseys.green 
+          img.yersey( src="/images/jerseys/green.png", alt="Yellow jersey", width="15" )
+       
+        if group.jerseys.white 
+          img.yersey( src="/images/jerseys/white.png", alt="Yellow jersey", width="15" )
 
   if group.gapNextGroupDist !== false || group.gapPrevGroupDist !== false || group.gapLeadingGroupTime !== false || group.gapNextGroupTime !== false
     .times  
       if group.gapNextGroupTime !== false
-        p To next group: #{group.gapNextGroupTime}
+        p To next group: #{group.gapNextGroupTime} min
 
       if group.gapLeadingGroupTime !== false
-        p To leading group: #{group.gapLeadingGroupTime}
-  
-      if group.gapNextGroupDist !== false
-        p To next group: #{group.gapNextGroupDist}km
-
-      if group.gapPrevGroupDist !== false
-        p Ahead of previous group: #{group.gapPrevGroupDist}km
+        p To leading group: #{group.gapLeadingGroupTime} min
 
   .stats
+    p To finish: #{group.distToFinish}km
     if group.speed !== "0.0"
       p Speed: #{group.speed}km/h
     if group.avgSpeed !== "0.0"
       p Average speed: #{group.avgSpeed}km/h
     if group.slope
       p Slope: #{group.slope}%
-    p To finish:  #{group.distToFinish}km
-
-  if group.jerseys.yellow || group.jerseys.polka_dot || group.jerseys.green || group.jerseys.white 
-   .jerseys
-     if group.jerseys.yellow 
-      img.yersey( src="/images/jerseys/yellow.png", alt="Yellow jersey", width="25", height="28" )
-     
-     if group.jerseys.polka_dot 
-      img.yersey( src="/images/jerseys/polka_dots.png", alt="Yellow jersey", width="25", height="28" )
-     
-     if group.jerseys.green 
-      img.yersey( src="/images/jerseys/green.png", alt="Yellow jersey", width="25", height="28" )
-     
-     if group.jerseys.white 
-      img.yersey( src="/images/jerseys/white.png", alt="Yellow jersey", width="25", height="28" )
 
   if group.riders.length > 0
     ul.riders
@@ -44,6 +38,6 @@
         li( data-lang=rider.countryCode )
           span.name
             span.flag( class="flag-" + rider.countryCode )
-            | #{rider.name} 
-          span.team
-            | #{rider.teamCode}, in #{rider.classificationGeneral.split( ', ' )[ 0 ]}th place at #{rider.classificationGeneral.split( ', ' )[ 1 ]}
+            | #{rider.lastName} 
+          span.place
+            | #{rider.classificationGeneral.split( ', ' )[ 0 ]}th #{ ( rider.classificationGeneral.split( ', ' )[ 1 ] !== '00:00:00' ) ? '+' + rider.classificationGeneral.split( ', ' )[ 1 ] : undefined}

@@ -34,7 +34,7 @@ export default class MapsHandler {
       center: { lat: 48.8566140, lng: 2.3522219 }
     };
 
-    //this.map = new google.maps.Map( document.getElementById( 'map' ), this.mapOptions );
+    this.map = new google.maps.Map( document.getElementById( 'map' ), this.mapOptions );
 
     this.emitter.emit( 'map:ready' );
   }

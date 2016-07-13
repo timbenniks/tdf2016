@@ -99,6 +99,7 @@ router.get( '/groups', ( req, res )=>{
               bib: rider.Bib,
               posInGroup: ( rider.PositionInTheGroup ) ? rider.PositionInTheGroup : false,
               name: getRiderForBib( rider.Bib ).FirstName + ' ' + capitalize( getRiderForBib( rider.Bib ).LastName ), 
+              lastName: getRiderForBib( rider.Bib ).LastName, 
               team: getRiderForBib( rider.Bib ).TeamName,
               teamCode: getRiderForBib( rider.Bib ).TeamCode,
               countryCode: getRiderForBib( rider.Bib ).CountryCode.toLowerCase(),

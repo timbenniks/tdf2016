@@ -25,15 +25,15 @@ export default class Maps {
     this.groupsHandler = new GroupsHandler( this );
 
     this.emitter.on( 'map:ready', ()=>{
-      // this.dataHandler.call( 'route' ).then( ( routeData )=>{
-      //   this.mapHandler.plotRoute( routeData.route );
-      //   this.plotPointsOfInterest( routeData.pointsOfInterest );
-      //   this.renderInterestPopups( routeData.pointsOfInterest );
-      // } );
+      this.dataHandler.call( 'route' ).then( ( routeData )=>{
+        this.mapHandler.plotRoute( routeData.route );
+        this.plotPointsOfInterest( routeData.pointsOfInterest );
+        this.renderInterestPopups( routeData.pointsOfInterest );
+      } );
 
-      if( new Date().getTime() > this.startsAt ){
+      //if( new Date().getTime() > this.startsAt ){
         this.renderGroups();
-      }
+     // }
     } );
 
     this.emitter.on( 'panels:toggle', ()=>{
@@ -52,7 +52,7 @@ export default class Maps {
         this.renderGroupPopupsAndSidebar();
       }
 
-      setTimeout( this.renderGroups.bind( this ), 10000 );
+      //setTimeout( this.renderGroups.bind( this ), 10000 );
     } )
     .catch( ( error )=>{
       console.log( error );
