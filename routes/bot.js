@@ -3,9 +3,9 @@
 var config = require( '../data/config' ),
     express = require( 'express' ),
     request = require( 'superagent' ),
-    bot = require( '../modules/botHandler' )
+    BotHandler = require( '../modules/botHandler' ),
     router = express.Router(),
-    botHandler = new bot();
+    botHandler = new BotHandler();
 
 router.get( '/', ( req, res )=>{
   if( req.query[ 'hub.verify_token' ] === 'my_voice_is_my_password_verify_me' ){
