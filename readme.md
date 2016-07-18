@@ -25,10 +25,7 @@ This year the project has the following features:
 ## Todo:
 * Time trial progress tracking
 * Show a virtual leaderboard for mountain stages
-* Map view: show number of riders on marker
-* Map view: follow favorite rider (in dashboard and map view)
-* Map view: show jerseys in marker
-* Map view: find a way to show quick group overview
+* Map view: follow favorite rider
 
 ## Data sources
 * dimensiondata.com
@@ -55,3 +52,4 @@ npm start
 
 ## Messenger bot research
 * https://howdy.ai/botkit/
+* https://github.com/kelonye/express-facebook-messenger

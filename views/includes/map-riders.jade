@@ -1,3 +1,7 @@
-ul
-  for rider in riders
-    include map-rider.jade
+.form-item
+  select
+    for rider in riders
+      if !rider.withdrawn
+        option( value=rider.id )=rider.name
+
+  button select

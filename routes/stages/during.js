@@ -28,42 +28,12 @@ module.exports = function( res, params ){
     config.twitterAccountToFollow = params.twitter_id;
   }
 
-  pubSub.on( 'streams:start', ()=>{
-    if( !streamStarted ){
-      
-      if( config.useLiveNewsInsteadOfTwitter ){
-        return;
-      }
-
-      TwitterHandler.createStream( 'statuses/filter', { follow: config.twitterAccountToFollow,  with: 'user' } ).then( ( stream )=>{
-        stream.on( 'data', ( tweet )=>{
-      
-          TwitterHandler.clean( tweet ).then( ( cleanTweet )=>{
-            pubSub.emit( 'socket:tweet', cleanTweet[ 0 ] );
-          } )
-          .catch( ( error )=>{
-            pubSub.emit( 'socket:tweet:error', error );
-          } );
-      
-        } );
-
-        pubSub.once( 'streams:destroy', ()=>{
-          stream.destroy();
-        } );
-
-      } );
-
-      streamStarted = true;
-    }
-  } );
-
   getAppState().then( ( state )=>{
     
     if( params.stage ){
       state.stage = params.stage;
     }
 
-    //promises.push( TwitterHandler.get( 'statuses/user_timeline', { user_id: config.twitterAccountToFollow, count: 10, trim_user: true, exclude_replies: true } ) )
     promises.push( getStageInfo( state ) );
     promises.push( getProgress( state ) );
     promises.push( getRank( state ) );
@@ -73,7 +43,6 @@ module.exports = function( res, params ){
     Promise.all( promises ).then( ( data )=>{
       var tmplData = {
         title: config.title,
-        //tweets: data[ 0 ],
         info: data[ 0 ],
         progress: data[ 1 ],
         rank: data[ 2 ],

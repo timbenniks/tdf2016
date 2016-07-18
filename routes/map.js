@@ -34,12 +34,14 @@ router.get( '/', ( req, res )=>{
       
       tmplData.riders = data[ 2 ].map( ( rider )=>{
         return {
+          id: rider.Id,
           name: rider.FirstName + ' ' + rider.LastName, 
           lastName: rider.LastName, 
           team: rider.TeamName,
           teamCode: rider.TeamCode,
           countryCode: rider.CountryCode.toLowerCase(),
           photo: rider.PhotoUri.replace( 'http://', '//' ),
+          withdrawn: rider.IsWithdrawn,
           classificationGeneral: ( rider.GeneralClassification ) ? rider.GeneralClassification : false,
           classfication:{
             yellow: rider.GeneralClassificationRank,
@@ -48,7 +50,7 @@ router.get( '/', ( req, res )=>{
             polka_dot: rider.MountainClassificationRank
           }
         }
-      } )
+      } );
 
       tmplData.info = {
         date: moment( data[ 0 ].date ).format( "D MMMM YYYY" ),

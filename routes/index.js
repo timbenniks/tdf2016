@@ -7,6 +7,7 @@ var config = require( '../data/config' ),
     during = require( './stages/during' ),
     after = require( './stages/after' ),
     rest = require( './stages/rest' ),
+    trial = require( './stages/trial' ),
     getState = require( '../modules/state' ),
     getStartTime = require( '../modules/startTime' ),
     router = express.Router();
@@ -34,6 +35,9 @@ router.get( '/', ( req, res, next )=>{
   getState().then( ( state )=>{
     if( state.stage === '00R1' || state.stage === '00R2' ){
       rest( res, req.query );
+    }
+    else if( state.stage === '1300' || state.stage === '1800' ){
+      trial( res, req.query );
     }
     else {
       if( time > afterStageTime ){

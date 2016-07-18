@@ -1,0 +1,32 @@
+extends layout
+
+block content
+
+  .section-holder.during( class=( livenews ) ? "livenews" : "tweet-stream" )
+    
+    include includes/header.jade
+    
+    .page-content( style="overflow: auto" )
+      if livenews
+        include includes/livenews.jade
+
+      section.other-data
+        .trial
+          each point, index in trial.checkpoints
+            .checkpoint
+              if index === 0
+                h1 
+                  span.chapeau #{point.ridersPast} have gone past
+                  span.title Start
+              else
+                h1 
+                  span.chapeau #{point.fromStart}km &ndash; #{point.ridersPast} have gone past
+                  span.title Chrono No. #{index}
+
+              .riders
+                .group-riders
+
+                  for rider in point.riders
+                    p=riders[ rider.id ].name
+                    //- .rider( data-lang=riders[ rider.id ].countryCode )
+                    //-   h3 #[span.flag( class="flag-#{riders[ rider.id ].countryCode}" )] #[span.name #{riders[ rider.id ].lastName}]

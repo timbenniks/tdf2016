@@ -3,71 +3,9 @@
 var config = require( '../data/config' ),
     express = require( 'express' ),
     request = require( 'superagent' ),
+    bot = require( '../modules/botHandler' )
     router = express.Router(),
-    
-    sendTextMessage = ( sender, text )=>{
-      let messageData = { text: text };
-      
-      request
-        .post( 'https://graph.facebook.com/v2.6/me/messages' )
-        .query( { access_token: config.fb_token } )
-        .send( { recipient: { id: sender }, message: messageData } )
-        .end( ( err, res )=>{
-          if( err ) {
-            console.log( err );
-          }
-          else if( res.body.error ){
-            console.log( res.body.error );
-          }
-        } );
-    },
-
-    sendRichMessage = ( sender )=>{
-      let messageData = {
-        "attachment": {
-          "type": "template",
-          "payload": {
-            "template_type": "generic",
-            "elements": [{
-              "title": "First card",
-              "subtitle": "Element #1 of an hscroll",
-              "image_url": "http://messengerdemo.parseapp.com/img/rift.png",
-              "buttons": [{
-                "type": "web_url",
-                "url": "https://www.messenger.com",
-                "title": "web url"
-              }, {
-                "type": "postback",
-                "title": "Postback",
-                "payload": "Payload for first element in a generic bubble",
-              }],
-            }, {
-              "title": "Second card",
-              "subtitle": "Element #2 of an hscroll",
-              "image_url": "http://messengerdemo.parseapp.com/img/gearvr.png",
-              "buttons": [{
-                "type": "postback",
-                "title": "Postback",
-                "payload": "Payload for second element in a generic bubble",
-              }],
-            }]
-          }
-        }
-      }
-
-      request
-        .post( 'https://graph.facebook.com/v2.6/me/messages' )
-        .query( { access_token: config.fb_token } )
-        .send( { recipient: { id: sender }, message: messageData } )
-        .end( ( err, res )=>{
-          if( err ) {
-            console.log( err );
-          }
-          else if( res.body.error ){
-            console.log( res.body.error );
-          }
-        } );
-    };
+    botHandler = new bot();
 
 router.get( '/', ( req, res )=>{
   if( req.query[ 'hub.verify_token' ] === 'my_voice_is_my_password_verify_me' ){
@@ -90,16 +28,16 @@ router.post( '/', ( req, res )=>{
     if( event.message && event.message.text ){
       let text = event.message.text;
         if( text === 'awesome' ){
-          sendRichMessage( sender );
+          botHandler.sendRichMessage( sender );
           continue;
         }
         
-      sendTextMessage( sender, "Text received, echo: " + text.substring( 0, 200 ) );
+      botHandler.sendTextMessage( sender, "Text received, echo: " + text.substring( 0, 200 ) );
     }
 
     if( event.postback ){
       let text = JSON.stringify( event.postback );
-      sendTextMessage( sender, "Postback received: "+text.substring( 0, 200 ) );
+      botHandler.sendTextMessage( sender, "Postback received: "+text.substring( 0, 200 ) );
       continue;
     }
   }
